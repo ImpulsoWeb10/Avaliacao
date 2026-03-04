@@ -130,7 +130,11 @@ h1{
     background:#facc15;
     color:#000;
 }
-
+<div style="margin-top:60px; max-width:600px; margin-left:auto; margin-right:auto; font-size:15px; color:#cbd5e1;">
+    “Depois que começamos a usar a página de avaliação, nossos clientes passaram a avaliar muito mais no Google.”
+    <br><br>
+    <strong>- Cliente Satisfeito</strong>
+</div>
 /* FOOTER */
 
 .footer{
@@ -143,6 +147,23 @@ h1{
     color:#22c55e;
     text-decoration:none;
     font-weight:bold;
+}
+    .prova-social{
+    margin-bottom:20px;
+    font-size:16px;
+    color:#22c55e;
+}
+
+.contador{
+    margin-bottom:50px;
+    font-size:15px;
+    color:#facc15;
+}
+
+#timer{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:8px;
 }
 </style>
 </head>
@@ -213,6 +234,29 @@ h1{
     </div>
 
 </div>
+<script>
+function iniciarContador() {
+    let tempo = 3600; // 1 hora em segundos
 
+    const timer = document.getElementById("timer");
+
+    setInterval(() => {
+        let horas = Math.floor(tempo / 3600);
+        let minutos = Math.floor((tempo % 3600) / 60);
+        let segundos = tempo % 60;
+
+        timer.innerHTML =
+            String(horas).padStart(2, '0') + ":" +
+            String(minutos).padStart(2, '0') + ":" +
+            String(segundos).padStart(2, '0');
+
+        if (tempo > 0) {
+            tempo--;
+        }
+    }, 1000);
+}
+
+iniciarContador();
+</script>
 </body>
 </html>
