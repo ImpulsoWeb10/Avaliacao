@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -31,6 +30,8 @@ body{
     margin-bottom:15px;
 }
 
+/* TITULOS */
+
 h1{
     font-size:26px;
     margin-bottom:10px;
@@ -48,73 +49,80 @@ p{
     color:#cbd5e1;
 }
 
+/* BOTÕES */
+
 .botao{
     position:relative;
     display:block;
     width:100%;
-    padding:15px;
-    margin-bottom:20px;
+    padding:16px;
+    margin-bottom:22px;
     text-decoration:none;
     font-weight:bold;
-    border-radius:8px;
+    border-radius:10px;
     overflow:hidden;
     transition:0.3s;
 }
 
-/* ===== GOOGLE ===== */
+/* GOOGLE PREMIUM */
 
 .google{
     background:#facc15;
     color:#000;
-    animation:pulsar 1.5s infinite;
+    animation:pulsar 2s infinite;
+    box-shadow:0 0 15px rgba(250,204,21,0.6);
 }
 
+/* ESTRELAS LOADING */
 .estrelas{
     display:block;
-    font-size:18px;
-    margin-bottom:5px;
-    animation:brilho 2s infinite;
+    font-size:20px;
+    letter-spacing:4px;
+    margin-bottom:6px;
+    animation:estrelaMove 2s linear infinite;
 }
 
-/* ===== WHATS ===== */
+@keyframes estrelaMove{
+    0%{opacity:0.3; letter-spacing:2px;}
+    50%{opacity:1; letter-spacing:6px;}
+    100%{opacity:0.3; letter-spacing:2px;}
+}
+
+/* WHATS PREMIUM */
 
 .whatsapp{
     background:#22c55e;
     color:white;
-    animation:pulsar 1.8s infinite;
+    animation:pulsar 2.2s infinite;
+    box-shadow:0 0 15px rgba(34,197,94,0.6);
 }
 
-/* brilho passando */
+/* brilho automático passando */
 .whatsapp::before{
     content:"";
     position:absolute;
     top:0;
     left:-100%;
-    width:100%;
+    width:50%;
     height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
-    transition:0.5s;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);
+    animation:brilhoPassando 3s infinite;
 }
 
-.whatsapp:hover::before{
-    left:100%;
+@keyframes brilhoPassando{
+    0%{left:-100%;}
+    100%{left:200%;}
 }
 
-/* ===== ANIMAÇÕES ===== */
+/* PULSAR */
 
 @keyframes pulsar{
     0%{transform:scale(1);}
-    50%{transform:scale(1.05);}
+    50%{transform:scale(1.06);}
     100%{transform:scale(1);}
 }
 
-@keyframes brilho{
-    0%{opacity:0.5;}
-    50%{opacity:1;}
-    100%{opacity:0.5;}
-}
-
-/* ===== FOOTER ===== */
+/* FOOTER */
 
 .footer{
     margin-top:25px;
@@ -138,20 +146,17 @@ p{
 
 <div class="container">
 
-    <!-- 🔥 COLOQUE O LINK DA LOGO -->
     <img src="COLE_AQUI_LINK_DA_LOGO" class="logo">
 
     <h1>NOME DA SUA EMPRESA</h1>
     <h2>Sua opinião é muito importante para nós!</h2>
     <p>Leva menos de 1 minuto e ajuda nossa empresa a crescer 🚀</p>
 
-    <!-- GOOGLE -->
     <a href="COLE_AQUI_LINK_GOOGLE" target="_blank" class="botao google">
         <span class="estrelas">★★★★★</span>
         Avaliar no Google
     </a>
 
-    <!-- WHATS -->
     <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" class="botao whatsapp">
         💬 Falar no WhatsApp
     </a>
