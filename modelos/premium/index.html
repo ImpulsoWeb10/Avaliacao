@@ -1,1 +1,177 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalie Nossa Empresa</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:420px;
+    margin:60px auto;
+    padding:30px;
+}
+
+.logo{
+    width:120px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:26px;
+    margin-bottom:10px;
+}
+
+h2{
+    font-size:20px;
+    margin-bottom:15px;
+    font-weight:normal;
+}
+
+p{
+    font-size:16px;
+    margin-bottom:30px;
+    color:#cbd5e1;
+}
+
+.botao{
+    position:relative;
+    display:block;
+    width:100%;
+    padding:15px;
+    margin-bottom:20px;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:8px;
+    overflow:hidden;
+    transition:0.3s;
+}
+
+/* ===== GOOGLE ===== */
+
+.google{
+    background:#facc15;
+    color:#000;
+    animation:pulsar 1.5s infinite;
+}
+
+.estrelas{
+    display:block;
+    font-size:18px;
+    margin-bottom:5px;
+    animation:brilho 2s infinite;
+}
+
+/* ===== WHATS ===== */
+
+.whatsapp{
+    background:#22c55e;
+    color:white;
+    animation:pulsar 1.8s infinite;
+}
+
+/* brilho passando */
+.whatsapp::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+    transition:0.5s;
+}
+
+.whatsapp:hover::before{
+    left:100%;
+}
+
+/* ===== ANIMAÇÕES ===== */
+
+@keyframes pulsar{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(1);}
+}
+
+@keyframes brilho{
+    0%{opacity:0.5;}
+    50%{opacity:1;}
+    100%{opacity:0.5;}
+}
+
+/* ===== FOOTER ===== */
+
+.footer{
+    margin-top:25px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.footer div{
+    margin-top:6px;
+}
+
+.footer a{
+    color:#22c55e;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🔥 COLOQUE O LINK DA LOGO -->
+    <img src="COLE_AQUI_LINK_DA_LOGO" class="logo">
+
+    <h1>NOME DA SUA EMPRESA</h1>
+    <h2>Sua opinião é muito importante para nós!</h2>
+    <p>Leva menos de 1 minuto e ajuda nossa empresa a crescer 🚀</p>
+
+    <!-- GOOGLE -->
+    <a href="COLE_AQUI_LINK_GOOGLE" target="_blank" class="botao google">
+        <span class="estrelas">★★★★★</span>
+        Avaliar no Google
+    </a>
+
+    <!-- WHATS -->
+    <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" class="botao whatsapp">
+        💬 Falar no WhatsApp
+    </a>
+
+    <div class="footer">
+        <div>© 2026 NOME_DA_EMPRESA - Todos os direitos reservados</div>
+        
+        <div>
+            🔒 Site Seguro | Conexão Protegida SSL
+        </div>
+
+        <div>
+            Desenvolvido por 
+            <a href="https://wa.me/5511954950044?text=Quero%20saber%20sobre%20landpage%20ou%20site%20da%20ImpulsoWeb10" target="_blank">
+                ImpulsoWeb10
+            </a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
