@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Páginas de Avaliação Profissional</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:1100px;
+    margin:60px auto;
+    padding:20px;
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.subtitulo{
+    font-size:18px;
+    color:#cbd5e1;
+    margin-bottom:50px;
+}
+
+/* CARDS */
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:#1e293b;
+    padding:30px;
+    width:320px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+    transition:0.3s;
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+.card ul{
+    list-style:none;
+    text-align:left;
+    margin-bottom:25px;
+}
+
+.card ul li{
+    margin-bottom:10px;
+}
+
+.botao{
+    display:inline-block;
+    padding:12px 25px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+/* BASIC */
+
+.basic{
+    border:1px solid #334155;
+}
+
+.basic .botao{
+    background:#22c55e;
+    color:white;
+}
+
+/* PREMIUM DESTACADO */
+
+.premium{
+    background:#111827;
+    transform:scale(1.05);
+    border:2px solid #facc15;
+    box-shadow:0 0 25px rgba(250,204,21,0.5);
+}
+
+.tag{
+    background:#facc15;
+    color:#000;
+    font-size:12px;
+    padding:5px 10px;
+    border-radius:20px;
+    display:inline-block;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.premium .botao{
+    background:#facc15;
+    color:#000;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:60px;
+    font-size:13px;
+    color:#94a3b8;
+}
+
+.footer a{
+    color:#22c55e;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Transforme Avaliações em Vendas 🚀</h1>
+    <div class="subtitulo">
+        Crie sua página profissional de avaliações e aumente a confiança da sua empresa.
+    </div>
+
+    <div class="cards">
+
+        <!-- BASIC -->
+        <div class="card basic">
+            <h2>Plano Basic</h2>
+            <ul>
+                <li>✔ Página profissional</li>
+                <li>✔ Botão Google</li>
+                <li>✔ Botão WhatsApp</li>
+                <li>✔ Rodapé com SSL</li>
+                <li>✔ Entrega rápida</li>
+            </ul>
+            <a href="avaliacao-basic/index.html" class="botao">Quero Basic</a>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="card premium">
+            <div class="tag">Mais Escolhido</div>
+            <h2>Plano Premium</h2>
+            <ul>
+                <li>✔ Tudo do Basic</li>
+                <li>✔ Logo personalizada</li>
+                <li>✔ Botões animados</li>
+                <li>✔ Efeito brilho</li>
+                <li>✔ Layout mais impactante</li>
+                <li>✔ Maior taxa de conversão</li>
+            </ul>
+            <a href="avaliacao-premium/index.html" class="botao">Quero Premium</a>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>© 2026 ImpulsoWeb10 - Todos os direitos reservados</p>
+        <p>🔒 Site Seguro | Conexão Protegida SSL</p>
+    </div>
+
+</div>
+
+</body>
+</html>
