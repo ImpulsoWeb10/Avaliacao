@@ -1,121 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <meta name="google-site-verification" content="kriQSKxFj8s3y1h5Dg1m7EeHkinUfxj3fCD0FrIcokA" />
-<meta name="google-site-verification" content="Q4kwMaEMc-U1ZE7fy3WPXrzqNK1rfVbYuwwdWBNfW9o" />
-<title>Avalie Nossa Empresa</title>
+    <meta name="google-site-verification" content="Q4kwMaEMc-U1ZE7fy3WPXrzqNK1rfVbYuwwdWBNfW9o" />
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+    <title>ImpulsoWeb10 | Avalie Nossa Empresa</title>
+    
+    <meta name="description" content="Plataforma de avaliações inteligentes da ImpulsoWeb10. Deixe seu feedback e ajude empresas a crescerem.">
+    <meta property="og:title" content="Avalie Nossa Empresa | ImpulsoWeb10">
+    <meta property="og:description" content="Sua opinião é o motor do nosso crescimento.">
+    <meta name="theme-color" content="#0f172a">
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    text-align:center;
-}
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.container{
-    max-width:420px;
-    margin:80px auto;
-    padding:30px;
-}
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-h1{
-    font-size:26px;
-    margin-bottom:10px;
-}
+        .container {
+            max-width: 420px;
+            width: 90%;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
 
-h2{
-    font-size:20px;
-    margin-bottom:15px;
-    font-weight:normal;
-}
+        h1 { font-size: 24px; margin-bottom: 10px; letter-spacing: 1px; }
+        h2 { font-size: 18px; margin-bottom: 20px; font-weight: 300; color: #94a3b8; }
+        p { font-size: 15px; margin-bottom: 30px; color: #cbd5e1; line-height: 1.5; }
 
-p{
-    font-size:16px;
-    margin-bottom:30px;
-    color:#cbd5e1;
-}
+        .botao {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; margin-bottom: 16px;
+            text-decoration: none; font-weight: bold; border-radius: 12px;
+            transition: all 0.3s ease; font-size: 16px;
+        }
 
-.botao{
-    display:block;
-    width:100%;
-    padding:15px;
-    margin-bottom:15px;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:8px;
-    transition:0.3s;
-}
+        .google { background: #facc15; color: #000; box-shadow: 0 4px 15px rgba(250, 204, 21, 0.2); }
+        .google:hover { transform: translateY(-2px); background: #fde047; }
 
-.google{
-    background:#facc15;
-    color:#000;
-}
+        .whatsapp { background: #22c55e; color: white; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2); }
+        .whatsapp:hover { transform: translateY(-2px); background: #4ade80; }
 
-.google:hover{
-    background:#eab308;
-}
+        .footer { margin-top: 35px; font-size: 12px; color: #64748b; }
+        .footer-line { border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; padding-top: 15px; }
+        
+        /* LINK DE INDEXAÇÃO PARA O GOOGLE */
+        .seo-links { margin-bottom: 15px; }
+        .seo-links a { color: #94a3b8; text-decoration: none; font-size: 11px; transition: 0.3s; }
+        .seo-links a:hover { color: #facc15; }
 
-.whatsapp{
-    background:#22c55e;
-    color:white;
-}
-
-.whatsapp:hover{
-    background:#16a34a;
-}
-
-.footer{
-    margin-top:25px;
-    font-size:12px;
-    color:#94a3b8;
-}
-
-.footer div{
-    margin-top:6px;
-}
-
-.footer a{
-    color:#22c55e;
-    text-decoration:none;
-    font-weight:bold;
-}
-</style>
+        .footer b { color: #22c55e; }
+        a.dev-link { color: #22c55e; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>NOME DA SUA EMPRESA</h1>
-    <h2>Sua opinião é muito importante para nós!</h2>
-    <p>Leva menos de 1 minuto e ajuda nossa empresa a crescer 🚀</p>
+    <h1>IMPULSOWEB10</h1>
+    <h2>Sua opinião é fundamental ✨</h2>
+    <p>Escolha uma opção abaixo para falar conosco ou nos avaliar no Google.</p>
 
-    <a href="COLE_AQUI_LINK_GOOGLE" target="_blank" class="botao google">
+    <a href="#" target="_blank" class="botao google">
         ⭐ Avaliar no Google
     </a>
 
-    <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" class="botao whatsapp">
-        💬 Falar no WhatsApp
+    <a href="https://wa.me/5511954950044" target="_blank" class="botao whatsapp">
+        💬 Chamar no WhatsApp
     </a>
 
     <div class="footer">
-        <div>© 2026 NOME_DA_EMPRESA - Todos os direitos reservados</div>
-        
-        <div>
-            🔒 Site Seguro | Conexão Protegida SSL
+        <div class="footer-line">
+            <div class="seo-links">
+                <small>CLIENTES RECENTES:</small><br>
+                <a href="clientes/amorporpatinhas/amor/">Avaliação Amor por Patinhas 🐾</a>
+            </div>
+            
+            <div>© 2026 <b>ImpulsoWeb10</b></div>
+            <div style="margin-top:8px;">🔒 Conexão Segura SSL | Site Oficial</div>
         </div>
 
         <div>
             Desenvolvido por 
-            <a href="https://wa.me/5511954950044?text=Quero%20saber%20sobre%20landpage%20ou%20site%20da%20ImpulsoWeb10" target="_blank">
+            <a href="https://wa.me/5511954950044?text=Olá! Vim pelo site de Avaliações." target="_blank" class="dev-link">
                 ImpulsoWeb10
             </a>
         </div>
