@@ -6,6 +6,8 @@
     <title>Avalie a Amor por Patinhas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,7 +26,6 @@
         .logo-box { margin-bottom: 20px; }
         .logo { width: 100px; border-radius: 50%; border: 3px solid #f472b6; margin-bottom: 10px; }
         
-        /* NOME DA EMPRESA ESTILIZADO */
         .nome-loja { 
             font-family: 'Pacifico', cursive; 
             font-size: 28px; 
@@ -93,7 +94,7 @@
         .hidden { display: none; }
 
         .footer { margin-top: 30px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .footer a { color: #22c55e; text-decoration: none; font-weight: bold; }
+        .footer a { color: #facc15; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 
@@ -134,12 +135,38 @@
 
     <div class="footer">
         <div>🔒 Conexão Segura SSL | © 2026</div>
-        <div>Parceiro de Tecnologia: <a href="https://wa.me/5511954950044" target="_blank">ImpulsoWeb10</a></div>
+        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
+
+    function dispararConfetes() {
+        const duracao = 3 * 1000;
+        const fim = Date.now() + duracao;
+
+        (function frame() {
+            confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#f472b6', '#facc15', '#ffffff']
+            });
+            confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#f472b6', '#facc15', '#ffffff']
+            });
+
+            if (Date.now() < fim) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
 
     function avaliar(n) {
         notaSelecionada = n;
@@ -158,6 +185,7 @@
         if (n >= 4) {
             bom.classList.remove('hidden');
             ruim.classList.add('hidden');
+            dispararConfetes(); // Ativa a purpurina/confetes
         } else {
             ruim.classList.remove('hidden');
             bom.classList.add('hidden');
@@ -166,10 +194,10 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511973051524"; // NÚMERO DA LOJA ATUALIZADO
-        if (!texto) { alert("Por favor, conte-nos o que houve para que possamos te ajudar."); return; }
+        const telefone = "5511973051524"; 
+        if (!texto) { alert("Por favor, conte-nos o que houve."); return; }
         
-        const mensagem = encodeURIComponent(`FEEDBACK NEGATIVO - Nota: ${notaSelecionada} estrelas.\nSugestão do cliente: ${texto}`);
+        const mensagem = encodeURIComponent(`FEEDBACK NEGATIVO - Nota: ${notaSelecionada} estrelas.\nSugestão: ${texto}`);
         window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
