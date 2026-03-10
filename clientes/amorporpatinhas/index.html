@@ -13,9 +13,9 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            /* NOVO FUNDO: Cinza Grafite Profundo (Mais elegante que o azul) */
-            background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 100%);
-            color: white;
+            /* FUNDO CLARO: Degradê suave de rosa bebê para branco */
+            background: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%);
+            color: #334155; /* Texto escuro para leitura no fundo claro */
             text-align: center;
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -23,30 +23,40 @@
 
         .container { 
             max-width: 400px; width: 100%; padding: 40px 30px; 
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 35px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            background: #ffffff; 
+            border: 1px solid rgba(244, 114, 182, 0.2); /* Borda rosa bem fininha */
+            border-radius: 35px; 
+            box-shadow: 0 20px 40px rgba(244, 114, 182, 0.1); /* Sombra rosada suave */
         }
         
         .logo-box { margin-bottom: 25px; }
-        .logo { width: 115px; height: 115px; object-fit: cover; border-radius: 50%; border: 4px solid #ff69b4; box-shadow: 0 0 25px rgba(255, 105, 180, 0.3); }
+        .logo { 
+            width: 115px; height: 115px; object-fit: cover; border-radius: 50%; 
+            border: 4px solid #ff69b4; 
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); 
+        }
         
         .nome-loja { 
             font-family: 'Pacifico', cursive; 
             font-size: 42px; 
             color: #ff69b4; 
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.9);
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 1), 4px 4px 8px rgba(244, 114, 182, 0.3);
             margin-top: 15px;
             margin-bottom: 10px;
             line-height: 1.2;
         }
 
-        h1 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #71717a; margin-bottom: 20px; }
-        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 700; color: #facc15; }
+        h1 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-bottom: 20px; }
+        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 700; color: #f59e0b; } /* Amarelo um pouco mais forte para o fundo claro */
 
         .rating-box { margin-bottom: 30px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 42px; color: #27272a; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .star-btn.active { color: #facc15; transform: scale(1.2); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+        .star-btn { 
+            font-size: 42px; 
+            color: #e2e8f0; /* Estrela apagada é cinza clarinho agora */
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .star-btn.active { color: #facc15; transform: scale(1.2); filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.4)); }
 
         .botao {
             position: relative; overflow: hidden;
@@ -57,20 +67,20 @@
 
         .google { 
             background: #facc15; color: #000; 
-            box-shadow: 0 10px 25px rgba(250, 204, 21, 0.4);
+            box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3);
             animation: pulsar 1.8s infinite ease-in-out;
         }
 
         .google::after {
             content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
             transform: skewX(-20deg);
             animation: brilhoPassando 2.5s infinite;
         }
 
         @keyframes pulsar {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.04); }
             100% { transform: scale(1); }
         }
 
@@ -80,19 +90,19 @@
             100% { left: 150%; }
         }
 
-        .whatsapp { background: #22c55e; color: white; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
+        .whatsapp { background: #22c55e; color: white; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2); }
 
         textarea {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px; color: white; padding: 15px; margin-bottom: 20px; font-family: inherit; resize: none; outline: none;
+            width: 100%; background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 15px; color: #334155; padding: 15px; margin-bottom: 20px; font-family: inherit; resize: none; outline: none;
         }
 
         .hidden { display: none; }
 
-        .footer { margin-top: 40px; font-size: 13px; color: #a1a1aa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; }
-        .ssl-msg { font-weight: bold; color: #4ade80; margin-bottom: 8px; display: block; }
+        .footer { margin-top: 40px; font-size: 13px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 25px; }
+        .ssl-msg { font-weight: bold; color: #16a34a; margin-bottom: 8px; display: block; }
         .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 800; }
+        .footer a { color: #f59e0b; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 
