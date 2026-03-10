@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avalie Nossa Empresa</title>
+    <title>Avalie a Amor por Patinhas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Quicksand', sans-serif;
             background: linear-gradient(135deg,#0f172a,#1e293b);
             color: white;
             text-align: center;
@@ -19,23 +20,33 @@
         }
 
         .container { max-width: 420px; margin: 0 auto; padding: 30px; }
-        .logo { width: 120px; margin-bottom: 15px; border-radius: 15px; }
-        h1 { font-size: 26px; margin-bottom: 10px; }
-        h2 { font-size: 18px; margin-bottom: 15px; font-weight: normal; color: #facc15; }
+        
+        .logo-box { margin-bottom: 20px; }
+        .logo { width: 100px; border-radius: 50%; border: 3px solid #f472b6; margin-bottom: 10px; }
+        
+        /* NOME DA EMPRESA ESTILIZADO */
+        .nome-loja { 
+            font-family: 'Pacifico', cursive; 
+            font-size: 28px; 
+            color: #f472b6; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+
+        h1 { font-size: 18px; color: #94a3b8; font-weight: normal; margin-bottom: 15px; }
+        h2 { font-size: 20px; margin-bottom: 15px; font-weight: bold; color: #facc15; line-height: 1.3; }
         p { font-size: 15px; margin-bottom: 25px; color: #cbd5e1; line-height: 1.5; }
 
-        /* ESTRELAS INTERATIVAS */
         .rating-box { margin-bottom: 25px; }
         .star-btn {
-            font-size: 35px;
+            font-size: 38px;
             color: #475569;
             cursor: pointer;
             transition: 0.2s;
             margin: 0 5px;
         }
-        .star-btn.active { color: #facc15; text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+        .star-btn.active { color: #facc15; text-shadow: 0 0 15px rgba(250, 204, 21, 0.6); }
 
-        /* CAIXA DE TEXTO (MELHORIA) */
         #feedback-ruim textarea {
             width: 100%;
             background: rgba(255,255,255,0.05);
@@ -48,13 +59,12 @@
             outline: none;
         }
 
-        /* BOTÕES */
         .botao {
             position: relative;
             display: block;
             width: 90%;
             margin: 0 auto 18px auto;
-            padding: 15px;
+            padding: 16px;
             text-decoration: none;
             font-weight: bold;
             border-radius: 30px;
@@ -65,34 +75,20 @@
             cursor: pointer;
         }
 
-        .google {
-            background: #facc15;
-            color: #000;
-            animation: pulsar 2s infinite;
-            box-shadow: 0 0 15px rgba(250,204,21,0.6);
-        }
+        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; box-shadow: 0 0 15px rgba(250,204,21,0.4); }
+        .whatsapp { background: #22c55e; color: white; animation: pulsar 2.2s infinite; }
 
-        .whatsapp {
-            background: #22c55e;
-            color: white;
-            animation: pulsar 2.2s infinite;
-            box-shadow: 0 0 15px rgba(34,197,94,0.6);
-        }
-
-        /* Efeito de brilho passando */
         .botao::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
             background: linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
             animation: brilhoPassando 3s infinite;
         }
 
         @keyframes brilhoPassando { 0% {left:-100%;} 100% {left:200%;} }
-        @keyframes pulsar { 0% {transform:scale(1);} 50% {transform:scale(1.05);} 100% {transform:scale(1);} }
+        @keyframes pulsar { 0% {transform:scale(1);} 50% {transform:scale(1.03);} 100% {transform:scale(1);} }
 
         .hidden { display: none; }
 
@@ -104,11 +100,14 @@
 <body>
 
 <div class="container">
-    <img src="amor-por-patinhas.png" class="logo">
+    <div class="logo-box">
+        <img src="amor-por-patinhas.png" class="logo" alt="Logo Amor por Patinhas">
+        <div class="nome-loja">Amor por Patinhas</div>
+    </div>
 
-    <h1>ImpulsoWeb10</h1>
-    <h2>Sua opinião é nosso combustível!</h2>
-    <p id="instrucao">Toque nas estrelas para avaliar sua experiência:</p>
+    <h1>ImpulsoWeb10 apresenta:</h1>
+    <h2>Sua avaliação ajuda a espalhar mais amor pelos pets! 🐾</h2>
+    <p id="instrucao">Toque nas estrelas para nos contar como foi sua experiência:</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -119,23 +118,23 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <p>Ficamos muito felizes! 🎉 Que tal compartilhar isso no Google?</p>
-        <a href="Https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
+        <p>Uhul! Ficamos latindo de alegria! 🎉 Que tal nos dar 5 estrelas no Google agora?</p>
+        <a href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
             ⭐ AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p>Sentimos muito. 😔 Em que podemos melhorar?</p>
-        <textarea id="texto-melhoria" placeholder="Digite aqui sua sugestão..." rows="3"></textarea>
+        <p>Poxa, queremos corrigir isso. 😔 O que aconteceu?</p>
+        <textarea id="texto-melhoria" placeholder="Fale direto com o nosso suporte..." rows="3"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            💬 FALAR COM GERENTE
+            <i class="fab fa-whatsapp"></i> FALAR COM A LOJA AGORA
         </button>
     </div>
 
     <div class="footer">
-        <div>🔒 Conexão Protegida SSL | © 2026</div>
-        <div>Desenvolvido por <a href="https://wa.me/5511954950044" target="_blank">ImpulsoWeb10</a></div>
+        <div>🔒 Conexão Segura SSL | © 2026</div>
+        <div>Parceiro de Tecnologia: <a href="https://wa.me/5511954950044" target="_blank">ImpulsoWeb10</a></div>
     </div>
 </div>
 
@@ -149,7 +148,6 @@
         const ruim = document.getElementById('feedback-ruim');
         const instrucao = document.getElementById('instrucao');
 
-        // Atualiza Estrelas
         stars.forEach((s, i) => {
             if (i < n) s.classList.add('active');
             else s.classList.remove('active');
@@ -157,7 +155,6 @@
 
         instrucao.classList.add('hidden');
 
-        // Filtro
         if (n >= 4) {
             bom.classList.remove('hidden');
             ruim.classList.add('hidden');
@@ -169,11 +166,11 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511954950044"; // Seu número
-        if (!texto) { alert("Por favor, conte-nos como melhorar."); return; }
+        const telefone = "5511973051524"; // NÚMERO DA LOJA ATUALIZADO
+        if (!texto) { alert("Por favor, conte-nos o que houve para que possamos te ajudar."); return; }
         
-        const mensagem = encodeURIComponent(`Avaliação: ${notaSelecionada} estrelas. Sugestão: ${texto}`);
-        window.open(`https://wa.me/${5511973051524}?text=${mensagem}`, '_blank');
+        const mensagem = encodeURIComponent(`FEEDBACK NEGATIVO - Nota: ${notaSelecionada} estrelas.\nSugestão do cliente: ${texto}`);
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
 
