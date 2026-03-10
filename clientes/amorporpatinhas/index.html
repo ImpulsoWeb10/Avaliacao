@@ -1,183 +1,181 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avalie Nossa Empresa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avalie Nossa Empresa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg,#0f172a,#1e293b);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    text-align:center;
-}
+        .container { max-width: 420px; margin: 0 auto; padding: 30px; }
+        .logo { width: 120px; margin-bottom: 15px; border-radius: 15px; }
+        h1 { font-size: 26px; margin-bottom: 10px; }
+        h2 { font-size: 18px; margin-bottom: 15px; font-weight: normal; color: #facc15; }
+        p { font-size: 15px; margin-bottom: 25px; color: #cbd5e1; line-height: 1.5; }
 
-.container{
-    max-width:420px;
-    margin:60px auto;
-    padding:30px;
-}
+        /* ESTRELAS INTERATIVAS */
+        .rating-box { margin-bottom: 25px; }
+        .star-btn {
+            font-size: 35px;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 0 5px;
+        }
+        .star-btn.active { color: #facc15; text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-.logo{
-    width:120px;
-    margin-bottom:15px;
-}
+        /* CAIXA DE TEXTO (MELHORIA) */
+        #feedback-ruim textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            color: white;
+            padding: 12px;
+            margin-bottom: 15px;
+            resize: none;
+            outline: none;
+        }
 
-/* TITULOS */
+        /* BOTÕES */
+        .botao {
+            position: relative;
+            display: block;
+            width: 90%;
+            margin: 0 auto 18px auto;
+            padding: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            overflow: hidden;
+            transition: 0.3s;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
 
-h1{
-    font-size:26px;
-    margin-bottom:10px;
-}
+        .google {
+            background: #facc15;
+            color: #000;
+            animation: pulsar 2s infinite;
+            box-shadow: 0 0 15px rgba(250,204,21,0.6);
+        }
 
-h2{
-    font-size:20px;
-    margin-bottom:15px;
-    font-weight:normal;
-}
+        .whatsapp {
+            background: #22c55e;
+            color: white;
+            animation: pulsar 2.2s infinite;
+            box-shadow: 0 0 15px rgba(34,197,94,0.6);
+        }
 
-p{
-    font-size:16px;
-    margin-bottom:30px;
-    color:#cbd5e1;
-}
+        /* Efeito de brilho passando */
+        .botao::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+            animation: brilhoPassando 3s infinite;
+        }
 
-/* BOTÕES */
+        @keyframes brilhoPassando { 0% {left:-100%;} 100% {left:200%;} }
+        @keyframes pulsar { 0% {transform:scale(1);} 50% {transform:scale(1.05);} 100% {transform:scale(1);} }
 
-.botao{
-    position:relative;
-    display:block;
-    width:85%;
-    margin:0 auto 18px auto;
-    padding:13px;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:30px; /* mais arredondado */
-    overflow:hidden;
-    transition:0.3s;
-    font-size:15px; /* levemente menor */
-}
-/* GOOGLE PREMIUM */
+        .hidden { display: none; }
 
-.google{
-    background:#facc15;
-    color:#000;
-    animation:pulsar 2s infinite;
-    box-shadow:0 0 15px rgba(250,204,21,0.6);
-}
-
-/* ESTRELAS LOADING */
-.estrelas{
-    display:block;
-    font-size:20px;
-    letter-spacing:4px;
-    margin-bottom:6px;
-    animation:estrelaMove 2s linear infinite;
-}
-
-@keyframes estrelaMove{
-    0%{opacity:0.3; letter-spacing:2px;}
-    50%{opacity:1; letter-spacing:6px;}
-    100%{opacity:0.3; letter-spacing:2px;}
-}
-
-/* WHATS PREMIUM */
-
-.whatsapp{
-    background:#22c55e;
-    color:white;
-    animation:pulsar 2.2s infinite;
-    box-shadow:0 0 15px rgba(34,197,94,0.6);
-}
-
-/* brilho automático passando */
-.whatsapp::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:50%;
-    height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);
-    animation:brilhoPassando 3s infinite;
-}
-
-@keyframes brilhoPassando{
-    0%{left:-100%;}
-    100%{left:200%;}
-}
-
-/* PULSAR */
-
-@keyframes pulsar{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.06);}
-    100%{transform:scale(1);}
-}
-
-/* FOOTER */
-
-.footer{
-    margin-top:25px;
-    font-size:12px;
-    color:#94a3b8;
-}
-
-.footer div{
-    margin-top:6px;
-}
-
-.footer a{
-    color:#22c55e;
-    text-decoration:none;
-    font-weight:bold;
-}
-</style>
+        .footer { margin-top: 30px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .footer a { color: #22c55e; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
+    <img src="impulsoweb10.png" class="logo">
 
-    <img src="COLE_AQUI_LINK_DA_LOGO" class="logo">
+    <h1>ImpulsoWeb10</h1>
+    <h2>Sua opinião é nosso combustível!</h2>
+    <p id="instrucao">Toque nas estrelas para avaliar sua experiência:</p>
 
-    <h1>NOME DA SUA EMPRESA</h1>
-    <h2>Sua opinião é muito importante para nós!</h2>
-    <p>Se você ficou satisfeito com nosso serviço, deixe sua avaliação no Google ou fale conosco pelo WhatsApp. 🚀</p>
-
-    <a href="COLE_AQUI_LINK_GOOGLE" target="_blank" class="botao google">
-        <span class="estrelas">★★★★★</span>
-        Avaliar no Google
-    </a>
-
-    <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" class="botao whatsapp">
-        💬 Falar no WhatsApp
-    </a>
-
-    <div class="footer">
-        <div>© 2026 NOME_DA_EMPRESA - Todos os direitos reservados</div>
-        
-        <div>
-            🔒 Site Seguro | Conexão Protegida SSL
-        </div>
-
-        <div>
-            Desenvolvido por 
-            <a href="https://wa.me/5511954950044?text=Quero%20saber%20sobre%20landpage%20ou%20site%20da%20ImpulsoWeb10" target="_blank">
-                ImpulsoWeb10
-            </a>
-        </div>
+    <div class="rating-box">
+        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
+    <div id="feedback-bom" class="hidden">
+        <p>Ficamos muito felizes! 🎉 Que tal compartilhar isso no Google?</p>
+        <a href="https://g.page/r/CRECbD178tUDEAE/review" target="_blank" class="botao google">
+            ⭐ AVALIAR NO GOOGLE
+        </a>
+    </div>
+
+    <div id="feedback-ruim" class="hidden">
+        <p>Sentimos muito. 😔 Em que podemos melhorar?</p>
+        <textarea id="texto-melhoria" placeholder="Digite aqui sua sugestão..." rows="3"></textarea>
+        <button onclick="enviarWhatsApp()" class="botao whatsapp">
+            💬 FALAR COM GERENTE
+        </button>
+    </div>
+
+    <div class="footer">
+        <div>🔒 Conexão Protegida SSL | © 2026</div>
+        <div>Desenvolvido por <a href="https://wa.me/5511954950044" target="_blank">ImpulsoWeb10</a></div>
+    </div>
 </div>
+
+<script>
+    let notaSelecionada = 0;
+
+    function avaliar(n) {
+        notaSelecionada = n;
+        const stars = document.querySelectorAll('.star-btn');
+        const bom = document.getElementById('feedback-bom');
+        const ruim = document.getElementById('feedback-ruim');
+        const instrucao = document.getElementById('instrucao');
+
+        // Atualiza Estrelas
+        stars.forEach((s, i) => {
+            if (i < n) s.classList.add('active');
+            else s.classList.remove('active');
+        });
+
+        instrucao.classList.add('hidden');
+
+        // Filtro
+        if (n >= 4) {
+            bom.classList.remove('hidden');
+            ruim.classList.add('hidden');
+        } else {
+            ruim.classList.remove('hidden');
+            bom.classList.add('hidden');
+        }
+    }
+
+    function enviarWhatsApp() {
+        const texto = document.getElementById('texto-melhoria').value;
+        const telefone = "5511954950044"; // Seu número
+        if (!texto) { alert("Por favor, conte-nos como melhorar."); return; }
+        
+        const mensagem = encodeURIComponent(`Avaliação: ${notaSelecionada} estrelas. Sugestão: ${texto}`);
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+    }
+</script>
 
 </body>
 </html>
