@@ -29,7 +29,15 @@
         
         .logo-box { margin-bottom: 25px; }
         .logo { width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 4px solid #f472b6; box-shadow: 0 0 20px rgba(244, 114, 182, 0.4); }
-        .nome-loja { font-family: 'Pacifico', cursive; font-size: 32px; color: #f472b6; text-shadow: 0 4px 10px rgba(0,0,0,0.5); margin-top: 10px; }
+        
+        /* NOVO ESTILO DO NOME DA EMPRESA: FONTE 'PACIFICO', COR PET E SOMBRA */
+        .nome-loja { 
+            font-family: 'Pacifico', cursive; 
+            font-size: 32px; 
+            color: #f472b6; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Sombra para destaque */
+            margin-top: 10px; 
+        }
 
         h1 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-bottom: 20px; }
         h2 { font-size: 22px; margin-bottom: 15px; font-weight: 700; color: #facc15; }
@@ -45,7 +53,6 @@
             border-radius: 20px; transition: 0.3s; border: none; cursor: pointer; text-decoration: none;
         }
 
-        /* ANIMAÇÃO PULSAR E BRILHO GOOGLE */
         .google { 
             background: #facc15; color: #0f172a; 
             box-shadow: 0 10px 25px rgba(250, 204, 21, 0.4);
@@ -92,7 +99,7 @@
 <div class="container">
     <div class="logo-box">
         <img src="amor-por-patinhas.png" class="logo" alt="Amor por Patinhas">
-        <div class="nome-lo_ja">Amor por Patinhas</div>
+        <div class="nome-loja">Amor por Patinhas</div>
     </div>
 
     <h1>Feedback Oficial</h1>
@@ -136,35 +143,4 @@
         const ruim = document.getElementById('feedback-ruim');
         const titulo = document.getElementById('titulo-dinamico');
         const msgEspecial = document.getElementById('msg-especial');
-        const areaTexto = document.getElementById('texto-melhoria');
-
-        stars.forEach((s, i) => {
-            if (i < n) s.classList.add('active');
-            else s.classList.remove('active');
-        });
-
-        if (n >= 4) {
-            titulo.innerText = "Isso é incrível! ✨";
-            msgEspecial.innerText = "Você é um herói dos animais! 🐾";
-            bom.classList.remove('hidden');
-            ruim.classList.add('hidden');
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#f472b6', '#facc15', '#ffffff'] });
-        } else {
-            titulo.innerText = "Sua opinião é vital! 💬";
-            msgEspecial.innerText = "";
-            areaTexto.value = "Nos desculpe, em que podemos melhorar?";
-            ruim.classList.remove('hidden');
-            bom.classList.add('hidden');
-        }
-    }
-
-    function enviarWhatsApp() {
-        const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511973051524"; 
-        const mensagem = encodeURIComponent(`Feedback Amor por Patinhas (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
-    }
-</script>
-
-</body>
-</html>
+        const areaTexto = document.getElementById('texto-melhoria
