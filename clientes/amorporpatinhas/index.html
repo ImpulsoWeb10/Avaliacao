@@ -9,92 +9,123 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg,#0f172a,#1e293b);
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             color: white;
             text-align: center;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .container { max-width: 420px; margin: 0 auto; padding: 30px; }
+        /* EFEITO GLASSMORPHISM (Nível Premium) */
+        .container { 
+            max-width: 400px; 
+            width: 100%;
+            padding: 40px 30px; 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
         
-        .logo-box { margin-bottom: 20px; }
-        .logo { width: 100px; border-radius: 50%; border: 3px solid #f472b6; margin-bottom: 10px; }
+        .logo-box { margin-bottom: 25px; position: relative; }
+        .logo { 
+            width: 110px; 
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%; 
+            border: 4px solid #f472b6; 
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
+            transition: transform 0.5s ease;
+        }
+        .logo:hover { transform: rotate(10deg) scale(1.05); }
         
         .nome-loja { 
             font-family: 'Pacifico', cursive; 
-            font-size: 28px; 
+            font-size: 30px; 
             color: #f472b6; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 5px;
+            text-shadow: 0 4px 10px rgba(244, 114, 182, 0.2);
+            margin-top: 10px;
         }
 
-        h1 { font-size: 18px; color: #94a3b8; font-weight: normal; margin-bottom: 15px; }
-        h2 { font-size: 20px; margin-bottom: 15px; font-weight: bold; color: #facc15; line-height: 1.3; }
-        p { font-size: 15px; margin-bottom: 25px; color: #cbd5e1; line-height: 1.5; }
+        h1 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #64748b; margin-bottom: 20px; }
+        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 700; color: #facc15; }
+        p { font-size: 15px; margin-bottom: 30px; color: #94a3b8; line-height: 1.6; }
 
-        .rating-box { margin-bottom: 25px; }
+        /* ESTRELAS COM ANIMAÇÃO BOUNCE */
+        .rating-box { margin-bottom: 30px; display: flex; justify-content: center; gap: 8px; }
         .star-btn {
-            font-size: 38px;
-            color: #475569;
+            font-size: 42px;
+            color: #334155;
             cursor: pointer;
-            transition: 0.2s;
-            margin: 0 5px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .star-btn.active { color: #facc15; text-shadow: 0 0 15px rgba(250, 204, 21, 0.6); }
-
-        #feedback-ruim textarea {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px;
-            color: white;
-            padding: 12px;
-            margin-bottom: 15px;
-            resize: none;
-            outline: none;
+        .star-btn.active { 
+            color: #facc15; 
+            transform: scale(1.2);
+            text-shadow: 0 0 20px rgba(250, 204, 21, 0.4); 
         }
 
         .botao {
-            position: relative;
-            display: block;
-            width: 90%;
-            margin: 0 auto 18px auto;
-            padding: 16px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 30px;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 20px;
             transition: 0.3s;
-            font-size: 15px;
             border: none;
             cursor: pointer;
+            text-decoration: none;
         }
 
-        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; box-shadow: 0 0 15px rgba(250,204,21,0.4); }
-        .whatsapp { background: #22c55e; color: white; animation: pulsar 2.2s infinite; }
+        .google { 
+            background: #facc15; 
+            color: #0f172a; 
+            box-shadow: 0 10px 20px -5px rgba(250, 204, 21, 0.3);
+        }
+        .google:active { transform: scale(0.98); }
 
-        .botao::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
-            animation: brilhoPassando 3s infinite;
+        .whatsapp { 
+            background: #22c55e; 
+            color: white; 
+            box-shadow: 0 10px 20px -5px rgba(34, 197, 94, 0.3);
         }
 
-        @keyframes brilhoPassando { 0% {left:-100%;} 100% {left:200%;} }
-        @keyframes pulsar { 0% {transform:scale(1);} 50% {transform:scale(1.03);} 100% {transform:scale(1);} }
+        textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            resize: none;
+        }
 
         .hidden { display: none; }
 
-        .footer { margin-top: 30px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .footer a { color: #facc15; text-decoration: none; font-weight: bold; }
+        .footer { 
+            margin-top: 40px; 
+            font-size: 12px; 
+            color: #475569; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            padding-top: 25px; 
+        }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .footer a:hover { color: #f472b6; }
     </style>
 </head>
 
@@ -102,91 +133,77 @@
 
 <div class="container">
     <div class="logo-box">
-        <img src="amor-por-patinhas.png" class="logo" alt="Logo Amor por Patinhas">
+        <img src="amor-por-patinhas.png" class="logo" alt="Amor por Patinhas">
         <div class="nome-loja">Amor por Patinhas</div>
     </div>
 
-    <h1>Gratidão por sua preferência:</h1>
-    <h2>Sua avaliação ajuda a espalhar mais amor pelos pets! 🐾</h2>
-    <p id="instrucao">Toque nas estrelas para nos contar como foi sua experiência:</p>
+    <h1>Seu Feedback Vale Muito</h1>
+    <h2 id="titulo-dinamico">Como foi sua experiência? 🐾</h2>
+    <p id="instrucao">Toque nas estrelas para avaliar nosso cuidado com seu melhor amigo.</p>
 
     <div class="rating-box">
-        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
+        <i class="fas fa-star star-btn" data-value="1" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" data-value="2" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" data-value="3" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" data-value="4" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" data-value="5" onclick="avaliar(5)"></i>
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <p>Uhul! Ficamos felizes com sua avaliação! 🎉 Que tal nos dar 5 estrelas no Google agora?</p>
         <a href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
-            ⭐ AVALIAR NO GOOGLE
+            <i class="fab fa-google"></i> POSTAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p>Poxa, queremos corrigir isso. 😔 O que aconteceu?</p>
-        <textarea id="texto-melhoria" placeholder="Fale direto com o nosso suporte..." rows="3"></textarea>
+        <textarea id="texto-melhoria" placeholder="Conte-nos o que houve para podermos melhorar..." rows="3"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> FALAR COM A LOJA AGORA
+            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <div>🔒 Conexão Segura SSL | © 2026</div>
-        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
+        <div>🔒 Ambiente Seguro & Criptografado</div>
+        <div>Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
 
-    function dispararConfetes() {
-        const duracao = 3 * 1000;
-        const fim = Date.now() + duracao;
-
-        (function frame() {
-            confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#f472b6', '#facc15', '#ffffff']
-            });
-            confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#f472b6', '#facc15', '#ffffff']
-            });
-
-            if (Date.now() < fim) {
-                requestAnimationFrame(frame);
-            }
-        }());
-    }
-
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
         const bom = document.getElementById('feedback-bom');
         const ruim = document.getElementById('feedback-ruim');
+        const titulo = document.getElementById('titulo-dinamico');
         const instrucao = document.getElementById('instrucao');
 
+        // Animação das estrelas
         stars.forEach((s, i) => {
-            if (i < n) s.classList.add('active');
-            else s.classList.remove('active');
+            if (i < n) {
+                setTimeout(() => s.classList.add('active'), i * 50);
+            } else {
+                s.classList.remove('active');
+            }
         });
 
-        instrucao.classList.add('hidden');
+        instrucao.style.display = 'none';
 
         if (n >= 4) {
+            titulo.innerText = "Isso é incrível! ✨";
             bom.classList.remove('hidden');
             ruim.classList.add('hidden');
-            dispararConfetes(); // Ativa a purpurina/confetes
+            
+            // Confetes Premium
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#f472b6', '#facc15', '#ffffff']
+            });
         } else {
+            titulo.innerText = "Queremos te ouvir! 💬";
             ruim.classList.remove('hidden');
             bom.classList.add('hidden');
         }
@@ -195,9 +212,8 @@
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
         const telefone = "5511973051524"; 
-        if (!texto) { alert("Por favor, conte-nos o que houve."); return; }
-        
-        const mensagem = encodeURIComponent(`FEEDBACK NEGATIVO - Nota: ${notaSelecionada} estrelas.\nSugestão: ${texto}`);
+        if (!texto) { alert("Por favor, descreva como podemos melhorar."); return; }
+        const mensagem = encodeURIComponent(`Feedback Amor por Patinhas (${notaSelecionada} estrelas): ${texto}`);
         window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
