@@ -1,0 +1,10 @@
+# ImpulsoWeb10 - Configuração de Indexação 2026
+User-agent: *
+Allow: /
+
+# Indica ao Google e outros buscadores onde está o seu mapa atualizado
+Sitemap: https://impulsoweb10.github.io/Avaliacao/sitemap.xml
+
+# Bloqueia pastas que não precisam aparecer no Google (opcional)
+Disallow: /temp/
+Disallow: /testes/
