@@ -1,86 +1,182 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ImpulsoWeb10 - Impulsione seu negócio</title>
+<title>ImpulsoWeb10 | Seu site aparecendo no Google</title>
+
+<meta name="description" content="Seu site existe mas ninguém encontra? A ImpulsoWeb10 configura SEO, indexação no Google e estrutura correta para seu negócio aparecer e gerar clientes.">
+
+<meta name="keywords" content="seo itaquaquecetuba, aparecer no google, indexar site google, criar site profissional, seo local">
+
+<meta name="robots" content="index, follow">
 
 <style>
 
 body{
-    margin:0;
-    padding:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#0a2c4a,#0f5b8f);
-    color:white;
-    text-align:center;
-}
-
-.container{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    padding:20px;
+margin:0;
+font-family:Arial;
+background:#0c2740;
+color:white;
+text-align:center;
+padding:20px;
 }
 
 .logo{
-    width:90%;
-    max-width:320px;
-    margin-bottom:30px;
+width:260px;
+margin-top:40px;
 }
 
-.frase{
-    font-size:24px;
-    font-weight:bold;
-    line-height:1.4;
+h1{
+font-size:26px;
+margin-top:20px;
 }
 
-.sub{
-    margin-top:15px;
-    font-size:16px;
-    opacity:0.9;
+p{
+font-size:17px;
+line-height:1.6;
+opacity:0.95;
 }
 
-.botao{
-    margin-top:35px;
-    padding:15px 30px;
-    font-size:18px;
-    border:none;
-    border-radius:40px;
-    background:linear-gradient(45deg,#ff7a00,#ffb000);
-    color:white;
-    font-weight:bold;
+.solucao{
+margin-top:20px;
+font-size:18px;
+color:#ffb000;
+font-weight:bold;
 }
 
-.botao:hover{
-    transform:scale(1.05);
+.whatsapp-btn{
+
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+background:#25d366;
+color:white;
+font-size:18px;
+padding:16px 35px;
+border-radius:40px;
+text-decoration:none;
+font-weight:bold;
+overflow:hidden;
+
+}
+
+.whatsapp-btn::before{
+
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
+animation:brilho 2.5s infinite;
+
+}
+
+@keyframes brilho{
+
+0%{left:-100%}
+100%{left:100%}
+
+}
+
+.modal{
+
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+
+}
+
+.modal-content{
+
+background:white;
+color:black;
+padding:30px;
+border-radius:10px;
+max-width:320px;
+margin:150px auto;
+text-align:center;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
-
 <img src="impulsoweb10.png" class="logo">
 
-<div class="frase">
-Impulsione sua presença digital 🚀
+<h1>Seu site existe… mas o Google sabe disso?</h1>
+
+<p>
+Muitos sites são criados e simplesmente jogados na internet.
+Sem configuração de SEO, sem indexação e sem estrutura correta,
+o Google não entende seu site.
+</p>
+
+<p>
+Resultado?
+<br><br>
+Uma página parada, perdida na internet,
+sem visitantes e sem clientes.
+</p>
+
+<div class="solucao">
+A ImpulsoWeb10 configura seu site corretamente para o Google encontrar, entender e mostrar seu negócio nas buscas.
 </div>
 
-<div class="sub">
-Com a <b>ImpulsoWeb10</b>, seu negócio ganha mais visibilidade, mais clientes e muito mais resultados na internet.
-</div>
+<br><br>
 
-<button class="botao">
-QUERO CRESCER NA INTERNET
+<a href="#" class="whatsapp-btn" onclick="abrirModal()">
+Falar com especialista
+</a>
+
+
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<h3>Vamos fazer seu site aparecer</h3>
+
+<p>
+Clique abaixo e fale direto no WhatsApp com a ImpulsoWeb10.
+</p>
+
+<a href="https://wa.me/5511954950044" target="_blank">
+Ir para WhatsApp
+</a>
+
+<br><br>
+
+<button onclick="fecharModal()">
+Fechar
 </button>
 
 </div>
+
+</div>
+
+<script>
+
+function abrirModal(){
+document.getElementById("modal").style.display="block";
+}
+
+function fecharModal(){
+document.getElementById("modal").style.display="none";
+}
+
+</script>
 
 </body>
 </html>
