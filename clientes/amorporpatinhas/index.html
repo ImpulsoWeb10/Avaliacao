@@ -40,16 +40,28 @@
             box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
         }
         
-        .logo-box { margin-bottom: 25px; }
-        .logo { 
-    width: 160px;      /* Aumentei de 115px para 160px */
-    height: 160px;     /* Aumentei de 115px para 160px */
-    object-fit: contain; /* Garante que a imagem apareça inteira sem cortes */
+       .logo { 
+    /* 1. Defina o tamanho final que você quer para o CÍRCULO ROSA */
+    width: 160px;  
+    height: 160px; 
+    
+    /* 2. MUITO IMPORTANTE: Faz o padding ser ADICIONADO ao tamanho, 
+       criando espaço extra para a borda */
+    box-sizing: content-box; 
+    
+    /* 3. O 'contain' impede o corte, e o padding gera o respiro */
+    object-fit: contain; 
+    padding: 15px; /* Aumentei o respiro interno. Se ainda cortar, aumente aqui. */
+    
+    /* 4. Aparência do círculo */
     border-radius: 50%; 
     border: 4px solid #ff69b4; 
+    background: white; /* Fundo branco para o logo não vazar */
+    
+    /* Sombra e alinhamento */
     box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); 
-    background: white;
-    padding: 10px;     /* Cria um respiro para as letras não encostarem na borda rosa */
+    display: block; /* Garante bom comportamento */
+    margin: 0 auto; /* Centraliza */
 }
         
         .nome-loja { 
