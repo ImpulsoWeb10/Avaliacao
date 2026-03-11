@@ -41,22 +41,26 @@
         }
         
        .logo { 
-    /* Tamanho do círculo interno */
-    width: 140px;  
-    height: 140px; 
+    /* 1. Defina o tamanho TOTAL desejado para o CÍRCULO ROSA */
+    /* Se quiser o círculo maior, aumente aqui (ex: 180px) */
+    width: 160px;  
+    height: 160px; 
     
-    /* Mantém o círculo perfeito e evita cortes */
-    box-sizing: content-box; 
+    /* 2. Volta ao padrão para controlar o tamanho interno com precisão */
+    box-sizing: border-box; 
+    
+    /* 3. O 'contain' impede o corte. */
     object-fit: contain; 
     
-    /* CONTROLE DA BORDA BRANCA: */
-    /* Diminua para 5px se quiser ainda mais colado, ou aumente para 12px se quiser mais longe */
-    padding: 2px; 
+    /* 4. AUMENTAMOS O PADDING: Isso empurra o logo para dentro, */
+    /* fazendo ele ficar menor dentro do círculo rosa. */
+    /* Tente 20px. Se ainda cortar, aumente para 25px. */
+    padding: 20px; 
     
-    /* Aparência Visual */
+    /* 5. Aparência do círculo */
     border-radius: 50%; 
-    border: 4px solid #ff69b4; 
-    background: #ffffff; 
+    border: 4px solid #ff69b4; /* Linha rosa */
+    background: #ffffff;      /* Fundo branco */
     
     /* Sombra e Centralização */
     box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); 
