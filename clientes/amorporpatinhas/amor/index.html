@@ -1,179 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avalie a Amor por Patinhas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            color: white;
-            text-align: center;
-            min-height: 100vh;
-            display: flex; align-items: center; justify-content: center; padding: 20px;
-        }
+<title>ImpulsoWeb10 - Impulsione seu negócio</title>
 
-        .container { 
-            max-width: 400px; width: 100%; padding: 40px 30px; 
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-        }
-        
-        .logo-box { margin-bottom: 25px; }
-        .logo { width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 4px solid #f472b6; box-shadow: 0 0 20px rgba(244, 114, 182, 0.4); }
-        
-        /* NOME DA EMPRESA: ROSA, GRANDE E COM SOMBRA */
-        .nome-loja { 
-            font-family: 'Pacifico', cursive; 
-            font-size: 42px; /* Aumentado para destaque total */
-            color: #ff69b4; /* Rosa bem vivo */
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8); /* Sombra mais nítida */
-            margin-top: 15px;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
+<style>
 
-        h1 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-bottom: 20px; }
-        h2 { font-size: 22px; margin-bottom: 15px; font-weight: 700; color: #facc15; }
+body{
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#0a2c4a,#0f5b8f);
+    color:white;
+    text-align:center;
+}
 
-        .rating-box { margin-bottom: 30px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 42px; color: #334155; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .star-btn.active { color: #facc15; transform: scale(1.2); }
+.container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    padding:20px;
+}
 
-        .botao {
-            position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 18px; font-size: 16px; font-weight: 800;
-            border-radius: 20px; transition: 0.3s; border: none; cursor: pointer; text-decoration: none;
-        }
+.logo{
+    width:90%;
+    max-width:320px;
+    margin-bottom:30px;
+}
 
-        .google { 
-            background: #facc15; color: #0f172a; 
-            box-shadow: 0 10px 25px rgba(250, 204, 21, 0.4);
-            animation: pulsar 1.8s infinite ease-in-out;
-        }
+.frase{
+    font-size:24px;
+    font-weight:bold;
+    line-height:1.4;
+}
 
-        .google::after {
-            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            transform: skewX(-20deg);
-            animation: brilhoPassando 2.5s infinite;
-        }
+.sub{
+    margin-top:15px;
+    font-size:16px;
+    opacity:0.9;
+}
 
-        @keyframes pulsar {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+.botao{
+    margin-top:35px;
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(45deg,#ff7a00,#ffb000);
+    color:white;
+    font-weight:bold;
+}
 
-        @keyframes brilhoPassando {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
+.botao:hover{
+    transform:scale(1.05);
+}
 
-        .whatsapp { background: #22c55e; color: white; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
-
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px; color: white; padding: 15px; margin-bottom: 20px; font-family: inherit; resize: none; outline: none;
-        }
-
-        .hidden { display: none; }
-
-        .footer { margin-top: 40px; font-size: 13px; color: #e2e8f0; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; }
-        .ssl-msg { font-weight: bold; color: #4ade80; margin-bottom: 8px; display: block; }
-        .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; text-shadow: 1px 1px 2px black; }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 800; }
-    </style>
+</style>
 </head>
 
 <body>
 
 <div class="container">
-    <div class="logo-box">
-        <img src="amor-por-patinhas.png" class="logo" alt="Amor por Patinhas">
-        <div class="nome-loja">Amor por Patinhas</div>
-    </div>
 
-    <h1>Feedback Oficial</h1>
-    <h2 id="titulo-dinamico">Como foi sua experiência? 🐾</h2>
+<img src="impulsoweb10.png" class="logo">
 
-    <div class="rating-box">
-        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
-    </div>
-
-    <div id="feedback-bom" class="hidden">
-        <a href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
-            <i class="fab fa-google"></i> AVALIAR NO GOOGLE
-        </a>
-    </div>
-
-    <div id="feedback-ruim" class="hidden">
-        <textarea id="texto-melhoria" rows="3"></textarea>
-        <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
-        </button>
-    </div>
-
-    <div class="footer">
-        <div id="msg-especial" class="hero-msg"></div>
-        <span class="ssl-msg"><i class="fas fa-shield-alt"></i> SITE SEGURO - CERTIFICADO SSL</span>
-        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
-    </div>
+<div class="frase">
+Impulsione sua presença digital 🚀
 </div>
 
-<script>
-    let notaSelecionada = 0;
+<div class="sub">
+Com a <b>ImpulsoWeb10</b>, seu negócio ganha mais visibilidade, mais clientes e muito mais resultados na internet.
+</div>
 
-    function avaliar(n) {
-        notaSelecionada = n;
-        const stars = document.querySelectorAll('.star-btn');
-        const bom = document.getElementById('feedback-bom');
-        const ruim = document.getElementById('feedback-ruim');
-        const titulo = document.getElementById('titulo-dinamico');
-        const msgEspecial = document.getElementById('msg-especial');
-        const areaTexto = document.getElementById('texto-melhoria');
+<button class="botao">
+QUERO CRESCER NA INTERNET
+</button>
 
-        stars.forEach((s, i) => {
-            if (i < n) s.classList.add('active');
-            else s.classList.remove('active');
-        });
-
-        if (n >= 4) {
-            titulo.innerText = "Isso é incrível! ✨";
-            msgEspecial.innerText = "Você é um herói dos animais! 🐾";
-            bom.classList.remove('hidden');
-            ruim.classList.add('hidden');
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff69b4', '#facc15', '#ffffff'] });
-        } else {
-            titulo.innerText = "Sua opinião é vital! 💬";
-            msgEspecial.innerText = "";
-            areaTexto.value = "Nos desculpe, em que podemos melhorar?";
-            ruim.classList.remove('hidden');
-            bom.classList.add('hidden');
-        }
-    }
-
-    function enviarWhatsApp() {
-        const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511973051524"; 
-        const mensagem = encodeURIComponent(`Feedback Amor por Patinhas (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
-    }
-</script>
+</div>
 
 </body>
 </html>
