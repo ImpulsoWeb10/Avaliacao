@@ -22,7 +22,7 @@
 
         header {
             width: 100%;
-            padding: 40px 20px;
+            padding: 30px 20px;
             background: #fff;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -31,19 +31,19 @@
 
         .container-clientes {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Cards levemente menores */
+            gap: 20px;
             width: 90%;
-            max-width: 1200px;
+            max-width: 1100px;
             padding-bottom: 50px;
         }
 
         .cliente-card {
             background: #ffffff;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
             transition: transform 0.3s ease;
             border: 1px solid #eee;
             display: flex;
@@ -52,42 +52,52 @@
         }
 
         .cliente-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
 
-        /* CONTAINER DO LOGO - Aumentado para dar mais destaque */
+        /* CONTAINER DO LOGO - Reduzido em ~40% para um visual mais discreto */
         .logo-container {
-            height: 140px; /* Aumentei a altura do espaço do logo */
+            height: 85px; /* Antes era 140px */
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            overflow: hidden;
+            margin-bottom: 15px;
         }
 
-        /* LOGOS GERAIS - Agora ficam maiores */
+        /* LOGOS GERAIS - Reduzidos proporcionalmente */
         .logo-container img {
-            max-width: 95%; /* Quase largura total */
-            max-height: 120px; /* Altura máxima aumentada */
+            max-width: 60%; /* Antes era 95% */
+            max-height: 70px; /* Antes era 120px */
             object-fit: contain;
+            filter: grayscale(10%); /* Toque opcional para elegância */
+            transition: filter 0.3s;
+        }
+        
+        .cliente-card:hover img {
+            filter: grayscale(0%);
         }
 
-        /* AJUSTE ESPECÍFICO PARA ESQUADRI-E-BOX - Fica um pouco menor que os outros */
-        .logo-esquadria {
-            max-width: 75% !important;
-            max-height: 90px !important;
+        .cliente-card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: var(--text-dark);
         }
 
         .btn-avaliar {
             display: block;
             background-color: var(--primary-color);
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.9rem;
-            margin-top: 15px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-avaliar:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -126,7 +136,7 @@
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/esquadriebox/esquadri-e-box.png" class="logo-esquadria" alt="Esquadriebox">
+                <img src="clientes/esquadriebox/esquadri-e-box.png" alt="Esquadriebox">
             </div>
             <h3>Esquadriebox</h3>
             <a href="clientes/esquadriebox/" class="btn-avaliar">Avaliar Agora</a>
