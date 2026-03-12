@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Óptica Lionda | Avalie sua Visão e nosso Atendimento</title>
+    <title>Óptica Lionda | Avalie nossa Qualidade</title>
 
     <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista. Sua saúde visual é nossa prioridade na Óptica Lionda.">
     <meta name="keywords" content="Óptica Lionda, ótica em São Paulo, óculos de grau, lentes de contato, avaliação ótica, exame de vista">
@@ -17,7 +17,7 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a, #2d3436);
+            background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
             display: flex;
             align-items: center;
@@ -39,8 +39,8 @@
         }
 
         .logo { 
-            width: 140px; 
-            height: 140px; 
+            width: 130px; 
+            height: 130px; 
             object-fit: contain; 
             padding: 10px;
             border-radius: 22px;
@@ -68,7 +68,6 @@
             color: white; padding: 15px; margin-bottom: 15px;
             resize: none; outline: none; font-family: inherit; font-size: 15px;
         }
-        textarea::placeholder { color: rgba(255,255,255,0.5); }
 
         .botao {
             position: relative; overflow: hidden;
@@ -81,16 +80,21 @@
         .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
         .whatsapp { background: #22c55e; color: white; animation: pulsar 2s infinite; }
 
-        .botao::after {
-            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
-        }
-
-        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
         @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .hidden { display: none; }
+
+        /* ESTILO DA IMAGEM DO CASAL */
+        .img-comemorativa {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 2px solid rgba(250, 204, 21, 0.5);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .footer { 
             margin-top: 35px; 
@@ -100,18 +104,17 @@
             padding-top: 25px;
             line-height: 1.8;
         }
-        .footer a { color: #22c55e; text-decoration: none; font-weight: 800; border-bottom: 1px solid #22c55e; }
         .footer b { color: #facc15; }
-        .frase-top { font-style: italic; margin-bottom: 10px; display: block; }
+        .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="optica-lionda.png" class="logo" alt="Óptica Lionda">
+    <img src="logo-optica-lionda.png" class="logo" alt="Óptica Lionda">
 
     <h1>Óptica Lionda</h1>
-    <h2>Qualidade em cada Detalhe</h2>
+    <h2>Excelência em Saúde Visual</h2>
     
     <p id="instrucao">Toque nas estrelas para avaliar nosso serviço:</p>
 
@@ -124,32 +127,28 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
-        <p>Sua visão merece o melhor. Ajude-nos a crescer avaliando no Google:</p>
-        <a href="https://g.page/r/SEU_LINK_GOOGLE_AQUI/review" target="_blank" class="botao google">
+        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Felizes">
+        <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
+        <p style="margin-bottom: 15px;">Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
+        <a href="https://g.page/r/SEU_LINK_AQUI/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Puxa, sentimos muito... 😔</p>
-        <p>Queremos melhorar sua experiência. Como podemos ajudar agora?</p>
-        <textarea id="texto-melhoria" placeholder="Diga-nos o que aconteceu..."></textarea>
+        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
+        <p>Em que podemos melhorar para te atender melhor?</p>
+        <textarea id="texto-melhoria" placeholder="Sua opinião é fundamental..."></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> FALAR COM SUPORTE
+            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
         </button>
     </div>
 
     <div class="footer">
         <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo para grandes conquistas."</span>
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div>
-            Desenvolvido por 
-            <a href="https://wa.me/5511972319233?text=Quero%20saber%20sobre%20link%20de%20avaliacoes" target="_blank">
-                ImpulsoWeb10
-            </a>
-        </div>
-        <div style="margin-top: 5px;">Suporte Direto <b>Óptica Lionda</b>: (11) 97231-9233</div>
+        <div style="margin-top: 5px;">Suporte Especializado <b>Óptica Lionda</b></div>
+        <div>Contato: <b>(11) 97231-9233</b></div>
     </div>
 </div>
 
@@ -177,7 +176,7 @@
                 particleCount: 150,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#facc15', '#22c55e', '#ffffff']
+                colors: ['#facc15', '#ffffff', '#2ecc71']
             });
         } else {
             ruim.classList.remove('hidden');
@@ -187,15 +186,15 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefoneOptica = "5511972319233"; 
+        const telefone = "5511972319233"; 
         
         if (!texto) { 
-            alert("Por favor, conte-nos como podemos melhorar."); 
+            alert("Por favor, digite sua sugestão."); 
             return; 
         }
 
         const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefoneOptica}?text=${mensagem}`, '_blank');
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
 
