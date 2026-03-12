@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esquadri&Box | Avalie nossa Qualidade</title>
+    <title>Óptica Lionda | Avalie sua Visão e nosso Atendimento</title>
 
-    <meta name="description" content="Especialistas em Esquadrias de Alumínio, Box para Banheiro e Vidros Temperados.">
+    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista. Sua saúde visual é nossa prioridade na Óptica Lionda.">
+    <meta name="keywords" content="Óptica Lionda, ótica em São Paulo, óculos de grau, lentes de contato, avaliação ótica, exame de vista">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: linear-gradient(135deg, #1a1a1a, #2d3436);
             color: white;
             display: flex;
             align-items: center;
@@ -38,13 +38,12 @@
             text-align: center;
         }
 
-        /* LOGO QUADRADO COM PONTAS QUEBRADAS */
         .logo { 
-            width: 150px; 
-            height: 150px; 
+            width: 140px; 
+            height: 140px; 
             object-fit: contain; 
             padding: 10px;
-            border-radius: 22px; /* Pontas quebradas/arredondadas */
+            border-radius: 22px;
             border: 3px solid #facc15; 
             background: white; 
             margin: 0 auto 20px;
@@ -93,26 +92,26 @@
 
         .hidden { display: none; }
 
-        /* RODAPÉ MAIS VISÍVEL */
         .footer { 
             margin-top: 35px; 
             font-size: 13px; 
-            color: #ffffff; /* Cor branca para não ficar apagado */
+            color: #ffffff; 
             border-top: 1px solid rgba(255,255,255,0.2); 
             padding-top: 25px;
             line-height: 1.8;
         }
         .footer a { color: #22c55e; text-decoration: none; font-weight: 800; border-bottom: 1px solid #22c55e; }
         .footer b { color: #facc15; }
+        .frase-top { font-style: italic; margin-bottom: 10px; display: block; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="esquadri-e-box.png" class="logo" alt="Esquadri&Box">
+    <img src="optica-lionda.png" class="logo" alt="Óptica Lionda">
 
-    <h1>Esquadri&Box</h1>
-    <h2>Excelência em Alumínio e Vidros</h2>
+    <h1>Óptica Lionda</h1>
+    <h2>Qualidade em cada Detalhe</h2>
     
     <p id="instrucao">Toque nas estrelas para avaliar nosso serviço:</p>
 
@@ -125,32 +124,34 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
-        <p>Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
-        <a href="https://g.page/r/CZ0VbTVJUwwmEAE/review" target="_blank" class="botao google">
+        <p style="font-size: 18px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
+        <p>Sua visão merece o melhor. Ajude-nos a crescer avaliando no Google:</p>
+        <a href="https://g.page/r/SEU_LINK_GOOGLE_AQUI/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
-        <p>Nosso objetivo é a perfeição. Em que podemos melhorar para te atender melhor?</p>
-        <textarea id="texto-melhoria" placeholder="Sua opinião é fundamental para nós..."></textarea>
+        <p style="font-size: 18px; margin-bottom: 15px;">Puxa, sentimos muito... 😔</p>
+        <p>Queremos melhorar sua experiência. Como podemos ajudar agora?</p>
+        <textarea id="texto-melhoria" placeholder="Diga-nos o que aconteceu..."></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
+            <i class="fab fa-whatsapp"></i> FALAR COM SUPORTE
         </button>
     </div>
 
     <div class="footer">
+        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo para grandes conquistas."</span>
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
         <div>
             Desenvolvido por 
-            <a href="https://wa.me/5511954950044?text=Quero%20saber%20sobre%20link%20de%20avaliacoes%20do%20Google" target="_blank">
+            <a href="https://wa.me/5511972319233?text=Quero%20saber%20sobre%20link%20de%20avaliacoes" target="_blank">
                 ImpulsoWeb10
             </a>
         </div>
-        <div style="margin-top: 5px;">Suporte Especializado <b>Esquadri&Box</b></div>
+        <div style="margin-top: 5px;">Suporte Direto <b>Óptica Lionda</b>: (11) 97231-9233</div>
     </div>
+</div>
 
 <script>
     let notaSelecionada = 0;
@@ -172,7 +173,6 @@
         if (n >= 4) {
             bom.classList.remove('hidden');
             ruim.classList.add('hidden');
-            // Efeito de Festa / Confetes
             confetti({
                 particleCount: 150,
                 spread: 70,
@@ -187,15 +187,15 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefoneEsquadria = "5511945656193"; // WhatsApp do cliente Esquadria
+        const telefoneOptica = "5511972319233"; 
         
         if (!texto) { 
-            alert("Por favor, digite uma breve sugestão para podermos te ajudar."); 
+            alert("Por favor, conte-nos como podemos melhorar."); 
             return; 
         }
 
-        const mensagem = encodeURIComponent(`Feedback Esquadri&Box (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefoneEsquadria}?text=${mensagem}`, '_blank');
+        const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
+        window.open(`https://wa.me/${telefoneOptica}?text=${mensagem}`, '_blank');
     }
 </script>
 
