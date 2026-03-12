@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Avaliação Itapuã Center | Materiais de Construção</title>
-    <meta name="description" content="Avalie o atendimento e os produtos da Itapuã Center Materiais de Construção.">
+    <title>Avaliação Itapuã Center</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -22,117 +20,94 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 10px; /* Reduzido para ganhar espaço */
+            padding: 10px;
         }
 
         .container {
-            max-width: 380px; /* Ligeiramente menor para aparelhos estreitos */
+            max-width: 380px;
             width: 100%;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px);
-            padding: 20px; /* Reduzi de 40px para 20px */
+            padding: 20px;
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
 
         .logo { 
-            width: 100px; height: 100px; object-fit: contain; padding: 8px; /* Reduzi de 150px */
-            border-radius: 18px; border: 2px solid #facc15; 
+            width: 90px; height: 90px; object-fit: contain; padding: 5px;
+            border-radius: 15px; border: 2px solid #facc15; 
             background: white; margin: 0 auto 10px;
         }
 
-        h1 { font-size: 20px; margin-bottom: 2px; color: #fff; }
+        h1 { font-size: 20px; margin-bottom: 2px; }
         h2 { font-size: 14px; color: #facc15; margin-bottom: 15px; font-weight: normal; }
         
-        .rating-box { margin-bottom: 15px; display: flex; justify-content: center; gap: 6px; }
-        .star-btn { font-size: 35px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.1); text-shadow: 0 0 15px rgba(250, 204, 21, 0.6); }
+        /* ESTRELAS MENORES */
+        .rating-box { margin-bottom: 15px; display: flex; justify-content: center; gap: 5px; }
+        .star-btn { font-size: 32px; color: #475569; cursor: pointer; transition: 0.3s; }
+        .star-btn.active { color: #facc15; transform: scale(1.1); }
 
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
-            color: white; padding: 12px; margin-bottom: 10px; outline: none;
-            resize: none; font-family: inherit; font-size: 14px;
+        /* IMAGEM RETANGULAR FIXA */
+        .img-familia {
+            width: 100%;
+            height: 130px; /* Altura pequena para caber tudo */
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: block;
         }
 
         .botao {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            width: 100%; padding: 14px; border-radius: 50px; /* Reduzi o padding de 18px para 14px */
-            font-weight: 800; font-size: 14px; text-decoration: none;
-            transition: 0.3s; border: none; cursor: pointer;
-            position: relative; overflow: hidden;
-            margin-bottom: 8px;
+            width: 100%; padding: 12px; border-radius: 50px;
+            font-weight: 800; font-size: 13px; text-decoration: none;
+            margin-bottom: 8px; position: relative; overflow: hidden;
         }
         
         .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
         .instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
         .whatsapp { background: #22c55e; color: white; }
 
-        .google::after, .instagram::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            animation: shine 3s infinite;
-        }
-
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.5); }
+            0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(250, 204, 21, 0); }
             100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); }
-        }
-        @keyframes shine { to { left: 100%; } }
-
-        /* IMAGEM COMPACTA E RETANGULAR */
-        .img-resultado {
-            width: 100%;
-            max-height: 140px; /* Limite rigoroso para caber na tela */
-            object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .hidden { display: none; }
 
         .footer { 
-            margin-top: 20px; padding-top: 15px;
-            font-size: 11px; color: #ffffff; 
-            border-top: 1px solid rgba(255,255,255,0.2); 
-            line-height: 1.5;
+            margin-top: 15px; padding-top: 10px;
+            font-size: 11px; border-top: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .footer .slogan-final { 
-            font-style: italic; color: #facc15; margin-bottom: 10px; 
-            font-size: 15px; font-weight: 700; display: block;
-        }
-
-        .footer a { color: #22c55e; text-decoration: none; font-weight: 800; }
+        .footer a { color: #22c55e; text-decoration: none; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Itapuã Center Logo">
+    <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Logo">
 
     <h1>Itapuã Center</h1>
     <h2>Materiais de Construção</h2>
     
-    <p id="instrucao" style="margin-bottom: 15px; font-size: 14px;">Toque nas estrelas para avaliar:</p>
-
-    <div class="rating-box">
-        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
+    <div id="instrucao">
+        <p style="margin-bottom: 10px; font-size: 14px;">Avalie nosso atendimento:</p>
+        <div class="rating-box">
+            <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
+            <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
+            <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
+            <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
+            <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
+        </div>
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="itapua-center.jpg" class="img-resultado" alt="Itapuã Center">
+        <img src="itapua-center.jpg" class="img-familia" alt="Família Itapuã">
         
-        <p style="font-size: 15px; margin-bottom: 5px;">Ficamos felizes! 🎉</p>
-        <p style="font-size: 13px; margin-bottom: 12px; opacity: 0.9;">Sua avaliação ajuda nossa loja.</p>
+        <p style="font-size: 14px; margin-bottom: 10px;">Ficamos muito felizes! 🎉</p>
         
         <a href="https://g.page/r/CWSPsbcmiCwZEBM/review/" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
@@ -144,43 +119,37 @@
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 16px; margin-bottom: 10px;">Como podemos melhorar? 😔</p>
-        <textarea id="texto-melhoria" rows="3" placeholder="Sua opinião..."></textarea>
+        <textarea id="texto-melhoria" rows="3" placeholder="Como podemos melhorar?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
             <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <span class="slogan-final">"Alicerce forte se constrói com confiança."</span>
-        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
+        <p style="color: #facc15; font-weight: bold; margin-bottom: 5px;">"Alicerce forte se constrói com confiança."</p>
         <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
     </div>
 </div>
 
 <script>
-    let notaSelecionada = 0;
     function avaliar(n) {
-        notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
-        document.getElementById('instrucao').classList.add('hidden');
+        
         if (n >= 4) {
+            document.getElementById('instrucao').classList.add('hidden');
             document.getElementById('feedback-bom').classList.remove('hidden');
-            document.getElementById('feedback-ruim').classList.add('hidden');
-            confetti({ particleCount: 100, spread: 60, origin: { y: 0.7 } });
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
         } else {
+            document.getElementById('instrucao').classList.add('hidden');
             document.getElementById('feedback-ruim').classList.remove('hidden');
-            document.getElementById('feedback-bom').classList.add('hidden');
         }
     }
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511945320614"; 
-        if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
-        const msg = encodeURIComponent(`Feedback Itapuã Center (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${msg}`, '_blank');
+        if (!texto) { alert("Por favor, digite sua mensagem."); return; }
+        window.open(`https://wa.me/5511945320614?text=Feedback: ${encodeURIComponent(texto)}`, '_blank');
     }
 </script>
 
