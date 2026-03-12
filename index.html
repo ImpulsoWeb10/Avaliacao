@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossos Clientes | Avaliações - ImpulsoWeb10</title>
+    <title>Avaliações | ImpulsoWeb10</title>
     <style>
         :root {
-            --primary-color: #d32f2f; /* Vermelho inspirado na Itapuã */
+            --primary-color: #d32f2f;
             --bg-color: #f4f7f6;
             --text-dark: #333;
             --text-light: #666;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--bg-color);
             margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -29,17 +28,6 @@
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-        }
-
-        header h1 {
-            margin: 0;
-            color: var(--text-dark);
-            font-size: 2rem;
-        }
-
-        header p {
-            color: var(--text-light);
-            margin-top: 10px;
         }
 
         .container-clientes {
@@ -57,7 +45,7 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
             border: 1px solid #eee;
             display: flex;
             flex-direction: column;
@@ -66,7 +54,6 @@
 
         .cliente-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .logo-container {
@@ -83,19 +70,6 @@
             object-fit: contain;
         }
 
-        .cliente-card h3 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            margin: 10px 0;
-        }
-
-        .cliente-card p {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-bottom: 25px;
-            height: 40px;
-        }
-
         .btn-avaliar {
             display: block;
             background-color: var(--primary-color);
@@ -105,18 +79,6 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-
-        .btn-avaliar:hover {
-            background-color: #b71c1c;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 30px;
-            color: #999;
-            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -124,7 +86,7 @@
 
     <header>
         <h1>Central de Avaliações</h1>
-        <p>Selecione a empresa para registrar sua experiência.</p>
+        <p>ImpulsoWeb10 - Escolha um cliente para avaliar</p>
     </header>
 
     <div class="container-clientes">
@@ -134,51 +96,50 @@
                 <img src="clientes/itapua-center/itapua-center-materiais-de-construcao.png" alt="Itapuã Center">
             </div>
             <h3>Itapuã Center</h3>
-            <p>Materiais de Construção</p>
-            <a href="clientes/itapua-center/" class="btn-avaliar">Ver Página de Avaliação</a>
+            <a href="clientes/itapua-center/" class="btn-avaliar">Avaliar Agora</a>
         </div>
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/amorporpatinhas/logo.png" alt="Amor por Patinhas">
+                <img src="clientes/amorporpatinhas/amor-por-patinhas.png" alt="Amor por Patinhas">
             </div>
             <h3>Amor por Patinhas</h3>
-            <p>Pet Shop & Estética</p>
-            <a href="clientes/amorporpatinhas/" class="btn-avaliar">Ver Página de Avaliação</a>
+            <a href="clientes/amorporpatinhas/" class="btn-avaliar">Avaliar Agora</a>
         </div>
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/QualyQuimy/logo.png" alt="QualyQuimy">
+                <img src="clientes/QualyQuimy/logotintasqualyquimy.png" alt="QualyQuimy">
             </div>
             <h3>QualyQuimy</h3>
-            <p>Produtos Químicos e Limpeza</p>
-            <a href="clientes/QualyQuimy/" class="btn-avaliar">Ver Página de Avaliação</a>
+            <a href="clientes/QualyQuimy/" class="btn-avaliar">Avaliar Agora</a>
         </div>
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/esquadriebox/logo.png" alt="Esquadriebox">
+                <img src="clientes/esquadriebox/esquadri-e-box.png" alt="Esquadriebox">
             </div>
             <h3>Esquadriebox</h3>
-            <p>Esquadrias e Vidros</p>
-            <a href="clientes/esquadriebox/" class="btn-avaliar">Ver Página de Avaliação</a>
+            <a href="clientes/esquadriebox/" class="btn-avaliar">Avaliar Agora</a>
         </div>
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/li&lidecor/logo.png" alt="Li & Li Decor">
+                <img src="clientes/analiliamcake/logoanaliliamcake.png" alt="Ana Liliam Cake">
+            </div>
+            <h3>Ana Liliam Cake</h3>
+            <a href="clientes/analiliamcake/" class="btn-avaliar">Avaliar Agora</a>
+        </div>
+
+        <div class="cliente-card">
+            <div class="logo-container">
+                <img src="clientes/li&lidecor/logolieliDecor.png" alt="Li & Li Decor">
             </div>
             <h3>Li & Li Decor</h3>
-            <p>Decoração e Design</p>
-            <a href="clientes/li&lidecor/" class="btn-avaliar">Ver Página de Avaliação</a>
+            <a href="clientes/li&lidecor/" class="btn-avaliar">Avaliar Agora</a>
         </div>
 
     </div>
-
-    <footer>
-        &copy; 2026 ImpulsoWeb10 - Todos os direitos reservados.
-    </footer>
 
 </body>
 </html>
