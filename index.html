@@ -9,7 +9,6 @@
             --primary-color: #d32f2f;
             --bg-color: #f4f7f6;
             --text-dark: #333;
-            --text-light: #666;
         }
 
         body {
@@ -42,7 +41,7 @@
         .cliente-card {
             background: #ffffff;
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
@@ -56,18 +55,27 @@
             transform: translateY(-10px);
         }
 
+        /* CONTAINER DO LOGO - Aumentado para dar mais destaque */
         .logo-container {
-            height: 100px;
+            height: 140px; /* Aumentei a altura do espaço do logo */
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            overflow: hidden;
         }
 
+        /* LOGOS GERAIS - Agora ficam maiores */
         .logo-container img {
-            max-width: 100%;
-            max-height: 80px;
+            max-width: 95%; /* Quase largura total */
+            max-height: 120px; /* Altura máxima aumentada */
             object-fit: contain;
+        }
+
+        /* AJUSTE ESPECÍFICO PARA ESQUADRI-E-BOX - Fica um pouco menor que os outros */
+        .logo-esquadria {
+            max-width: 75% !important;
+            max-height: 90px !important;
         }
 
         .btn-avaliar {
@@ -79,6 +87,7 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 0.9rem;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -117,7 +126,7 @@
 
         <div class="cliente-card">
             <div class="logo-container">
-                <img src="clientes/esquadriebox/esquadri-e-box.png" alt="Esquadriebox">
+                <img src="clientes/esquadriebox/esquadri-e-box.png" class="logo-esquadria" alt="Esquadriebox">
             </div>
             <h3>Esquadriebox</h3>
             <a href="clientes/esquadriebox/" class="btn-avaliar">Avaliar Agora</a>
