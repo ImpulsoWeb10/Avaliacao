@@ -22,7 +22,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
@@ -30,99 +30,106 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px);
-            padding: 40px 30px;
+            padding: 30px 20px;
             border-radius: 35px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
 
+        /* LOGO QUE SE ADAPTA NA SEGUNDA TELA */
         .logo { 
             width: 130px; 
             height: 130px; 
             object-fit: contain; 
-            padding: 5px;
+            padding: 8px;
             border-radius: 22px;
             border: 3px solid #facc15; 
             background: white; 
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
+            transition: 0.4s;
         }
 
-        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; }
-        h2 { font-size: 17px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
-        
-        #instrucao { font-size: 16px; color: #e2e8f0; margin-bottom: 20px; }
+        .logo-compacta {
+            width: 180px;
+            height: 60px;
+            object-fit: cover;
+        }
 
-        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
+        h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
+        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        
+        #instrucao { font-size: 15px; color: #e2e8f0; margin-bottom: 15px; }
+
+        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn {
             font-size: 40px; color: #475569; cursor: pointer;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
+        .star-btn.active { color: #facc15; transform: scale(1.15); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
-            color: white; padding: 15px; margin-bottom: 15px;
-            resize: none; outline: none; font-family: inherit;
-        }
-
-        /* BOTÃO GOOGLE COM BRILHO E PULSAR */
-        .botao {
-            position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 18px; border-radius: 50px;
-            font-weight: 800; font-size: 16px; text-decoration: none;
-            transition: 0.3s; border: none; cursor: pointer;
-        }
-
-        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
-        
-        .google::after {
-            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
-        }
-
-        .whatsapp { background: #22c55e; color: white; animation: pulsar 2s infinite; }
-
-        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
-        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-
-        .hidden { display: none; }
-
-        /* FOTO DO CASAL CORRIGIDA */
+        /* FOTO DO CASAL COM ÓCULOS */
         .img-comemorativa {
             width: 100%;
-            height: auto;
+            height: 160px;
+            object-fit: cover;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 2px solid rgba(250, 204, 21, 0.5);
+            border: 2px solid rgba(250, 204, 21, 0.3);
             display: block;
             animation: fadeIn 0.8s ease;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .footer { 
-            margin-top: 35px; font-size: 13px; color: #ffffff; 
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px;
+        textarea {
+            width: 100%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
+            color: white; padding: 12px; margin-bottom: 12px;
+            resize: none; outline: none; font-family: inherit;
         }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 700; border-bottom: 1px solid #facc15; }
-        .footer b { color: #facc15; }
-        .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 14px; }
+
+        .botao {
+            position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; border-radius: 50px;
+            font-weight: 800; font-size: 15px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
+        .google::after {
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
+        }
+
+        .whatsapp { background: #22c55e; color: white; }
+
+        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        .hidden { display: none; }
+
+        .footer { 
+            margin-top: 25px; font-size: 11px; color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+        }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
+        .frase-top { font-style: italic; margin-bottom: 8px; display: block; font-size: 13px; color: #facc15; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo-optica-lionda.png" class="logo" alt="Óptica Lionda">
+    <img src="logo-optica-lionda.png" class="logo" id="main-logo" alt="Óptica Lionda">
 
-    <h1>Óptica Lionda</h1>
-    <h2>Excelência em Saúde Visual</h2>
+    <h1 id="main-title">Óptica Lionda</h1>
+    <h2 id="sub-title">Excelência em Saúde Visual</h2>
     
-    <p id="instrucao">Toque nas estrelas para avaliar nosso serviço:</p>
+    <p id="instrucao">Como foi sua experiência hoje?</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -133,31 +140,30 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Óptica Lionda">
+        <img src="casal-oculos.png" class="img-comemorativa" alt="Clientes Satisfeitos">
         
-        <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
-        <p style="margin-bottom: 15px;">Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
+        <p style="font-size: 17px; margin-bottom: 12px;">Ficamos muito felizes! 🎉</p>
+        <p style="margin-bottom: 15px; font-size: 14px;">Sua avaliação ajuda outras pessoas a cuidarem da visão com qualidade.</p>
+        
         <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" placeholder="Em que podemos melhorar?"></textarea>
+        <p style="font-size: 17px; margin-bottom: 12px;">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos fazer para melhorar seu atendimento?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
+            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo para grandes conquistas."</span>
+        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo."</span>
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
         <div style="margin-top: 5px;">
-            Desenvolvido por 
-            <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+            Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
         </div>
-        <div>Suporte <b>Óptica Lionda</b>: <b>(11) 97231-9233</b></div>
     </div>
 </div>
 
@@ -170,6 +176,8 @@
         const bom = document.getElementById('feedback-bom');
         const ruim = document.getElementById('feedback-ruim');
         const instrucao = document.getElementById('instrucao');
+        const logo = document.getElementById('main-logo');
+        const title = document.getElementById('main-title');
 
         stars.forEach((s, i) => {
             if (i < n) s.classList.add('active');
@@ -177,6 +185,10 @@
         });
 
         instrucao.classList.add('hidden');
+        
+        // Compacta o topo para caber a foto do casal sem dar scroll
+        logo.classList.add('logo-compacta');
+        title.style.fontSize = "20px";
 
         if (n >= 4) {
             bom.classList.remove('hidden');
@@ -184,7 +196,7 @@
             confetti({
                 particleCount: 150,
                 spread: 70,
-                origin: { y: 0.6 },
+                origin: { y: 0.8 },
                 colors: ['#facc15', '#ffffff', '#2ecc71']
             });
         } else {
