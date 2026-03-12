@@ -73,7 +73,7 @@
             animation: pulse 2s infinite; 
         }
 
-        /* Adicionado Botão Instagram */
+        /* ESTILO DO BOTÃO INSTAGRAM */
         .instagram {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             color: white;
@@ -86,7 +86,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
             animation: shine 3s infinite;
         }
 
@@ -102,14 +102,15 @@
             to { left: 100%; }
         }
 
-        /* Adicionado Estilo da Imagem da Família */
-        .img-familia {
+        /* ESTILO DA IMAGEM DA FAMÍLIA (RETANGULAR E ARREDONDADA) */
+        .img-resultado {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            max-height: 180px;
             object-fit: cover;
             border-radius: 20px;
             margin-bottom: 15px;
             border: 2px solid rgba(255, 255, 255, 0.1);
+            display: block;
         }
 
         .hidden { display: none; }
@@ -157,16 +158,16 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="https://images.unsplash.com/photo-1593335851329-3adb597d0321?q=80&w=800&auto=format&fit=crop" class="img-familia" alt="Família na Casa Nova">
+        <img src="itapua-center.png" class="img-resultado" alt="Itapuã Center Família">
         
         <p style="font-size: 18px; margin-bottom: 15px;">Ficamos felizes! 🎉</p>
-        <p style="margin-bottom: 20px;">Sua avaliação positiva ajuda outros clientes.</p>
+        <p style="margin-bottom: 20px;">Sua avaliação ajuda outros clientes.</p>
         
         <a href="https://g.page/r/CWSPsbcmiCwZEBM/review/" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
-        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" class="botao instagram">
+        <a href="https://www.instagram.com/itapuacenter" target="_blank" class="botao instagram">
             <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
         </a>
     </div>
@@ -202,7 +203,6 @@
             document.getElementById('feedback-bom').classList.remove('hidden');
             document.getElementById('feedback-ruim').classList.add('hidden');
             
-            // --- EFEITOS DE COMEMORAÇÃO MÚLTIPLOS ---
             confetti({
                 particleCount: 150,
                 spread: 80,
@@ -220,11 +220,7 @@
 
             var interval = setInterval(function() {
               var timeLeft = animationEnd - Date.now();
-
-              if (timeLeft <= 0) {
-                return clearInterval(interval);
-              }
-
+              if (timeLeft <= 0) return clearInterval(interval);
               var particleCount = 50 * (timeLeft / duration);
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
