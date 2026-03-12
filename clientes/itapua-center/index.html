@@ -54,15 +54,15 @@
         
         #instrucao { font-size: 16px; color: #e2e8f0; margin-bottom: 20px; }
 
-        /* ESTRELA E BOTÕES */
         .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.25); }
+        .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
 
         textarea {
             width: 100%; background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
             color: white; padding: 15px; margin-bottom: 15px; outline: none;
+            resize: none; font-family: inherit;
         }
 
         .botao {
@@ -74,23 +74,16 @@
         .google { background: #facc15; color: #000; }
         .whatsapp { background: #22c55e; color: white; }
 
-        /* SEÇÃO FAQ */
-        .faq-section {
-            margin-top: 30px;
-            text-align: left;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-        }
-        .faq-title { font-size: 14px; color: #facc15; margin-bottom: 10px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-        .faq-item { margin-bottom: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-        .faq-question { padding: 12px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; }
-        .faq-answer { padding: 0 12px; max-height: 0; overflow: hidden; transition: 0.3s ease; font-size: 12px; color: #cbd5e1; }
-        .faq-item.active .faq-answer { padding-bottom: 12px; max-height: 100px; }
-
         .hidden { display: none; }
 
-        /* RODAPÉ */
-        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; }
+        .footer { 
+            margin-top: 35px; 
+            font-size: 13px; 
+            color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); 
+            padding-top: 20px;
+            line-height: 1.8;
+        }
         .footer .slogan-final { font-style: italic; color: #cbd5e1; margin-bottom: 15px; font-size: 12px; }
         .footer a { color: #22c55e; text-decoration: none; font-weight: 800; }
         .footer b { color: #facc15; }
@@ -131,18 +124,6 @@
         </button>
     </div>
 
-    <div class="faq-section">
-        <div class="faq-title">Dúvidas Frequentes</div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Fazem entregas? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">Sim! Entregamos em toda a região com agilidade para não parar sua obra.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">Aceitamos cartões de crédito, débito, PIX e oferecemos condições especiais para grandes compras.</div>
-        </div>
-    </div>
-
     <div class="footer">
         <div class="slogan-final">"Alicerce forte se constrói com confiança e bons materiais."</div>
         
@@ -180,10 +161,6 @@
         if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
         const msg = encodeURIComponent(`Feedback Itapuão Center (${notaSelecionada} estrelas): ${texto}`);
         window.open(`https://wa.me/${telefone}?text=${msg}`, '_blank');
-    }
-
-    function toggleFaq(element) {
-        element.parentElement.classList.toggle('active');
     }
 </script>
 
