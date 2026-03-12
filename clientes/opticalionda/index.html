@@ -78,7 +78,6 @@
 
         .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
         
-        /* O Brilho passando */
         .google::after {
             content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
@@ -92,16 +91,15 @@
 
         .hidden { display: none; }
 
-        /* FOTO DO CASAL */
+        /* FOTO DO CASAL CORRIGIDA */
         .img-comemorativa {
             width: 100%;
+            height: auto;
             border-radius: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             border: 2px solid rgba(250, 204, 21, 0.5);
             display: block;
-            margin-left: auto;
-            margin-right: auto;
             animation: fadeIn 0.8s ease;
         }
 
@@ -111,7 +109,7 @@
             margin-top: 35px; font-size: 13px; color: #ffffff; 
             border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px;
         }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; border-bottom: 1px solid #facc15; }
         .footer b { color: #facc15; }
         .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 14px; }
     </style>
@@ -135,7 +133,8 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Felizes">
+        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Óptica Lionda">
+        
         <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
         <p style="margin-bottom: 15px;">Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
         <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
