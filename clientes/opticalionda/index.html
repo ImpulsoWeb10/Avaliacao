@@ -69,6 +69,7 @@
             resize: none; outline: none; font-family: inherit; font-size: 15px;
         }
 
+        /* BOTÕES */
         .botao {
             position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -77,14 +78,27 @@
             transition: 0.3s; border: none; cursor: pointer;
         }
 
-        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
+        /* EFEITO PULSAR E BRILHO NO GOOGLE */
+        .google { 
+            background: #facc15; 
+            color: #000; 
+            animation: pulsar 2s infinite; 
+        }
+
+        .google::after {
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
+        }
+
         .whatsapp { background: #22c55e; color: white; animation: pulsar 2s infinite; }
 
+        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
         @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .hidden { display: none; }
 
-        /* ESTILO DA IMAGEM DO CASAL */
+        /* IMAGEM DO CASAL */
         .img-comemorativa {
             width: 100%;
             border-radius: 20px;
@@ -104,9 +118,9 @@
             padding-top: 25px;
             line-height: 1.8;
         }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
         .footer b { color: #facc15; }
         .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 14px; }
-        
     </style>
 </head>
 <body>
@@ -128,10 +142,10 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="casal-oculos.png" class="img-comemorativa" alt="Clientes Felizes">
+        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Felizes">
         <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
         <p style="margin-bottom: 15px;">Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
-        <a href="https://g.page/r/SEU_LINK_AQUI/review" target="_blank" class="botao google">
+        <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
@@ -148,8 +162,11 @@
     <div class="footer">
         <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo para grandes conquistas."</span>
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div style="margin-top: 5px;">Suporte Especializado <b>Óptica Lionda</b></div>
-        <div>Contato: <b>(11) 97231-9233</b></div>
+        <div style="margin-top: 5px;">
+            Desenvolvido por 
+            <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+        </div>
+        <div>Suporte Especializado <b>Óptica Lionda</b>: <b>(11) 97231-9233</b></div>
     </div>
 </div>
 
