@@ -56,14 +56,12 @@
         }
         .star-btn.active { color: #facc15; transform: scale(1.2); }
 
-        /* ESTILO DA CAIXA DE TEXTO */
         textarea {
             width: 100%; background: #ffffff; border: 1px solid #d1d5db;
             border-radius: 15px; color: #334155; padding: 15px; margin-bottom: 20px; 
             font-family: inherit; resize: none; outline: none; font-size: 14px;
         }
 
-        /* 1. INDICAÇÃO: COR DO TEXTO QUE SOME (PLACEHOLDER) */
         textarea::placeholder {
             color: #94a3b8;
             font-style: italic;
@@ -82,10 +80,16 @@
 
         .hidden { display: none; }
 
+        /* ESTILO DO RODAPÉ VENDEDOR */
         .footer { margin-top: 40px; font-size: 12px; color: #64748b; border-top: 1px solid #e5e7eb; padding-top: 25px; }
+        .cta-vendas { 
+            display: block; margin-bottom: 15px; font-size: 13px; color: #475569; 
+            line-height: 1.4; padding: 0 10px;
+        }
+        .cta-vendas a { color: #2563eb; text-decoration: none; font-weight: 700; border-bottom: 1px solid #2563eb; }
         .ssl-msg { font-weight: bold; color: #059669; margin-bottom: 8px; display: block; }
         .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; }
-        .footer a { color: #f59e0b; text-decoration: none; font-weight: 800; }
+        .footer .dev-link { color: #f59e0b; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 
@@ -116,9 +120,7 @@
 
     <div id="feedback-ruim" class="hidden">
         <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
-        
         <textarea id="texto-melhoria" placeholder="Por gentileza, o que ocorreu para melhorarmos?"></textarea>
-        
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
             <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
         </button>
@@ -126,8 +128,15 @@
 
     <div class="footer">
         <div id="msg-especial" class="hero-msg"></div>
+
+        <span class="cta-vendas">
+            Gostou desse sistema? Tenha um link personalizado para sua empresa. 
+            <a href="https://wa.me/5511954950044?text=Ol%C3%A1%2C%20vi%20o%20link%20de%20avalia%C3%A7%C3%A3o%20e%20gostaria%20de%20um%20personalizado%20para%20minha%20empresa!" target="_blank">Clique aqui</a>
+        </span>
+
         <span class="ssl-msg"><i class="fas fa-shield-alt"></i> SITE SEGURO - CERTIFICADO SSL</span>
-        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a></div>
+        
+        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank" class="dev-link">ImpulsoWeb10</a></div>
     </div>
 </div>
 
@@ -141,7 +150,6 @@
         const ruim = document.getElementById('feedback-ruim');
         const titulo = document.getElementById('titulo-dinamico');
         const msgEspecial = document.getElementById('msg-especial');
-        const areaTexto = document.getElementById('texto-melhoria');
 
         stars.forEach((s, i) => {
             if (i < n) s.classList.add('active');
@@ -157,10 +165,6 @@
         } else {
             titulo.innerText = "Sua opinião é vital! 💬";
             msgEspecial.innerText = "";
-            
-            // IMPORTANTE: Removi a linha que colocava texto fixo aqui
-            // Assim o placeholder pode aparecer corretamente.
-            
             ruim.classList.remove('hidden');
             bom.classList.add('hidden');
         }
