@@ -1,164 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliações | ImpulsoWeb10</title>
-    <style>
-        :root {
-            --primary-color: #d32f2f;
-            --bg-color: #f4f7f6;
-            --text-dark: #333;
-        }
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            width: 100%;
-            padding: 30px 20px;
-            background: #fff;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
+<title>Avaliações | ImpulsoWeb10</title>
 
-        .container-clientes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Cards levemente menores */
-            gap: 20px;
-            width: 90%;
-            max-width: 1100px;
-            padding-bottom: 50px;
-        }
+<meta name="description" content="Central de avaliações criada pela ImpulsoWeb10. Facilite para clientes avaliarem empresas no Google Maps.">
 
-        .cliente-card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-            transition: transform 0.3s ease;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+<style>
 
-        .cliente-card:hover {
-            transform: translateY(-5px);
-        }
+:root {
+    --primary-color: #d32f2f;
+    --bg-color: #f4f7f6;
+    --text-dark: #333;
+}
 
-        /* CONTAINER DO LOGO - Reduzido em ~40% para um visual mais discreto */
-        .logo-container {
-            height: 85px; /* Antes era 140px */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        /* LOGOS GERAIS - Reduzidos proporcionalmente */
-        .logo-container img {
-            max-width: 60%; /* Antes era 95% */
-            max-height: 70px; /* Antes era 120px */
-            object-fit: contain;
-            filter: grayscale(10%); /* Toque opcional para elegância */
-            transition: filter 0.3s;
-        }
-        
-        .cliente-card:hover img {
-            filter: grayscale(0%);
-        }
+header {
+    width: 100%;
+    padding: 30px 20px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
 
-        .cliente-card h3 {
-            font-size: 1.1rem;
-            margin: 10px 0;
-            color: var(--text-dark);
-        }
+.container-clientes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1100px;
+    padding-bottom: 40px;
+}
 
-        .btn-avaliar {
-            display: block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            transition: opacity 0.3s;
-        }
+.cliente-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-        .btn-avaliar:hover {
-            opacity: 0.9;
-        }
-    </style>
+.cliente-card:hover {
+    transform: translateY(-5px);
+}
+
+.logo-container {
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.logo-container img {
+    max-width: 60%;
+    max-height: 70px;
+    object-fit: contain;
+    filter: grayscale(10%);
+    transition: filter 0.3s;
+}
+
+.cliente-card:hover img {
+    filter: grayscale(0%);
+}
+
+.cliente-card h3 {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: var(--text-dark);
+}
+
+.btn-avaliar {
+    display: block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    transition: opacity 0.3s;
+}
+
+.btn-avaliar:hover {
+    opacity: 0.9;
+}
+
+/* SEÇÃO SERVIÇOS */
+
+.servicos {
+    background: white;
+    padding: 40px;
+    margin-bottom: 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.servicos h2 {
+    margin-top: 0;
+}
+
+.servicos a {
+    display: inline-block;
+    background: #25D366;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <header>
-        <h1>Central de Avaliações</h1>
-        <p>ImpulsoWeb10 - Escolha um cliente para avaliar</p>
-    </header>
+<header>
 
-    <div class="container-clientes">
+<h1>Central de Avaliações</h1>
+<p>ImpulsoWeb10 - Escolha um cliente para avaliar</p>
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/itapua-center/itapua-center-materiais-de-construcao.png" alt="Itapuã Center">
-            </div>
-            <h3>Itapuã Center</h3>
-            <a href="clientes/itapua-center/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+</header>
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/amorporpatinhas/amor-por-patinhas.png" alt="Amor por Patinhas">
-            </div>
-            <h3>Amor por Patinhas</h3>
-            <a href="clientes/amorporpatinhas/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+<div class="container-clientes">
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/QualyQuimy/logotintasqualyquimy.png" alt="QualyQuimy">
-            </div>
-            <h3>QualyQuimy</h3>
-            <a href="clientes/QualyQuimy/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/itapua-center/itapua-center-materiais-de-construcao.png" alt="Itapuã Center">
+</div>
+<h3>Itapuã Center</h3>
+<a href="clientes/itapua-center/" class="btn-avaliar">Avaliar Agora</a>
+</div>
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/esquadriebox/esquadri-e-box.png" alt="Esquadriebox">
-            </div>
-            <h3>Esquadriebox</h3>
-            <a href="clientes/esquadriebox/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/amorporpatinhas/amor-por-patinhas.png" alt="Amor por Patinhas">
+</div>
+<h3>Amor por Patinhas</h3>
+<a href="clientes/amorporpatinhas/" class="btn-avaliar">Avaliar Agora</a>
+</div>
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/analiliamcake/logoanaliliamcake.png" alt="Ana Liliam Cake">
-            </div>
-            <h3>Ana Liliam Cake</h3>
-            <a href="clientes/analiliamcake/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/QualyQuimy/logotintasqualyquimy.png" alt="QualyQuimy">
+</div>
+<h3>QualyQuimy</h3>
+<a href="clientes/QualyQuimy/" class="btn-avaliar">Avaliar Agora</a>
+</div>
 
-        <div class="cliente-card">
-            <div class="logo-container">
-                <img src="clientes/li&lidecor/logolieliDecor.png" alt="Li & Li Decor">
-            </div>
-            <h3>Li & Li Decor</h3>
-            <a href="clientes/li&lidecor/" class="btn-avaliar">Avaliar Agora</a>
-        </div>
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/esquadriebox/esquadri-e-box.png" alt="Esquadriebox">
+</div>
+<h3>Esquadriebox</h3>
+<a href="clientes/esquadriebox/" class="btn-avaliar">Avaliar Agora</a>
+</div>
 
-    </div>
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/analiliamcake/logoanaliliamcake.png" alt="Ana Liliam Cake">
+</div>
+<h3>Ana Liliam Cake</h3>
+<a href="clientes/analiliamcake/" class="btn-avaliar">Avaliar Agora</a>
+</div>
+
+<div class="cliente-card">
+<div class="logo-container">
+<img src="clientes/li&lidecor/logolieliDecor.png" alt="Li & Li Decor">
+</div>
+<h3>Li & Li Decor</h3>
+<a href="clientes/li&lidecor/" class="btn-avaliar">Avaliar Agora</a>
+</div>
+
+</div>
+
+<!-- SERVIÇOS -->
+
+<section class="servicos">
+
+<h2>Serviços</h2>
+
+<p>
+Criação de páginas personalizadas para clientes deixarem avaliações no Google de forma rápida e fácil.
+</p>
+
+<a href="servicos/pagina-avaliacao-google/">
+Criar Página para Avaliação Google
+</a>
+
+</section>
 
 </body>
 </html>
