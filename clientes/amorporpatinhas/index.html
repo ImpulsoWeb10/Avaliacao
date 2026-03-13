@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avalie a Amor por Patinhas</title>
 
-    <meta property="og:title" content="Avalie a Amor por Patinhas 🐾">
-    <meta property="og:description" content="Sua opinião é muito importante para nós! Leva menos de 30 segundos.">
-    <meta property="og:image" content="https://impulsoweb10.github.io/Avaliacao/clientes/amorporpatinhas/amor-por-patinhas.png">
-    <meta property="og:url" content="https://impulsoweb10.github.io/Avaliacao/clientes/amorporpatinhas/">
-    <meta name="theme-color" content="#ff69b4">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -20,7 +14,6 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            /* FUNDO DO FUNDO: Verde Água/Menta Suave (Combina com Rosa e não é escuro) */
             background-color: #e0f2f1;
             background-image: radial-gradient(at 0% 0%, hsla(160,100%,95%,1) 0, transparent 50%), 
                               radial-gradient(at 100% 100%, hsla(330,100%,98%,1) 0, transparent 50%);
@@ -32,7 +25,6 @@
 
         .container { 
             max-width: 400px; width: 100%; padding: 40px 30px; 
-            /* TEXTURA DE PAPEL PICADO / RECICLADO */
             background-color: #f1f1f1;
             background-image: url("https://www.transparenttextures.com/patterns/p6.png");
             border: 2px solid #ffffff;
@@ -40,42 +32,18 @@
             box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
         }
         
-       .logo { 
-    /* 1. Defina o tamanho TOTAL desejado para o CÍRCULO ROSA */
-    /* Se quiser o círculo maior, aumente aqui (ex: 180px) */
-    width: 160px;  
-    height: 160px; 
-    
-    /* 2. Volta ao padrão para controlar o tamanho interno com precisão */
-    box-sizing: border-box; 
-    
-    /* 3. O 'contain' impede o corte. */
-    object-fit: contain; 
-    
-    /* 4. AUMENTAMOS O PADDING: Isso empurra o logo para dentro, */
-    /* fazendo ele ficar menor dentro do círculo rosa. */
-    /* Tente 20px. Se ainda cortar, aumente para 25px. */
-    padding: 5px; 
-    
-    /* 5. Aparência do círculo */
-    border-radius: 50%; 
-    border: 4px solid #ff69b4; /* Linha rosa */
-    background: #ffffff;      /* Fundo branco */
-    
-    /* Sombra e Centralização */
-    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); 
-    display: block;
-    margin: 0 auto;
-}
+        .logo { 
+            width: 160px; height: 160px; box-sizing: border-box; 
+            object-fit: contain; padding: 5px; border-radius: 50%; 
+            border: 4px solid #ff69b4; background: #ffffff; 
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); 
+            display: block; margin: 0 auto;
+        }
         
         .nome-loja { 
-            font-family: 'Pacifico', cursive; 
-            font-size: 42px; 
-            color: #ff69b4; 
+            font-family: 'Pacifico', cursive; font-size: 42px; color: #ff69b4; 
             text-shadow: 2px 2px 0px #fff, 4px 4px 10px rgba(0,0,0,0.1);
-            margin-top: 10px;
-            margin-bottom: 10px;
-            line-height: 1.2;
+            margin-top: 10px; margin-bottom: 10px; line-height: 1.2;
         }
 
         h1 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #64748b; margin-bottom: 20px; font-weight: 700; }
@@ -83,57 +51,40 @@
 
         .rating-box { margin-bottom: 30px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { 
-            font-size: 42px; 
-            color: #cbd5e1; 
-            cursor: pointer; 
+            font-size: 42px; color: #cbd5e1; cursor: pointer; 
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
-        .star-btn.active { color: #facc15; transform: scale(1.2); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .star-btn.active { color: #facc15; transform: scale(1.2); }
+
+        /* ESTILO DA CAIXA DE TEXTO */
+        textarea {
+            width: 100%; background: #ffffff; border: 1px solid #d1d5db;
+            border-radius: 15px; color: #334155; padding: 15px; margin-bottom: 20px; 
+            font-family: inherit; resize: none; outline: none; font-size: 14px;
+        }
+
+        /* 1. INDICAÇÃO: COR DO TEXTO QUE SOME (PLACEHOLDER) */
+        textarea::placeholder {
+            color: #94a3b8;
+            font-style: italic;
+        }
 
         .botao {
-            position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 18px; font-size: 16px; font-weight: 800;
             border-radius: 20px; transition: 0.3s; border: none; cursor: pointer; text-decoration: none;
         }
 
-        .google { 
-            background: #facc15; color: #000; 
-            box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3);
-            animation: pulsar 1.8s infinite ease-in-out;
-        }
+        .google { background: #facc15; color: #000; animation: pulsar 1.8s infinite ease-in-out; }
+        .whatsapp { background: #22c55e; color: white; }
 
-        .google::after {
-            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
-            transform: skewX(-20deg);
-            animation: brilhoPassando 2.5s infinite;
-        }
-
-        @keyframes pulsar {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.04); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes brilhoPassando {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        .whatsapp { background: #22c55e; color: white; box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2); }
-
-        textarea {
-            width: 100%; background: #ffffff; border: 1px solid #d1d5db;
-            border-radius: 15px; color: #334155; padding: 15px; margin-bottom: 20px; font-family: inherit; resize: none; outline: none;
-        }
+        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
         .hidden { display: none; }
 
         .footer { margin-top: 40px; font-size: 12px; color: #64748b; border-top: 1px solid #e5e7eb; padding-top: 25px; }
-        .ssl-msg { font-weight: bold; color: #059669; margin-bottom: 8px; display: block; letter-spacing: 0.5px; }
-        .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; text-shadow: 1px 1px 0 #fff; }
+        .ssl-msg { font-weight: bold; color: #059669; margin-bottom: 8px; display: block; }
+        .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; }
         .footer a { color: #f59e0b; text-decoration: none; font-weight: 800; }
     </style>
 </head>
@@ -164,7 +115,10 @@
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <textarea id="texto-melhoria" rows="3"></textarea>
+        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
+        
+        <textarea id="texto-melhoria" placeholder="Por gentileza, o que ocorreu para melhorarmos?"></textarea>
+        
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
             <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
         </button>
@@ -203,7 +157,10 @@
         } else {
             titulo.innerText = "Sua opinião é vital! 💬";
             msgEspecial.innerText = "";
-            areaTexto.value = "Por gentileza, o que ocorreu ,para melhorarmos ?";
+            
+            // IMPORTANTE: Removi a linha que colocava texto fixo aqui
+            // Assim o placeholder pode aparecer corretamente.
+            
             ruim.classList.remove('hidden');
             bom.classList.add('hidden');
         }
