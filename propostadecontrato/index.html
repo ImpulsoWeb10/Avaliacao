@@ -5,193 +5,213 @@
 <title>Proposta Comercial - Aceleração Digital</title>
 
 <style>
-
 body{
-font-family: Arial, sans-serif;
-background:#f4f6f9;
-margin:0;
-padding:0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:0;
 }
 
 .container{
-max-width:900px;
-margin:auto;
-background:white;
-padding:40px;
-box-shadow:0 0 20px rgba(0,0,0,0.1);
+    max-width:850px;
+    margin:30px auto;
+    background:white;
+    padding:50px;
+    box-shadow:0 0 20px rgba(0,0,0,0.1);
+    border-top: 10px solid #0a3d62;
 }
 
 .logo{
-text-align:center;
-margin-bottom:30px;
+    text-align:center;
+    margin-bottom:30px;
 }
 
 h1{
-text-align:center;
-color:#0a3d62;
+    text-align:center;
+    color:#0a3d62;
+    font-size: 28px;
+    line-height: 1.2;
 }
 
 h2{
-color:#1e3799;
-margin-top:30px;
+    color:#1e3799;
+    margin-top:30px;
+    border-bottom: 2px solid #eaf6ff;
+    padding-bottom: 5px;
 }
 
 .box{
-background:#f8f9fa;
-padding:20px;
-border-radius:10px;
-margin-top:15px;
+    background:#f8f9fa;
+    padding:20px;
+    border-radius:10px;
+    margin-top:15px;
+    line-height: 1.6;
 }
 
 .invest{
-background:#eaf6ff;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
-font-size:18px;
+    background:#eaf6ff;
+    padding:25px;
+    border-radius:10px;
+    margin-top:20px;
+    font-size:18px;
+    border: 1px solid #b3d7ff;
 }
 
 .highlight{
-color:#e67e22;
-font-weight:bold;
+    color:#e67e22;
+    font-weight:bold;
 }
 
 .footer{
-margin-top:40px;
-padding-top:20px;
-border-top:1px solid #ddd;
-font-size:16px;
+    margin-top:40px;
+    padding-top:20px;
+    border-top:1px solid #ddd;
+    font-size:16px;
+}
+
+/* Esconde o botão na hora de imprimir o PDF */
+@media print {
+    button, .instrucao {
+        display: none !important;
+    }
+    body { background: white; }
+    .container { box-shadow: none; margin: 0; width: 100%; border-top: none; }
+}
+
+.instrucao {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px dashed #ffeeba;
 }
 
 button{
-background:#ff7a00;
-color:white;
-border:none;
-padding:15px 30px;
-font-size:18px;
-border-radius:8px;
-cursor:pointer;
-margin-top:20px;
+    background:#ff7a00;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:20px;
+    transition: 0.3s;
 }
 
 button:hover{
-background:#ff5a00;
+    background:#ff5a00;
+}
+
+/* Estilo para campos editáveis */
+[contenteditable="true"]:hover {
+    background: #fffdf0;
+    outline: 1px dashed #ccc;
+}
+[contenteditable="true"]:focus {
+    background: #fffdf0;
+    outline: 2px solid #ff7a00;
 }
 
 </style>
-
 </head>
 
 <body>
 
+<div class="instrucao">
+    💡 <b>Dica:</b> Clique em qualquer texto em cinza ou nos campos marcados para editar. Quando terminar, aperte <b>Ctrl + P</b> e salve como PDF.
+</div>
+
 <div class="container">
 
 <div class="logo">
-<img src="impulsoweb10.png" width="300">
+    <img src="https://impulsoweb10.com.br/wp-content/uploads/2023/07/logo-impulsoweb10.png" width="250" alt="Logo">
 </div>
 
 <h1>PROPOSTA COMERCIAL<br>ACELERAÇÃO DIGITAL</h1>
 
-<p><b>Cliente:</b> [Nome da Empresa]</p>
-<p><b>Data:</b> 13 de Março de 2026</p>
-<p><b>Consultor:</b> [Seu Nome]</p>
+<div style="margin: 30px 0;">
+    <p><b>Cliente:</b> <span contenteditable="true" style="color: #1e3799;">[Nome da Empresa ou Cliente]</span></p>
+    <p><b>Data:</b> <span contenteditable="true">13 de Março de 2026</span></p>
+    <p><b>Consultor:</b> <span contenteditable="true">[Seu Nome Aqui]</span></p>
+</div>
 
 <h2>🎯 Objetivo do Projeto</h2>
 
 <div class="box">
-Implementar um ecossistema digital focado em três pilares:
+Implementar um ecossistema digital focado em três pilares fundamentais para o crescimento da <b contenteditable="true">[Nome da Empresa]</b>:
 
 <br><br>
 
-<b>Visibilidade</b> (Google Maps)  
-<b>Autoridade</b> (Landing Page)  
-<b>Reputação</b> (Link de Avaliação Inteligente)
+📍 <b>Visibilidade</b> (Google Maps)<br>
+🛡️ <b>Autoridade</b> (Landing Page)<br>
+⭐ <b>Reputação</b> (Link de Avaliação Inteligente)
 
 <br><br>
 
-O objetivo final é aumentar o volume de  
-<span class="highlight">agendamentos e prestação de serviços através da internet.</span>
+O objetivo final é aumentar o volume de 
+<span class="highlight" contenteditable="true">agendamentos e prestação de serviços através da internet.</span>
 </div>
 
 <h2>🛠️ Escopo dos Serviços</h2>
 
 <div class="box">
+    <b>1. Sistema de Gestão de Reputação (Link VIP)</b>
+    <ul>
+        <li>Página interativa com emojis e estrelas personalizados.</li>
+        <li>Filtro inteligente: elogios vão para o Google, críticas para seu WhatsApp.</li>
+        <li>Geração automática de cupom para incentivar a avaliação.</li>
+    </ul>
 
-<b>1. Sistema de Gestão de Reputação (Link VIP)</b>
+    <b>2. Landing Page de Alta Conversão</b>
+    <ul>
+        <li>Página profissional focada em transformar visitantes em clientes.</li>
+        <li>Layout otimizado para celulares (80% das buscas atuais).</li>
+        <li>Copywriting focado nos diferenciais da sua empresa.</li>
+    </ul>
 
-<ul>
-<li>Página interativa com emojis e estrelas</li>
-<li>Filtro que envia elogios para o Google</li>
-<li>Críticas direcionadas ao WhatsApp privado</li>
-<li>Cupom de desconto para clientes que avaliarem</li>
-</ul>
-
-<b>2. Landing Page de Alta Conversão</b>
-
-<ul>
-<li>Página focada em conversão</li>
-<li>Design responsivo</li>
-<li>Copywriting estratégico</li>
-<li>Sem mensalidade de hospedagem</li>
-</ul>
-
-<b>3. Otimização Google Meu Negócio</b>
-
-<ul>
-<li>SEO local para aparecer nas buscas</li>
-<li>Catálogo digital de serviços</li>
-<li>Recuperação de contas antigas</li>
-</ul>
-
+    <b>3. Otimização Google Meu Negócio</b>
+    <ul>
+        <li>Configuração de SEO Local para busca orgânica.</li>
+        <li>Catálogo de serviços/produtos com fotos e descrições.</li>
+        <li>Reivindicação e proteção da ficha da empresa.</li>
+    </ul>
 </div>
 
 <h2>💰 Investimento</h2>
 
 <div class="invest">
-
-<b>PROJETO COMPLETO</b>
-
-<br><br>
-
-Link VIP + Landing Page + Google Business
-
-<br><br>
-
-<span class="highlight">Investimento: R$ 400</span>
-
-<br><br>
-
-Prazo de entrega: 7 a 10 dias  
-Condições: 50% início / 50% entrega  
-Validade da proposta: 7 dias
-
+    <b style="color: #0a3d62;">PACOTE SOLUÇÃO COMPLETA</b>
+    <br><br>
+    Link VIP + Landing Page + Google Business
+    <br><br>
+    <span class="highlight" style="font-size: 24px;">Investimento: R$ <span contenteditable="true">400,00</span></span>
+    <br><br>
+    <div style="font-size: 15px; color: #555;">
+        <b>Prazo de entrega:</b> <span contenteditable="true">7 a 10 dias úteis</span><br>
+        <b>Condições:</b> <span contenteditable="true">50% no início / 50% na entrega</span><br>
+        <b>Validade da proposta:</b> <span contenteditable="true">7 dias</span>
+    </div>
 </div>
 
-<h2>✅ Por que fechar este pacote?</h2>
+<h2>✅ Benefícios Imediatos</h2>
 
 <div class="box">
-
-<ul>
-<li><b>Sem mensalidades</b></li>
-<li>Proteção da reputação no Google</li>
-<li>Empresa mais profissional</li>
-<li>Mais clientes chegando pela internet</li>
-</ul>
-
+    <ul>
+        <li><b>Fim das taxas mensais:</b> Site e link sem custo de manutenção.</li>
+        <li><b>Blindagem de marca:</b> Menos reclamações públicas, mais notas 5 estrelas.</li>
+        <li><b>Posicionamento VIP:</b> Sua empresa aparece antes da concorrência no mapa.</li>
+    </ul>
 </div>
 
 <div class="footer">
+    <b contenteditable="true">[Seu Nome ou Sua Empresa]</b><br>
+    WhatsApp: <span contenteditable="true">[Seu WhatsApp]</span><br>
+    Instagram/Site: <span contenteditable="true">@seu_instagram</span>
 
-<b>[Seu Nome]</b><br>
-WhatsApp: [Seu WhatsApp]<br>
-Instagram/Site: [Seu Instagram]
-
-<br><br>
-
-<a href="https://wa.me/SEUNUMERO">
-<button>ACEITAR PROPOSTA</button>
-</a>
-
+    <br><br>
+    <button onclick="window.print()">GERAR PDF DA PROPOSTA</button>
 </div>
 
 </div>
