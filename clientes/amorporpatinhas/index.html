@@ -40,15 +40,14 @@
             display: block; margin: 0 auto;
         }
         
-        /* AJUSTE: NOME ALINHADO EM UMA LINHA SÓ */
         .nome-loja { 
             font-family: 'Pacifico', cursive; 
-            font-size: 32px; /* Diminuído para caber em uma linha */
+            font-size: 32px; 
             color: #ff69b4; 
             text-shadow: 2px 2px 0px #fff, 4px 4px 10px rgba(0,0,0,0.1);
             margin-top: 10px; margin-bottom: 10px; 
             line-height: 1.2;
-            white-space: nowrap; /* Garante que não quebre linha */
+            white-space: nowrap; 
         }
 
         h1 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #64748b; margin-bottom: 20px; font-weight: 700; }
@@ -76,7 +75,14 @@
             position: relative; overflow: hidden;
         }
 
-        /* EFEITO PULSAR E BRILHAR NO GOOGLE */
+        /* IMAGEM FIXA DE FEEDBACK POSITIVO */
+        .img-feedback {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
         .google { background: #facc15; color: #000; animation: pulsar 1.8s infinite ease-in-out; }
         
         .google::before {
@@ -124,6 +130,7 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
+        <img src="amor-por-patas.png" class="img-feedback" alt="Amor por Patas">
         <a href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
