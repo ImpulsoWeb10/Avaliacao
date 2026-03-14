@@ -3,120 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contagem Ágil CCB</title>
+    <title>Contagem Regional Itaquá</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ececec; margin: 0; padding: 10px; padding-bottom: 120px; }
-        .container { max-width: 500px; margin: auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { background: #1a2a3a; color: white; text-align: center; padding: 15px; font-size: 1.2em; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
         
-        .linha-instrumento { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; }
-        .linha-instrumento:nth-child(even) { background: #fafafa; }
-        .nome-inst { flex: 1; font-weight: 500; color: #444; }
-        
-        .controles { display: flex; align-items: center; gap: 10px; }
-        .btn { width: 35px; height: 35px; border: none; border-radius: 6px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn-menos { background: #e74c3c; color: white; }
-        .btn-mais { background: #27ae60; color: white; }
-        .btn:active { transform: scale(0.9); opacity: 0.8; }
-        
-        input { width: 40px; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 1.1em; font-weight: bold; background: #fff; }
+        /* TELA 1: SELEÇÃO DE COMUM */
+        #tela-comuns { padding: 15px; text-align: center; }
+        .grid-comuns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+        .btn-comum { background: white; border: 1px solid #ced4da; padding: 18px 5px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.85em; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: #2c3e50; }
+        .btn-comum:active { background: #1a2a3a; color: white; }
 
-        /* Rodapé Fixo */
-        .footer-painel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a2a3a; color: white; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
-        .resumo-flex { display: flex; justify-content: space-around; text-align: center; font-size: 0.85em; margin-bottom: 10px; border-bottom: 1px solid #334455; padding-bottom: 8px; }
-        .total-container { display: flex; justify-content: space-between; align-items: center; font-size: 1.3em; font-weight: bold; color: #f1c40f; }
+        /* MODAL DE CONFIRMAÇÃO */
+        #modal-confirmacao { 
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.8); align-items: center; justify-content: center; 
+        }
+        .modal-content { 
+            background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 350px; text-align: center; 
+        }
+        .seletor-qtd { display: flex; justify-content: center; align-items: center; gap: 25px; margin: 25px 0; }
+        .btn-c { width: 50px; height: 50px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.5em; color: white; cursor: pointer; }
+        .mais { background: #27ae60; }
+        .menos { background: #e74c3c; }
+        .confirmar { background: #27ae60; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1em; }
+        .cancelar { background: #eee; color: #666; width: 100%; padding: 10px; border: none; border-radius: 10px; margin-top: 10px; }
+
+        /* TELA 2: INSTRUMENTOS */
+        #tela-instrumentos { display: none; padding-bottom: 150px; }
+        .header-fixo { background: #1a2a3a; color: white; padding: 15px; position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        .linha { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: white; margin: 6px 12px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .nome-inst { font-weight: 600; color: #34495e; }
+        input { width: 50px; text-align: center; font-size: 1.4em; border: none; font-weight: bold; color: #2c3e50; }
+
+        /* FOOTER */
+        .footer { position: fixed; bottom: 0; width: 100%; background: #1a2a3a; color: white; padding: 20px; box-sizing: border-box; }
+        .total-g { display: flex; justify-content: space-between; font-size: 1.4em; font-weight: bold; color: #f1c40f; }
+        .multi-aviso { background: #f1c40f; color: #000; padding: 3px 10px; border-radius: 5px; font-size: 0.9em; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="container" id="lista-inst">
-    <div class="header">Contagem de Músicos</div>
-    
+    <div id="tela-comuns">
+        <h2 style="color: #1a2a3a;">Selecione a Comum</h2>
+        <div class="grid-comuns" id="lista-comuns"></div>
     </div>
 
-<div class="footer-painel">
-    <div class="resumo-flex">
-        <div>CORDAS<br><span id="pCordas">0</span>%</div>
-        <div>MADEIRAS<br><span id="pMadeiras">0</span>%</div>
-        <div>METAIS<br><span id="pMetais">0</span>%</div>
-        <div>MINISTÉRIO<br><span id="resMin">0</span></div>
+    <div id="modal-confirmacao">
+        <div class="modal-content">
+            <h3 id="modal-nome-comum" style="margin-top:0; color:#1a2a3a;">Igreja</h3>
+            <p style="color:#666;">Quantos chegaram deste local?</p>
+            <div class="seletor-qtd">
+                <button class="btn-c menos" onclick="ajustarModal(-1)">-</button>
+                <span id="qtd-modal" style="font-size: 2.5em; font-weight: bold;">1</span>
+                <button class="btn-c mais" onclick="ajustarModal(1)">+</button>
+            </div>
+            <button class="confirmar" onclick="confirmarEntrada()">CONFIRMAR ENTRADA</button>
+            <button class="cancelar" onclick="fecharModal()">Voltar</button>
+        </div>
     </div>
-    <div class="total-container">
-        <span>TOTAL GERAL:</span>
-        <span id="resTotal">0</span>
+
+    <div id="tela-instrumentos">
+        <div class="header-fixo">
+            <button onclick="voltar()" style="background:none; border:none; color:white; font-size:1.5em; cursor:pointer;">←</button>
+            <span id="nome-comum-atual">Comum</span>
+            <span id="indicador-multi" class="multi-aviso">x1</span>
+        </div>
+        <div id="lista-inst"></div>
+
+        <div class="footer">
+            <div class="total-g">
+                <span>TOTAL GERAL:</span>
+                <span id="resTotal">0</span>
+            </div>
+        </div>
     </div>
-</div>
 
 <script>
-    // Lista baseada exatamente na sua imagem do Excel
-    const instrumentos = [
-        {nome: "Organistas", tipo: "cordas"},
-        {nome: "Violino", tipo: "cordas"},
-        {nome: "Viola", tipo: "cordas"},
-        {nome: "Violoncelo", tipo: "cordas"},
-        {nome: "Flauta", tipo: "madeiras"},
-        {nome: "Oboé", tipo: "madeiras"},
-        {nome: "Clarinete", tipo: "madeiras"},
-        {nome: "Saxofone Alto", tipo: "madeiras"},
-        {nome: "Saxofone Tenor", tipo: "madeiras"},
-        {nome: "Trompete", tipo: "metais"},
-        {nome: "Trompa", tipo: "metais"},
-        {nome: "Trombone", tipo: "metais"},
-        {nome: "Tuba", tipo: "metais"},
-        {nome: "Eufônio", tipo: "metais"},
-        {nome: "Anciães", tipo: "ministerio"},
-        {nome: "Diáconos", tipo: "ministerio"},
-        {nome: "Cooperadores", tipo: "ministerio"}
+    // LISTA ORGANIZADA CONFORME SEU PEDIDO (ORDEM ALFABÉTICA PELO NOME PRINCIPAL)
+    const comuns = [
+        "Jardim Adriane", "Água das Pedras", "Jardim Amazonas", "Aracaré", "Vila Arizona", 
+        "Jardim Caiuby", "Jardim Canaã", "Jardim do Carmo", "Jardim Carolina", "Central", 
+        "Cidade Nova Louzada", "Jardim Estancia Guatambú", "Parque Residencial Furtuna", "Vila Japão", 
+        "Jardim Itapuã", "Jardim Itaquá", "Jardim Josely", "Jardim Karine", "Jardim Marcelo", 
+        "Parque Macedo", "Parque Marengo", "Parque Residencial Marengo", "Jardim Maria Eliza", 
+        "Jardim Maria Rosa", "Monte Belo", "Jardim Miray", "Jardim Monica", "Jardim Moraes", 
+        "Sítio José de Moraes", "Morro Branco", "Vila Nely", "Parque Novo Horizonte", "Jardim Odete", 
+        "Jardim Paineira", "Jardim Patricia", "Pedreira", "Jardim Pinheirinho", "Parque Piratininga I", 
+        "Parque Piratininga II", "Pium", "Rancho Grande", "Vila São Carlos", "Parque São Pedro", 
+        "Jardim São Paulo", "Scaffid", "Jardim Silvestre", "Vila Sônia", "Terra Prometida", 
+        "Jardim Tropical", "Parque Village", "Vila Virginia"
     ];
 
-    const listaContainer = document.getElementById('lista-inst');
+    const instrumentos = [
+        {n: "Organistas"}, {n: "Violino"}, {n: "Viola"}, {n: "Violoncelo"},
+        {n: "Flauta"}, {n: "Oboé"}, {n: "Clarinete"}, {n: "Sax Alto"}, 
+        {n: "Sax Tenor"}, {n: "Trompete"}, {n: "Trompa"}, {n: "Trombone"}, 
+        {n: "Tuba"}, {n: "Eufônio"}, {n: "Anciães"}, {n: "Diáconos"}, {n: "Cooperadores"}
+    ];
 
-    // Criar a interface
-    instrumentos.forEach((inst, index) => {
-        const div = document.createElement('div');
-        div.className = 'linha-instrumento';
-        div.innerHTML = `
-            <span class="nome-inst">${inst.nome}</span>
-            <div class="controles">
-                <button class="btn btn-menos" onclick="mudar(${index}, -1)">-</button>
-                <input type="number" id="inst-${index}" value="0" onchange="calcular()">
-                <button class="btn btn-mais" onclick="mudar(${index}, 1)">+</button>
-            </div>
-        `;
-        listaContainer.appendChild(div);
+    let comumSelecionada = "";
+    let multiplicadorAtual = 1;
+
+    // Gerar botões das Comuns
+    const divComuns = document.getElementById('lista-comuns');
+    comuns.forEach(c => {
+        let b = document.createElement('button');
+        b.className = 'btn-comum';
+        b.innerText = c;
+        b.onclick = () => abrirModal(c);
+        divComuns.appendChild(b);
     });
 
-    function mudar(index, valor) {
-        const campo = document.getElementById(`inst-${index}`);
-        let atual = parseInt(campo.value) || 0;
-        if (atual + valor >= 0) {
-            campo.value = atual + valor;
+    // Gerar lista de Instrumentos
+    const divInst = document.getElementById('lista-inst');
+    instrumentos.forEach((inst, i) => {
+        let d = document.createElement('div');
+        d.className = 'linha';
+        d.innerHTML = `<span class="nome-inst">${inst.n}</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <button class="btn-c menos" onclick="mudar(${i},-1)">-</button>
+                <input type="number" id="in-${i}" value="0" readonly>
+                <button class="btn-c mais" onclick="mudar(${i},1)">+</button>
+            </div>`;
+        divInst.appendChild(d);
+    });
+
+    function abrirModal(nome) {
+        comumSelecionada = nome;
+        document.getElementById('modal-nome-comum').innerText = nome;
+        multiplicadorAtual = 1;
+        document.getElementById('qtd-modal').innerText = "1";
+        document.getElementById('modal-confirmacao').style.display = 'flex';
+    }
+
+    function ajustarModal(v) {
+        multiplicadorAtual = Math.max(1, multiplicadorAtual + v);
+        document.getElementById('qtd-modal').innerText = multiplicadorAtual;
+    }
+
+    function fecharModal() { document.getElementById('modal-confirmacao').style.display = 'none'; }
+
+    function confirmarEntrada() {
+        document.getElementById('nome-comum-atual').innerText = comumSelecionada;
+        document.getElementById('indicador-multi').innerText = "Adicionando x" + multiplicadorAtual;
+        fecharModal();
+        document.getElementById('tela-comuns').style.display = 'none';
+        document.getElementById('tela-instrumentos').style.display = 'block';
+    }
+
+    function voltar() {
+        document.getElementById('tela-comuns').style.display = 'block';
+        document.getElementById('tela-instrumentos').style.display = 'none';
+    }
+
+    function mudar(i, v) {
+        let campo = document.getElementById(`in-${i}`);
+        let atual = parseInt(campo.value);
+        let mudanca = v * multiplicadorAtual;
+        if(atual + mudanca >= 0) {
+            campo.value = atual + mudanca;
             calcular();
+            // Resetar multiplicador para 1 após registrar a entrada do grupo
+            multiplicadorAtual = 1;
+            document.getElementById('indicador-multi').innerText = "x1";
         }
     }
 
     function calcular() {
-        let totais = { cordas: 0, madeiras: 0, metais: 0, ministerio: 0 };
-        
-        instrumentos.forEach((inst, index) => {
-            const qtd = parseInt(document.getElementById(`inst-${index}`).value) || 0;
-            totais[inst.tipo] += qtd;
+        let total = 0;
+        instrumentos.forEach((inst, i) => {
+            total += parseInt(document.getElementById(`in-${i}`).value);
         });
-
-        let totalMusicos = totais.cordas + totais.madeiras + totais.metais;
-        let totalGeral = totalMusicos + totais.ministerio;
-
-        // Atualizar painel
-        document.getElementById('resMin').innerText = totais.ministerio;
-        document.getElementById('resTotal').innerText = totalGeral;
-
-        if (totalMusicos > 0) {
-            document.getElementById('pCordas').innerText = Math.round((totais.cordas / totalMusicos) * 100);
-            document.getElementById('pMadeiras').innerText = Math.round((totais.madeiras / totalMusicos) * 100);
-            document.getElementById('pMetais').innerText = Math.round((totais.metais / totalMusicos) * 100);
-        }
+        document.getElementById('resTotal').innerText = total;
     }
 </script>
-
 </body>
 </html>
