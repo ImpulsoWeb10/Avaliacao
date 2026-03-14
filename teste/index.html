@@ -3,111 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contagem Ensaio Regional</title>
+    <title>Contagem Ágil CCB</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; color: #333; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .secao { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
-        .secao-titulo { font-weight: bold; margin-bottom: 10px; color: #2980b9; display: block; text-transform: uppercase; font-size: 0.9em; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .item { display: flex; flex-direction: column; }
-        label { font-size: 0.85em; margin-bottom: 3px; }
-        input { padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; } /* 16px evita zoom no iPhone */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ececec; margin: 0; padding: 10px; padding-bottom: 120px; }
+        .container { max-width: 500px; margin: auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { background: #1a2a3a; color: white; text-align: center; padding: 15px; font-size: 1.2em; font-weight: bold; }
         
-        .dashboard { background: #2c3e50; color: white; padding: 20px; border-radius: 8px; position: sticky; bottom: 10px; margin-top: 20px; }
-        .dash-line { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.1em; }
-        .total-geral { border-top: 1px solid #555; padding-top: 10px; margin-top: 10px; font-weight: bold; font-size: 1.4em; color: #f1c40f; }
-        .stats { font-size: 0.8em; color: #bdc3c7; }
+        .linha-instrumento { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; }
+        .linha-instrumento:nth-child(even) { background: #fafafa; }
+        .nome-inst { flex: 1; font-weight: 500; color: #444; }
+        
+        .controles { display: flex; align-items: center; gap: 10px; }
+        .btn { width: 35px; height: 35px; border: none; border-radius: 6px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-menos { background: #e74c3c; color: white; }
+        .btn-mais { background: #27ae60; color: white; }
+        .btn:active { transform: scale(0.9); opacity: 0.8; }
+        
+        input { width: 40px; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 1.1em; font-weight: bold; background: #fff; }
+
+        /* Rodapé Fixo */
+        .footer-painel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a2a3a; color: white; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
+        .resumo-flex { display: flex; justify-content: space-around; text-align: center; font-size: 0.85em; margin-bottom: 10px; border-bottom: 1px solid #334455; padding-bottom: 8px; }
+        .total-container { display: flex; justify-content: space-between; align-items: center; font-size: 1.3em; font-weight: bold; color: #f1c40f; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Contagem Regional</h2>
-
-    <div class="secao">
-        <span class="secao-titulo">Família das Cordas</span>
-        <div class="grid">
-            <div class="item"><label>Organistas</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Violinos</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Violas</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Violoncelos</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
-        </div>
+<div class="container" id="lista-inst">
+    <div class="header">Contagem de Músicos</div>
+    
     </div>
 
-    <div class="secao">
-        <span class="secao-titulo">Família das Madeiras</span>
-        <div class="grid">
-            <div class="item"><label>Flautas</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Clarinetes</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Saxofones</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Fagote/Oboé</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
-        </div>
+<div class="footer-painel">
+    <div class="resumo-flex">
+        <div>CORDAS<br><span id="pCordas">0</span>%</div>
+        <div>MADEIRAS<br><span id="pMadeiras">0</span>%</div>
+        <div>METAIS<br><span id="pMetais">0</span>%</div>
+        <div>MINISTÉRIO<br><span id="resMin">0</span></div>
     </div>
-
-    <div class="secao">
-        <span class="secao-titulo">Família dos Metais</span>
-        <div class="grid">
-            <div class="item"><label>Trompetes</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Trombones</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Tubas</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Eufônios</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
-        </div>
-    </div>
-
-    <div class="secao">
-        <span class="secao-titulo">Ministério</span>
-        <div class="grid">
-            <div class="item"><label>Anciães</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Diáconos</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
-            <div class="item"><label>Cooperadores</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
-        </div>
-    </div>
-
-    <div class="dashboard">
-        <div class="dash-line"><span>Músicos:</span> <span id="resMusicos">0</span></div>
-        <div class="stats">
-            Cordas: <span id="pCordas">0</span>% | 
-            Madeiras: <span id="pMadeiras">0</span>% | 
-            Metais: <span id="pMetais">0</span>%
-        </div>
-        <div class="dash-line"><span>Ministério/Outros:</span> <span id="resMinisterio">0</span></div>
-        <div class="dash-line total-geral"><span>TOTAL GERAL:</span> <span id="resTotal">0</span></div>
+    <div class="total-container">
+        <span>TOTAL GERAL:</span>
+        <span id="resTotal">0</span>
     </div>
 </div>
 
 <script>
-function calcular() {
-    let cordas = somarClasse('cordas');
-    let madeiras = somarClasse('madeiras');
-    let metais = somarClasse('metais');
-    let ministerio = somarClasse('ministerio');
+    // Lista baseada exatamente na sua imagem do Excel
+    const instrumentos = [
+        {nome: "Organistas", tipo: "cordas"},
+        {nome: "Violino", tipo: "cordas"},
+        {nome: "Viola", tipo: "cordas"},
+        {nome: "Violoncelo", tipo: "cordas"},
+        {nome: "Flauta", tipo: "madeiras"},
+        {nome: "Oboé", tipo: "madeiras"},
+        {nome: "Clarinete", tipo: "madeiras"},
+        {nome: "Saxofone Alto", tipo: "madeiras"},
+        {nome: "Saxofone Tenor", tipo: "madeiras"},
+        {nome: "Trompete", tipo: "metais"},
+        {nome: "Trompa", tipo: "metais"},
+        {nome: "Trombone", tipo: "metais"},
+        {nome: "Tuba", tipo: "metais"},
+        {nome: "Eufônio", tipo: "metais"},
+        {nome: "Anciães", tipo: "ministerio"},
+        {nome: "Diáconos", tipo: "ministerio"},
+        {nome: "Cooperadores", tipo: "ministerio"}
+    ];
 
-    let totalMusicos = cordas + madeiras + metais;
-    let totalGeral = totalMusicos + ministerio;
+    const listaContainer = document.getElementById('lista-inst');
 
-    // Atualiza números
-    document.getElementById('resMusicos').innerText = totalMusicos;
-    document.getElementById('resMinisterio').innerText = ministerio;
-    document.getElementById('resTotal').innerText = totalGeral;
+    // Criar a interface
+    instrumentos.forEach((inst, index) => {
+        const div = document.createElement('div');
+        div.className = 'linha-instrumento';
+        div.innerHTML = `
+            <span class="nome-inst">${inst.nome}</span>
+            <div class="controles">
+                <button class="btn btn-menos" onclick="mudar(${index}, -1)">-</button>
+                <input type="number" id="inst-${index}" value="0" onchange="calcular()">
+                <button class="btn btn-mais" onclick="mudar(${index}, 1)">+</button>
+            </div>
+        `;
+        listaContainer.appendChild(div);
+    });
 
-    // Atualiza Porcentagens
-    if(totalMusicos > 0) {
-        document.getElementById('pCordas').innerText = Math.round((cordas / totalMusicos) * 100);
-        document.getElementById('pMadeiras').innerText = Math.round((madeiras / totalMusicos) * 100);
-        document.getElementById('pMetais').innerText = Math.round((metais / totalMusicos) * 100);
+    function mudar(index, valor) {
+        const campo = document.getElementById(`inst-${index}`);
+        let atual = parseInt(campo.value) || 0;
+        if (atual + valor >= 0) {
+            campo.value = atual + valor;
+            calcular();
+        }
     }
-}
 
-function somarClasse(nomeClasse) {
-    let inputs = document.getElementsByClassName(nomeClasse);
-    let soma = 0;
-    for (let i = 0; i < inputs.length; i++) {
-        soma += Number(inputs[i].value) || 0;
+    function calcular() {
+        let totais = { cordas: 0, madeiras: 0, metais: 0, ministerio: 0 };
+        
+        instrumentos.forEach((inst, index) => {
+            const qtd = parseInt(document.getElementById(`inst-${index}`).value) || 0;
+            totais[inst.tipo] += qtd;
+        });
+
+        let totalMusicos = totais.cordas + totais.madeiras + totais.metais;
+        let totalGeral = totalMusicos + totais.ministerio;
+
+        // Atualizar painel
+        document.getElementById('resMin').innerText = totais.ministerio;
+        document.getElementById('resTotal').innerText = totalGeral;
+
+        if (totalMusicos > 0) {
+            document.getElementById('pCordas').innerText = Math.round((totais.cordas / totalMusicos) * 100);
+            document.getElementById('pMadeiras').innerText = Math.round((totais.madeiras / totalMusicos) * 100);
+            document.getElementById('pMetais').innerText = Math.round((totais.metais / totalMusicos) * 100);
+        }
     }
-    return soma;
-}
 </script>
 
 </body>
