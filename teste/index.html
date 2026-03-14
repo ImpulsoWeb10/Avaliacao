@@ -3,187 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Opinião | Itapuã Center</title>
-    
+    <title>Contagem Ensaio Regional</title>
     <style>
-        :root {
-            --primary: #d32f2f;
-            --google-blue: #4285F4;
-            --star-off: #ccc;
-            --star-on: #ffb400;
-            --bg: #f8fafc;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .card {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 40px 30px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .logo { max-width: 140px; margin-bottom: 20px; }
-
-        h1 { font-size: 1.4rem; color: #1e293b; margin-bottom: 8px; }
-        p { color: #64748b; font-size: 0.95rem; margin-bottom: 25px; }
-
-        /* Estrelas Interativas */
-        .stars-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            direction: rtl; /* Truque CSS para hover reverso */
-            margin-bottom: 30px;
-        }
-
-        .stars-container input { display: none; }
-
-        .stars-container label {
-            font-size: 2.5rem;
-            color: var(--star-off);
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-
-        .stars-container label:hover,
-        .stars-container label:hover ~ label,
-        .stars-container input:checked ~ label {
-            color: var(--star-on);
-            transform: scale(1.1);
-        }
-
-        /* Seções Escondidas */
-        .hidden { display: none; opacity: 0; transform: translateY(20px); }
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; color: #333; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .secao { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
+        .secao-titulo { font-weight: bold; margin-bottom: 10px; color: #2980b9; display: block; text-transform: uppercase; font-size: 0.9em; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .item { display: flex; flex-direction: column; }
+        label { font-size: 0.85em; margin-bottom: 3px; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; } /* 16px evita zoom no iPhone */
         
-        .show { 
-            display: block !important; 
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Botões */
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.3s;
-            border: none;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .btn-google {
-            background: var(--google-blue);
-            color: white;
-            box-shadow: 0 10px 20px rgba(66, 133, 244, 0.2);
-        }
-
-        .btn-feedback {
-            background: #1e293b;
-            color: white;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 15px;
-            font-family: inherit;
-            box-sizing: border-box;
-        }
-
-        .badge-ia {
-            font-size: 0.7rem;
-            background: #f1f5f9;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
+        .dashboard { background: #2c3e50; color: white; padding: 20px; border-radius: 8px; position: sticky; bottom: 10px; margin-top: 20px; }
+        .dash-line { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.1em; }
+        .total-geral { border-top: 1px solid #555; padding-top: 10px; margin-top: 10px; font-weight: bold; font-size: 1.4em; color: #f1c40f; }
+        .stats { font-size: 0.8em; color: #bdc3c7; }
     </style>
 </head>
 <body>
 
-<div class="card" id="main-card">
-    <img src="itapua-center-materiais-de-construcao.png" alt="Logo" class="logo">
-    
-    <div id="step-1">
-        <h1>Sua experiência</h1>
-        <p>Toque na estrela para avaliar nosso atendimento.</p>
-        
-        <div class="stars-container">
-            <input type="radio" name="rating" id="star5" value="5" onclick="handleRating(5)"><label for="star5">★</label>
-            <input type="radio" name="rating" id="star4" value="4" onclick="handleRating(4)"><label for="star4">★</label>
-            <input type="radio" name="rating" id="star3" value="3" onclick="handleRating(3)"><label for="star3">★</label>
-            <input type="radio" name="rating" id="star2" value="2" onclick="handleRating(2)"><label for="star2">★</label>
-            <input type="radio" name="rating" id="star1" value="1" onclick="handleRating(1)"><label for="star1">★</label>
+<div class="container">
+    <h2>Contagem Regional</h2>
+
+    <div class="secao">
+        <span class="secao-titulo">Família das Cordas</span>
+        <div class="grid">
+            <div class="item"><label>Organistas</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Violinos</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Violas</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Violoncelos</label><input type="number" class="cordas" value="0" oninput="calcular()"></div>
         </div>
     </div>
 
-    <div id="step-positive" class="hidden">
-        <span class="badge-ia">⭐ CLIENTE VIP</span>
-        <h1>Excelente!</h1>
-        <p>Ficamos muito felizes! Poderia compartilhar isso no Google para nos ajudar?</p>
-        <a href="SEU_LINK_DO_GOOGLE_AQUI" class="btn btn-google">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="20" style="filter: brightness(0) invert(1);">
-            Postar no Google
-        </a>
+    <div class="secao">
+        <span class="secao-titulo">Família das Madeiras</span>
+        <div class="grid">
+            <div class="item"><label>Flautas</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Clarinetes</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Saxofones</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Fagote/Oboé</label><input type="number" class="madeiras" value="0" oninput="calcular()"></div>
+        </div>
     </div>
 
-    <div id="step-negative" class="hidden">
-        <h1>Como podemos melhorar?</h1>
-        <p>Sua opinião será enviada diretamente à gerência para corrigirmos o erro.</p>
-        <textarea id="feedback-text" placeholder="Conte-nos o que aconteceu..."></textarea>
-        <button onclick="sendPrivate()" class="btn btn-feedback">Enviar Feedback Privado</button>
+    <div class="secao">
+        <span class="secao-titulo">Família dos Metais</span>
+        <div class="grid">
+            <div class="item"><label>Trompetes</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Trombones</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Tubas</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Eufônios</label><input type="number" class="metais" value="0" oninput="calcular()"></div>
+        </div>
     </div>
 
-    <div id="step-thanks" class="hidden">
-        <h1>Obrigado!</h1>
-        <p>Sua mensagem foi enviada. Trabalharemos para te atender melhor na próxima vez.</p>
+    <div class="secao">
+        <span class="secao-titulo">Ministério</span>
+        <div class="grid">
+            <div class="item"><label>Anciães</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Diáconos</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
+            <div class="item"><label>Cooperadores</label><input type="number" class="ministerio" value="0" oninput="calcular()"></div>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <div class="dash-line"><span>Músicos:</span> <span id="resMusicos">0</span></div>
+        <div class="stats">
+            Cordas: <span id="pCordas">0</span>% | 
+            Madeiras: <span id="pMadeiras">0</span>% | 
+            Metais: <span id="pMetais">0</span>%
+        </div>
+        <div class="dash-line"><span>Ministério/Outros:</span> <span id="resMinisterio">0</span></div>
+        <div class="dash-line total-geral"><span>TOTAL GERAL:</span> <span id="resTotal">0</span></div>
     </div>
 </div>
 
 <script>
-    function handleRating(stars) {
-        document.getElementById('step-1').classList.add('hidden');
-        document.getElementById('step-1').style.display = 'none';
+function calcular() {
+    let cordas = somarClasse('cordas');
+    let madeiras = somarClasse('madeiras');
+    let metais = somarClasse('metais');
+    let ministerio = somarClasse('ministerio');
 
-        if(stars >= 4) {
-            document.getElementById('step-positive').classList.add('show');
-        } else {
-            document.getElementById('step-negative').classList.add('show');
-        }
-    }
+    let totalMusicos = cordas + madeiras + metais;
+    let totalGeral = totalMusicos + ministerio;
 
-    function sendPrivate() {
-        // Aqui você pode integrar com um formspree.io ou WhatsApp da empresa
-        document.getElementById('step-negative').classList.remove('show');
-        document.getElementById('step-negative').style.display = 'none';
-        document.getElementById('step-thanks').classList.add('show');
+    // Atualiza números
+    document.getElementById('resMusicos').innerText = totalMusicos;
+    document.getElementById('resMinisterio').innerText = ministerio;
+    document.getElementById('resTotal').innerText = totalGeral;
+
+    // Atualiza Porcentagens
+    if(totalMusicos > 0) {
+        document.getElementById('pCordas').innerText = Math.round((cordas / totalMusicos) * 100);
+        document.getElementById('pMadeiras').innerText = Math.round((madeiras / totalMusicos) * 100);
+        document.getElementById('pMetais').innerText = Math.round((metais / totalMusicos) * 100);
     }
+}
+
+function somarClasse(nomeClasse) {
+    let inputs = document.getElementsByClassName(nomeClasse);
+    let soma = 0;
+    for (let i = 0; i < inputs.length; i++) {
+        soma += Number(inputs[i].value) || 0;
+    }
+    return soma;
+}
 </script>
 
 </body>
