@@ -4,52 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Avaliação | [NOME DA EMPRESA]</title>
-    <meta name="description" content="Avalie nossa empresa e nos ajude a melhorar.">
+    <title>Avaliação Fretadão | Excelência em Transporte de Passageiros</title>
+    <meta name="description" content="Sua opinião é fundamental para o Fretadão. Avalie nosso serviço de transporte executivo, fretamento e logística de pessoas com segurança e conforto.">
+    <meta name="keywords" content="Fretadão, transporte de passageiros, fretamento executivo, segurança viária, transporte de funcionários, logística de pessoas">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* ESTILOS PRESERVADOS - SUA IDENTIDADE VISUAL */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .container { max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); text-align: center; }
-        .logo { width: 150px; height: 100px; object-fit: contain; padding: 10px; border-radius: 22px; border: 3px solid #facc15; background: white; margin: 0 auto 20px; }
-        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; }
-        h2 { font-size: 17px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
-        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
-        textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; }
-        textarea::placeholder { color: rgba(255, 255, 255, 0.5); font-style: italic; }
-        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 10px; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        /* LOGO COM TRANSIÇÃO DE TAMANHO */
+        .logo-box {
+            width: 100%;
+            margin-bottom: 25px;
+            transition: all 0.5s ease;
+        }
+
+        .logo { 
+            width: 100%; /* Começa ocupando a largura total disponível */
+            max-width: 280px; /* Grande na primeira tela */
+            height: auto;
+            aspect-ratio: 16/9; /* Mantém proporção retangular */
+            object-fit: contain;
+            border-radius: 25px; /* Pontas arredondadas como solicitado */
+            border: 4px solid #facc15; 
+            background: white;
+            transition: all 0.5s ease;
+        }
+
+        /* Classe que será aplicada via JS para diminuir o logo */
+        .logo-small .logo {
+            max-width: 150px;
+        }
+
+        h1 { font-size: 28px; margin-bottom: 5px; color: #fff; }
+        h2 { font-size: 18px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
+        
+        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 10px; }
+        .star-btn { font-size: 45px; color: #475569; cursor: pointer; transition: 0.3s; }
+        .star-btn.active { color: #facc15; transform: scale(1.2); text-shadow: 0 0 20px rgba(250, 204, 21, 0.5); }
+
+        textarea {
+            width: 100%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
+            color: white; padding: 15px; margin-bottom: 15px; outline: none;
+            resize: none; font-family: inherit; font-size: 14px; height: 100px;
+        }
+
+        .botao {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 18px; border-radius: 50px;
+            font-weight: 800; font-size: 16px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer;
+            position: relative; overflow: hidden; margin-bottom: 12px;
+        }
+        
         .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
         .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
-        .google::after, .instagram::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shine 3s infinite; }
-        .whatsapp { background: #22c55e; color: white; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
-        @keyframes shine { to { left: 100%; } }
-        .img-resultado { width: 100%; max-height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); display: block; }
+        .telefone { background: #3b82f6; color: white; } /* Cor azul para telefone fixo */
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); }
+        }
+
         .hidden { display: none; }
-        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; line-height: 1.8; }
-        .footer .slogan-final { font-style: italic; color: #facc15; margin-bottom: 20px; font-size: 18px; font-weight: 700; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        .cta-vendas { display: block; margin-bottom: 15px; font-size: 12px; color: #cbd5e1; }
-        .cta-vendas a { color: #38bdf8; text-decoration: none; font-weight: 700; border-bottom: 1px solid #38bdf8; }
-        .footer .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
-        .footer b { color: #facc15; }
+
+        /* RODAPÉ ESTRATÉGICO */
+        .footer { 
+            margin-top: 35px; 
+            font-size: 13px; 
+            color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); 
+            padding-top: 25px;
+        }
+        
+        .slogan-forte { 
+            font-style: italic; 
+            color: #facc15; 
+            margin-bottom: 20px; 
+            font-size: 19px; 
+            font-weight: 700;
+            display: block;
+            line-height: 1.3;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="fretadao.png" class="logo" alt="Logo">
+<div class="container" id="main-container">
+    <div class="logo-box" id="logo-container">
+        <img src="logo-fretadao.png" class="logo" alt="Fretadão Logo">
+    </div>
 
-    <h1>[NOME DA EMPRESA]</h1>
-    <h2>[RAMO DE ATIVIDADE]</h2>
+    <h1>Fretadão</h1>
+    <h2>Transporte de Passageiros</h2>
     
-    <p id="instrucao" style="margin-bottom: 20px;">Toque nas estrelas para nos avaliar:</p>
+    <p id="instrucao" style="margin-bottom: 20px;">Como foi sua experiência de viagem hoje?</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -60,36 +140,31 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="imagem-feedback.png" class="img-resultado" alt="Sucesso">
-        <p style="font-size: 18px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
+        <p style="font-size: 18px; margin-bottom: 20px;">Sua satisfação é nosso destino! 🎉</p>
         
-        <a href="LINK_DO_GOOGLE_AQUI" target="_blank" class="botao google">
+        <a href="LINK_GOOGLE_FRETADAO" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
-        <a href="LINK_DO_INSTAGRAM_AQUI" target="_blank" class="botao instagram">
-            <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
+        <a href="LINK_INSTAGRAM_FRETADAO" target="_blank" class="botao instagram">
+            <i class="fab fa-instagram"></i> VER NOVIDADES NO INSTA
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" placeholder="O que podemos fazer para melhorar sua experiência?"></textarea>
+        <p style="font-size: 17px; margin-bottom: 15px;">Queremos ouvir você para melhorar. 😔</p>
+        <p style="font-size: 14px; margin-bottom: 15px; color: #cbd5e1;">Ligue agora para nosso suporte:</p>
         
-        <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
-        </button>
+        <a href="tel:1148581340" class="botao telefone">
+            <i class="fas fa-phone-alt"></i> (11) 4858-1340
+        </a>
+        <p style="font-size: 11px; margin-top: 5px; color: #94a3b8;">Atendimento Administrativo</p>
     </div>
 
     <div class="footer">
-        <span class="slogan-final">"Qualidade e compromisso em cada detalhe."</span>
+        <span class="slogan-forte">"Transportando sonhos e conectando destinos com a segurança que você merece."</span>
         
-        <span class="cta-vendas">
-            Gostou desse sistema? Tenha um link personalizado para sua empresa. 
-            <a href="https://wa.me/5511954950044?text=Olá, quero um sistema de avaliação para minha empresa!" target="_blank">Falar com ImpulsoWeb10</a>
-        </span>
-
-        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
+        <div style="margin-bottom: 10px;">🔒 AMBIENTE SEGURO | © 2026</div>
         <div>
             Desenvolvido por: 
             <a href="https://impulsoweb10.com.br/" target="_blank" class="dev-link">ImpulsoWeb10</a>
@@ -98,31 +173,30 @@
 </div>
 
 <script>
-    let notaSelecionada = 0;
-    const NOME_EMPRESA = "[NOME DA EMPRESA]"; // Troque pelo nome do cliente
-    const WHATSAPP_CLIENTE = "5511900000000"; // Troque pelo WhatsApp do cliente (DDI+DDD+NUMERO)
-
     function avaliar(n) {
-        notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
+        
         document.getElementById('instrucao').classList.add('hidden');
         
+        // Se a nota for boa, diminui o logo para caber tudo na tela sem rolar
         if (n >= 4) {
+            document.getElementById('logo-container').classList.add('logo-small');
             document.getElementById('feedback-bom').classList.remove('hidden');
             document.getElementById('feedback-ruim').classList.add('hidden');
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#facc15', '#ffffff', '#3b82f6']
+            });
         } else {
+            // Se for nota baixa, mantém o foco no atendimento
+            document.getElementById('logo-container').classList.add('logo-small');
             document.getElementById('feedback-ruim').classList.remove('hidden');
             document.getElementById('feedback-bom').classList.add('hidden');
         }
-    }
-
-    function enviarWhatsApp() {
-        const texto = document.getElementById('texto-melhoria').value;
-        if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
-        const msg = encodeURIComponent(`Feedback ${NOME_EMPRESA} (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${WHATSAPP_CLIENTE}?text=${msg}`, '_blank');
     }
 </script>
 
