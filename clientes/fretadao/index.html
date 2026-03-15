@@ -17,8 +17,17 @@
         .logo { width: 100%; max-width: 280px; height: auto; border-radius: 20px; border: 3px solid #facc15; background: white; transition: 0.5s; }
         .logo-small .logo { max-width: 190px; }
 
-        #carinha { font-size: 60px; display: block; margin-top: 10px; }
-        #status-txt { font-weight: 700; color: #facc15; margin-bottom: 15px; display: block; font-size: 18px; }
+        /* AJUSTE DAS CARINHAS AO LADO DO TEXTO */
+        .status-wrapper { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            margin-bottom: 15px;
+            min-height: 30px;
+        }
+        #status-txt { font-weight: 700; color: #facc15; font-size: 18px; }
+        #carinha { font-size: 24px; } /* Carinha menor ao lado da frase */
         
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 45px; color: #475569; cursor: pointer; transition: 0.3s; }
@@ -26,10 +35,8 @@
 
         textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; height: 100px; }
 
-        /* ANIMAÇÃO DO ÔNIBUS */
         .img-fretadao { width: 100%; border-radius: 20px; margin-bottom: 15px; border: 2px solid #facc15; display: none; transform: scale(0.5); opacity: 0; animation: crescendoEaparecendo 1.5s ease-out forwards; }
 
-        /* BOTÃO GOOGLE */
         .google { background: #facc15; color: #000; font-weight: 800; padding: 18px; border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; animation: pulse 2s infinite; position: relative; overflow: hidden; margin-top: 10px; }
         .google::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shine 3s infinite; }
         
@@ -45,9 +52,8 @@
         .vendas-link a { color: #38bdf8; text-decoration: none; font-weight: bold; border-bottom: 1px solid #38bdf8; }
         .dev { font-size: 11px; color: #64748b; }
         .dev a { color: #22c55e; text-decoration: none; font-weight: bold; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
     </style>
-    <script src="https://t.contentsquare.net/uxa/7bc1302beb4f7.js"></script>
 </head>
 <body>
 
@@ -67,8 +73,10 @@
         <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
-    <span id="carinha" class="hidden"></span>
-    <span id="status-txt" class="hidden"></span>
+    <div class="status-wrapper hidden" id="feedback-status">
+        <span id="status-txt"></span>
+        <span id="carinha"></span>
+    </div>
 
     <div id="area-feedback" class="hidden">
         <textarea id="texto-cliente"></textarea>
@@ -101,12 +109,13 @@
         const statusTxt = document.getElementById('status-txt');
         const slogan = document.getElementById('slogan-seo');
         const txtInput = document.getElementById('texto-cliente');
+        const statusWrapper = document.getElementById('feedback-status');
         
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
         document.getElementById('logo-wrap').classList.add('logo-small');
         document.getElementById('instrucao').classList.add('hidden');
-        carinha.classList.remove('hidden');
-        statusTxt.classList.remove('hidden');
+        
+        statusWrapper.classList.remove('hidden');
 
         if (n === 1) {
             carinha.innerText = "☹️"; statusTxt.innerText = "Sentimos muito."; 
