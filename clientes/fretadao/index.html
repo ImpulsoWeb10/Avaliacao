@@ -17,7 +17,7 @@
         .logo { width: 100%; max-width: 280px; height: auto; border-radius: 20px; border: 3px solid #facc15; background: white; transition: 0.5s; }
         .logo-small .logo { max-width: 190px; }
 
-        /* AJUSTE DAS CARINHAS AO LADO DO TEXTO */
+        /* CARINHA AO LADO DA FRASE */
         .status-wrapper { 
             display: flex; 
             align-items: center; 
@@ -27,7 +27,7 @@
             min-height: 30px;
         }
         #status-txt { font-weight: 700; color: #facc15; font-size: 18px; }
-        #carinha { font-size: 24px; } /* Carinha menor ao lado da frase */
+        #carinha { font-size: 24px; }
         
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 45px; color: #475569; cursor: pointer; transition: 0.3s; }
@@ -37,8 +37,33 @@
 
         .img-fretadao { width: 100%; border-radius: 20px; margin-bottom: 15px; border: 2px solid #facc15; display: none; transform: scale(0.5); opacity: 0; animation: crescendoEaparecendo 1.5s ease-out forwards; }
 
-        .google { background: #facc15; color: #000; font-weight: 800; padding: 18px; border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; animation: pulse 2s infinite; position: relative; overflow: hidden; margin-top: 10px; }
-        .google::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shine 3s infinite; }
+        /* BOTÃO AMARELO COM PULSO E BRILHO */
+        .google { 
+            background: #facc15; 
+            color: #000; 
+            font-weight: 800; 
+            padding: 18px; 
+            border-radius: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            text-decoration: none; 
+            animation: pulse 2s infinite; 
+            position: relative; 
+            overflow: hidden; 
+            margin-top: 10px; 
+        }
+        .google::after { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 100%; 
+            height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); 
+            animation: shine 3s infinite; 
+        }
         
         .whatsapp { background: #22c55e; color: white; padding: 18px; border-radius: 50px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; width: 100%; border: none; cursor: pointer; }
 
@@ -88,7 +113,7 @@
 
     <div id="bloco-bom" class="hidden">
         <img src="fretadaopai.png" class="img-fretadao" id="img-bus">
-        <a href="https://www.google.com/search?sca_esv=728cb637a3a48d4c&sxsrf=ANbL-n5ZDXrF4zJkovsuNRwaDVKdnwrqVw:1773599399723&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOW38ihEJL9ML2wQioW5g9t-FKz34cg_ScaTJa5Z3YbInXzGLwzDOo-FT_jizCn0E7ZgjxIdXUl-E4006D9ngMCp-Vsf7&q=Fretad%C3%A3o+Coment%C3%A1rios&sa=X&ved=2ahUKEwij4MbRxKKTAxV4pJUCHWSAIC4Q0bkNegQIGxAH&biw=1366&bih=615&dpr=1#lrd=0x94ce5804ccf2f1ab:0x83ac86aaa25e4687,3,,,,">
+        <a href="https://www.google.com/search?q=Fretad%C3%A3o+Coment%C3%A1rios#lrd=0x94ce5804ccf2f1ab:0x83ac86aaa25e4687,3,,,," class="google" target="_blank">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
