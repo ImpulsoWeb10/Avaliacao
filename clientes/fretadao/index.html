@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliação Fretadão</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -14,40 +13,36 @@
         body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .container { max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); padding: 30px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); text-align: center; }
         
-        .logo-box { width: 100%; margin-bottom: 20px; transition: all 0.6s ease; }
-        .logo { width: 100%; max-width: 280px; height: auto; border-radius: 25px; border: 4px solid #facc15; background: white; transition: 0.6s; }
-        .logo-small .logo { max-width: 110px; }
+        .logo-box { width: 100%; margin-bottom: 20px; transition: 0.5s ease; }
+        .logo { width: 100%; max-width: 280px; height: auto; border-radius: 25px; border: 4px solid #facc15; background: white; transition: 0.5s; }
+        /* Logo diminui apenas 30% */
+        .logo-small .logo { max-width: 196px; }
 
         h1 { font-size: 24px; margin-bottom: 5px; }
-        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        #carinha { font-size: 50px; display: block; margin-bottom: 10px; transition: 0.3s; }
         
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.1); }
+        .star-btn.active { color: #facc15; }
 
-        textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; height: 80px; transition: 0.3s; }
-        textarea:focus { border-color: #facc15; background: rgba(255,255,255,0.15); }
+        textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; height: 80px; }
 
-        .img-estrada { width: 100%; height: 140px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; display: none; animation: fadeIn 0.8s ease; }
+        .img-tropical { width: 100%; height: 160px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; border: 2px solid #facc15; display: none; animation: fadeIn 0.8s ease; }
 
-        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; border-radius: 50px; font-weight: 800; font-size: 15px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; margin-bottom: 10px; }
+        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; border-radius: 50px; font-weight: 800; font-size: 15px; text-decoration: none; border: none; cursor: pointer; margin-bottom: 10px; }
         .google { background: #facc15; color: #000; }
-        .whatsapp-gerente { background: #22c55e; color: white; }
+        .whatsapp { background: #22c55e; color: white; }
 
-        .footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; }
-        .slogan { font-style: italic; color: #facc15; font-size: 14px; display: block; margin-bottom: 10px; }
+        .footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .slogan-dinamico { font-style: italic; color: #facc15; font-size: 14px; display: block; margin-bottom: 15px; min-height: 40px; }
         
-        .seguranca { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; color: #22c55e; font-size: 11px; font-weight: bold; }
-        .seguranca i { font-size: 14px; }
-
-        .cta-impulso { font-size: 11px; color: #94a3b8; margin-bottom: 10px; display: block; line-height: 1.4; }
-        .cta-impulso a { color: #38bdf8; text-decoration: none; font-weight: bold; border-bottom: 1px solid #38bdf8; }
-        
+        .seguranca { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; color: #22c55e; font-size: 10px; font-weight: bold; }
+        .cta-impulso { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 8px; }
+        .cta-impulso a { color: #38bdf8; text-decoration: none; font-weight: bold; }
         .dev { font-size: 11px; color: #64748b; }
-        .dev b { color: #22c55e; }
 
         .hidden { display: none; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -57,8 +52,8 @@
         <img src="fretadao.png" class="logo" alt="Fretadão">
     </div>
 
-    <h1>Fretadão</h1>
-    <h2 id="subtitulo">Sua avaliação é muito importante para nós!</h2>
+    <span id="carinha">🚐</span>
+    <h2 id="subtitulo" style="font-size: 16px; margin-bottom: 20px;">Sua avaliação é muito importante!</h2>
     
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -68,25 +63,21 @@
         <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
-    <div id="area-comentario" class="hidden">
-        <textarea id="feedback-texto" placeholder="Em que podemos melhorar para te atender melhor?"></textarea>
+    <div id="area-feedback" class="hidden">
+        <textarea id="msg-cliente" placeholder="Em que podemos melhorar para te atender melhor?"></textarea>
         
-        <div id="feedback-bom" class="hidden">
-            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800" class="img-estrada" id="foto-viagem">
-            <a href="LINK_DO_GOOGLE" id="btn-google" target="_blank" class="botao google">
-                <i class="fab fa-google"></i> ENVIAR E AVALIAR NO GOOGLE
-            </a>
+        <div id="bloco-positivo" class="hidden">
+            <img src="https://images.unsplash.com/photo-1568051243851-f9b136146e97?auto=format&fit=crop&q=80&w=800" class="img-tropical" id="img-onibus">
+            <a href="LINK_GOOGLE" class="botao google"><i class="fab fa-google"></i> AVALIAR NO GOOGLE</a>
         </div>
 
-        <div id="feedback-ruim" class="hidden">
-            <button onclick="enviarGerente()" class="botao whatsapp-gerente">
-                <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
-            </button>
+        <div id="bloco-negativo" class="hidden">
+            <button onclick="enviarFretadao()" class="botao whatsapp"><i class="fab fa-whatsapp"></i> FALAR COM GERENTE</button>
         </div>
     </div>
 
     <div class="footer">
-        <span class="slogan">"Conectando destinos com segurança."</span>
+        <span id="slogan-seo" class="slogan-dinamico">"Fretadão: Segurança e conforto em cada quilômetro."</span>
         
         <div class="seguranca">
             <span><i class="fas fa-lock"></i> CONEXÃO PROTEGIDA</span>
@@ -94,10 +85,9 @@
         </div>
 
         <span class="cta-impulso">
-            Gostaria de ter um link personalizado como este para sua empresa? 
+            Deseja um link personalizado para sua empresa? 
             <a href="https://www.impulsoweb10.com.br" target="_blank">Saiba mais</a>
         </span>
-
         <div class="dev">Desenvolvido por: <b>ImpulsoWeb10</b></div>
     </div>
 </div>
@@ -105,27 +95,45 @@
 <script>
     function avaliar(n) {
         const stars = document.querySelectorAll('.star-btn');
-        stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
+        const carinha = document.getElementById('carinha');
+        const slogan = document.getElementById('slogan-seo');
+        const img = document.getElementById('img-onibus');
         
+        stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
         document.getElementById('logo-wrap').classList.add('logo-small');
-        document.getElementById('area-comentario').classList.remove('hidden');
+        document.getElementById('area-feedback').classList.remove('hidden');
 
-        if (n >= 4) {
-            document.getElementById('feedback-bom').classList.remove('hidden');
-            document.getElementById('foto-viagem').style.display = 'block';
-            document.getElementById('feedback-ruim').classList.add('hidden');
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        // Lógica de Carinhas e Frases SEO
+        if (n === 1) {
+            carinha.innerText = "☹️";
+            slogan.innerText = "Sua segurança é nossa prioridade. Conte-nos o que houve para resolvermos imediatamente.";
+        } else if (n === 2) {
+            carinha.innerText = "😐";
+            slogan.innerText = "Trabalhamos para evoluir. Seu feedback ajuda o Fretadão a ser cada vez melhor.";
+        } else if (n === 3) {
+            carinha.innerText = "🙂";
+            slogan.innerText = "Obrigado pela parceria. Estamos sempre ajustando os detalhes para sua melhor viagem.";
         } else {
-            document.getElementById('feedback-ruim').classList.remove('hidden');
-            document.getElementById('feedback-bom').classList.add('hidden');
-            document.getElementById('foto-viagem').style.display = 'none';
+            carinha.innerText = "😍";
+            slogan.innerText = "Excelência em transporte. O Fretadão agradece a confiança e deseja uma ótima jornada!";
+        }
+
+        // Mostrar blocos
+        if (n >= 4) {
+            document.getElementById('bloco-positivo').classList.remove('hidden');
+            document.getElementById('bloco-negativo').classList.add('hidden');
+            img.style.display = "block";
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        } else {
+            document.getElementById('bloco-negativo').classList.remove('hidden');
+            document.getElementById('bloco-positivo').classList.add('hidden');
+            img.style.display = "none";
         }
     }
 
-    function enviarGerente() {
-        const msgUser = document.getElementById('feedback-texto').value;
-        const url = `https://wa.me/5511972082305?text=Olá, gostaria de dar um feedback: ${msgUser}`;
-        window.open(url, '_blank');
+    function enviarFretadao() {
+        const texto = document.getElementById('msg-cliente').value;
+        window.open(`https://wa.me/5511972082305?text=Feedback Fretadão: ${texto}`, '_blank');
     }
 </script>
 
