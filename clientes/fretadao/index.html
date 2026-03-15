@@ -39,9 +39,14 @@
 
         .footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
         .slogan-seo { font-style: italic; color: #facc15; font-size: 13px; display: block; margin-bottom: 15px; min-height: 40px; }
-        .seguranca { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; color: #94a3b8; font-size: 10px; }
+        
+        /* NOVO RODAPÉ COM SEUS LINKS */
+        .vendas-link { font-size: 11px; color: #cbd5e1; margin-bottom: 10px; display: block; line-height: 1.4; }
+        .vendas-link a { color: #38bdf8; text-decoration: none; font-weight: bold; border-bottom: 1px solid #38bdf8; }
+        
         .dev { font-size: 11px; color: #64748b; }
-        .dev b { color: #22c55e; }
+        .dev a { color: #22c55e; text-decoration: none; font-weight: bold; }
+        
         .hidden { display: none; }
     </style>
 </head>
@@ -49,7 +54,7 @@
 
 <div class="container">
     <div class="logo-box" id="logo-wrap">
-        <img src="fretadao.png" class="logo" alt="Fretadão">
+        <img src="fretadao.jpg" class="logo" alt="Fretadão">
     </div>
 
     <h1 style="font-size: 22px; margin-bottom: 5px;">Fretadão</h1>
@@ -68,26 +73,25 @@
 
     <div id="area-feedback" class="hidden">
         <textarea id="texto-cliente"></textarea>
-        
         <div id="bloco-ruim" class="hidden">
-            <button onclick="enviarGerente()" class="whatsapp"><i class="fab fa-whatsapp"></i> FALAR COM GERENTE</button>
+            <button onclick="enviarGerente()" class="whatsapp"><i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE</button>
         </div>
     </div>
 
     <div id="bloco-bom" class="hidden">
-        <img src="fretadaopai.png" class="img-fretadao" id="img-bus">
-        <a href="LINK_GOOGLE" class="google"><i class="fab fa-google"></i> AVALIAR NO GOOGLE</a>
+        <img src="FOTO_BUS_ALTA_CONVERSAO.jpg" class="img-fretadao" id="img-bus">
+        <a href="LINK_GOOGLE_FRETADAO" class="google"><i class="fab fa-google"></i> AVALIAR NO GOOGLE</a>
     </div>
 
     <div class="footer">
         <span id="slogan-seo" class="slogan-seo">"Fretadão: Levando pessoas, movendo histórias."</span>
         
-        <div class="seguranca">
-            <span><i class="fas fa-lock"></i> AMBIENTE SEGURO</span>
-            <span><i class="fas fa-shield-alt"></i> SSL PROTEGIDO</span>
-        </div>
+        <span class="vendas-link">
+            Deseja ter um link personalizado para sua empresa? 
+            <a href="https://wa.me/5511954950044?text=Olá Robson, vim pelo link do Fretadão e gostaria de um sistema de avaliação para minha empresa." target="_blank">Saiba mais</a>
+        </span>
 
-        <div class="dev">Desenvolvido por: <b>ImpulsoWeb10</b></div>
+        <div class="dev">Desenvolvido por: <a href="https://impulsoweb10.com.br" target="_blank"><b>ImpulsoWeb10</b></a></div>
     </div>
 </div>
 
@@ -97,7 +101,6 @@
         const carinha = document.getElementById('carinha');
         const statusTxt = document.getElementById('status-txt');
         const slogan = document.getElementById('slogan-seo');
-        const areaFeedback = document.getElementById('area-feedback');
         const txtInput = document.getElementById('texto-cliente');
         
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
@@ -109,27 +112,27 @@
         if (n === 1) {
             carinha.innerText = "☹️";
             statusTxt.innerText = "Sentimos muito.";
-            txtInput.placeholder = "Por favor, nos conte o que houve para podermos nos desculpar e resolver.";
-            slogan.innerText = "Compromisso total com sua segurança e bem-estar.";
+            txtInput.placeholder = "Nos conte o que houve para podermos nos desculpar e resolver.";
+            slogan.innerText = "Sua segurança e satisfação são nossas metas diárias.";
             exibirArea(true);
         } else if (n === 2) {
             carinha.innerText = "😐";
             statusTxt.innerText = "Nos desculpe.";
             txtInput.placeholder = "Sua opinião é essencial para corrigirmos nossas falhas.";
-            slogan.innerText = "Evoluindo a cada quilômetro com você.";
+            slogan.innerText = "Ouvir você nos ajuda a evoluir a cada viagem.";
             exibirArea(true);
         } else if (n === 3) {
             carinha.innerText = "🙂";
             statusTxt.innerText = "Obrigado por avisar.";
             txtInput.placeholder = "Como podemos melhorar para chegar às 5 estrelas?";
-            slogan.innerText = "Transporte executivo com foco no cliente.";
+            slogan.innerText = "Transporte de excelência se constrói com feedback.";
             exibirArea(true);
         } else {
             carinha.innerText = "😍";
             statusTxt.innerText = "Gratidão!";
-            slogan.innerText = "O melhor serviço de fretamento da região. Obrigado!";
+            slogan.innerText = "O melhor fretamento executivo agradece a sua confiança!";
             exibirArea(false);
-            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
         }
     }
 
@@ -140,7 +143,6 @@
         const img = document.getElementById('img-bus');
 
         if (isRuim) {
-    
             areaFeedback.classList.remove('hidden');
             blocoRuim.classList.remove('hidden');
             blocoBom.classList.add('hidden');
