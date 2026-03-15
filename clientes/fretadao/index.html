@@ -26,7 +26,8 @@
 
         textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; height: 100px; }
 
-        .img-fretadao { width: 100%; border-radius: 20px; margin-bottom: 15px; border: 2px solid #facc15; display: none; animation: fadeIn 0.8s ease; }
+        /* IMAGEM DO ÔNIBUS COM NOVA ANIMAÇÃO */
+        .img-fretadao { width: 100%; border-radius: 20px; margin-bottom: 15px; border: 2px solid #facc15; display: none; /* Começa escondida */ transform: scale(0.5); /* Começa menor */ opacity: 0; /* Começa transparente */ animation: crescendoEaparecendo 1.5s ease-out forwards; /* Animação mais lenta */ }
 
         .google { background: #facc15; color: #000; font-weight: 800; padding: 18px; border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; animation: pulse 2s infinite; position: relative; overflow: hidden; }
         .google::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shine 3s infinite; }
@@ -35,18 +36,16 @@
 
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
         @keyframes shine { to { left: 100%; } }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        /* NOVA ANIMAÇÃO DE CRESCER */
+        @keyframes crescendoEaparecendo { to { opacity: 1; transform: scale(1); } }
 
         .footer { margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
         .slogan-seo { font-style: italic; color: #facc15; font-size: 13px; display: block; margin-bottom: 15px; min-height: 40px; }
-        
-        /* NOVO RODAPÉ COM SEUS LINKS */
         .vendas-link { font-size: 11px; color: #cbd5e1; margin-bottom: 10px; display: block; line-height: 1.4; }
         .vendas-link a { color: #38bdf8; text-decoration: none; font-weight: bold; border-bottom: 1px solid #38bdf8; }
-        
         .dev { font-size: 11px; color: #64748b; }
         .dev a { color: #22c55e; text-decoration: none; font-weight: bold; }
-        
         .hidden { display: none; }
     </style>
 </head>
@@ -54,7 +53,7 @@
 
 <div class="container">
     <div class="logo-box" id="logo-wrap">
-        <img src="fretadao.png" class="logo" alt="Fretadão">
+        <img src="fretadao.jpg" class="logo" alt="Fretadão">
     </div>
 
     <h1 style="font-size: 22px; margin-bottom: 5px;">Fretadão</h1>
@@ -79,18 +78,16 @@
     </div>
 
     <div id="bloco-bom" class="hidden">
-        <img src="fretadaopai.png" class="img-fretadao" id="img-bus">
-        <a href="https://www.google.com/search?sca_esv=5a6a5bfff728b5c5&sxsrf=ANbL-n6feCRZKcVRvZivaZg57FORISQfZA:1773548105077&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOW38ihEJL9ML2wQioW5g9t-FKz34cg_ScaTJa5Z3YbInXzGLwzDOo-FT_jizCn0E7ZgjxIdXUl-E4006D9ngMCp-Vsf7&q=Fretad%C3%A3o+Coment%C3%A1rios&sa=X&ved=2ahUKEwiB_63GhaGTAxUzpZUCHZ4tFSsQ0bkNegQIKRAH&biw=1366&bih=615&dpr=1#lrd=0x94ce5804ccf2f1ab:0x83ac86aaa25e4687,3,,,," class="google"><i class="fab fa-google"></i> AVALIAR NO GOOGLE</a>
+        <img src="FOTO_BUS_ALTA_CONVERSAO.jpg" class="img-fretadao" id="img-bus">
+        <a href="LINK_GOOGLE_FRETADAO" class="google"><i class="fab fa-google"></i> AVALIAR NO GOOGLE</a>
     </div>
 
     <div class="footer">
         <span id="slogan-seo" class="slogan-seo">"Fretadão: Levando pessoas, movendo histórias."</span>
-        
         <span class="vendas-link">
             Deseja ter um link personalizado para sua empresa? 
-            <a href="https://wa.me/5511954950044?text=Olá Robson, vim pelo link do Fretadão e gostaria de um sistema de avaliação para minha empresa." target="_blank">Saiba mais</a>
+            <a href="https://wa.me/5511954950044?text=Olá Robson, vi o link do Fretadão e quero um sistema para minha empresa." target="_blank">Saiba mais</a>
         </span>
-
         <div class="dev">Desenvolvido por: <a href="https://impulsoweb10.com.br" target="_blank"><b>ImpulsoWeb10</b></a></div>
     </div>
 </div>
@@ -110,29 +107,13 @@
         statusTxt.classList.remove('hidden');
 
         if (n === 1) {
-            carinha.innerText = "☹️";
-            statusTxt.innerText = "Sentimos muito.";
-            txtInput.placeholder = "Nos conte o que houve para podermos nos desculpar e resolver.";
-            slogan.innerText = "Sua segurança e satisfação são nossas metas diárias.";
-            exibirArea(true);
+            carinha.innerText = "☹️"; statusTxt.innerText = "Sentimos muito."; txtInput.placeholder = "Nos conte o que houve para podermos nos desculpar e resolver."; slogan.innerText = "Sua segurança e satisfação são nossas metas diárias."; exibirArea(true);
         } else if (n === 2) {
-            carinha.innerText = "😐";
-            statusTxt.innerText = "Nos desculpe.";
-            txtInput.placeholder = "Sua opinião é essencial para corrigirmos nossas falhas.";
-            slogan.innerText = "Ouvir você nos ajuda a evoluir a cada viagem.";
-            exibirArea(true);
+            carinha.innerText = "😐"; statusTxt.innerText = "Nos desculpe."; txtInput.placeholder = "Sua opinião é essencial para corrigirmos nossas falhas."; slogan.innerText = "Ouvir você nos ajuda a evoluir a cada viagem."; exibirArea(true);
         } else if (n === 3) {
-            carinha.innerText = "🙂";
-            statusTxt.innerText = "Obrigado por avisar.";
-            txtInput.placeholder = "Como podemos melhorar para chegar às 5 estrelas?";
-            slogan.innerText = "Transporte de excelência se constrói com feedback.";
-            exibirArea(true);
+            carinha.innerText = "🙂"; statusTxt.innerText = "Obrigado por avisar."; txtInput.placeholder = "Como podemos melhorar para chegar às 5 estrelas?"; slogan.innerText = "Transporte de excelência se constrói com feedback."; exibirArea(true);
         } else {
-            carinha.innerText = "😍";
-            statusTxt.innerText = "Gratidão!";
-            slogan.innerText = "O melhor fretamento executivo agradece a sua confiança!";
-            exibirArea(false);
-            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+            carinha.innerText = "😍"; statusTxt.innerText = "Gratidão!"; slogan.innerText = "O melhor fretamento executivo agradece a sua confiança!"; exibirArea(false); confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
         }
     }
 
@@ -143,15 +124,9 @@
         const img = document.getElementById('img-bus');
 
         if (isRuim) {
-            areaFeedback.classList.remove('hidden');
-            blocoRuim.classList.remove('hidden');
-            blocoBom.classList.add('hidden');
-            img.style.display = "none";
+            areaFeedback.classList.remove('hidden'); blocoRuim.classList.remove('hidden'); blocoBom.classList.add('hidden'); img.style.display = "none";
         } else {
-            areaFeedback.classList.add('hidden');
-            blocoRuim.classList.add('hidden');
-            blocoBom.classList.remove('hidden');
-            img.style.display = "block";
+            areaFeedback.classList.add('hidden'); blocoRuim.classList.add('hidden'); blocoBom.classList.remove('hidden'); img.style.display = "block";
         }
     }
 
