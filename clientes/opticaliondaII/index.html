@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Óptica Lionda | Orçamento e Avaliação</title>
+    <title>Óptica Lionda | Calculadora de Lentes e Avaliação</title>
 
-    <meta name="description" content="Especialistas em Lentes de Grau e Armações em Itaquaquecetuba. Use nossa calculadora de lentes e avalie nossa qualidade.">
+    <meta name="description" content="Óptica Lionda em Itaquaquecetuba. Use nossa calculadora inteligente para descobrir a lente mais leve para o seu grau.">
     
     <script type="application/ld+json">
     {
@@ -38,19 +38,15 @@
             background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 15px;
+            align-items: center; justify-content: center;
+            min-height: 100vh; padding: 15px;
         }
 
         .container {
-            max-width: 420px;
-            width: 100%;
+            max-width: 420px; width: 100%;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px);
-            padding: 25px 20px;
-            border-radius: 35px;
+            padding: 25px 20px; border-radius: 35px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             text-align: center;
@@ -68,6 +64,24 @@
         .frase-topo { font-size: 13px; color: #facc15; font-style: italic; margin-bottom: 8px; display: block; line-height: 1.2; }
         h2 { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; font-weight: normal; }
         
+        /* CALCULADORA ATUALIZADA */
+        .calc-box {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;
+            border: 1px solid rgba(250, 204, 21, 0.3); margin: 15px 0; text-align: left;
+        }
+        .calc-input {
+            width: 100%; padding: 12px; border-radius: 10px; border: none;
+            margin: 10px 0; font-family: inherit; font-size: 14px; outline: none;
+        }
+
+        .res-tabela { margin-top: 12px; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px; font-size: 12px; }
+        .item-lente { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .item-lente:last-child { border: none; }
+        .tag-peso { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+        .peso-leve { background: #22c55e; color: white; }
+        .peso-medio { background: #facc15; color: black; }
+        .peso-pesado { background: #64748b; color: white; }
+
         .status-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; display: block; }
         .status-sad { color: #ef4444; }
         .status-happy { color: #22c55e; }
@@ -76,10 +90,8 @@
 
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.2s; }
-        .star-btn:hover { color: #fde047; transform: scale(1.1); }
         .star-btn.active { color: #facc15; transform: scale(1.1); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-        /* IMAGEM DO CASAL QUE CRESCE */
         .img-comemorativa {
             width: 100%; height: 170px; object-fit: cover; border-radius: 20px;
             margin-bottom: 15px; border: 3px solid rgba(250, 204, 21, 0.4);
@@ -87,22 +99,6 @@
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .img-comemorativa.show-img { opacity: 1; transform: scale(1); }
-
-        /* CALCULADORA DE ORÇAMENTO */
-        .calc-box {
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;
-            border: 1px solid rgba(250, 204, 21, 0.3); margin: 20px 0; text-align: left;
-        }
-        .calc-input {
-            width: 100%; padding: 12px; border-radius: 10px; border: none;
-            margin: 10px 0; font-family: inherit; font-size: 14px;
-        }
-
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
-            color: white; padding: 12px; margin-bottom: 12px; outline: none; font-family: inherit;
-        }
 
         .botao {
             position: relative; overflow: hidden; display: flex; align-items: center; 
@@ -120,14 +116,10 @@
             transform: skewX(-25deg); animation: brilhoPassandoConstante 2.5s infinite;
         }
 
-        .whatsapp { background: #22c55e; color: white; font-family: inherit; font-size: 16px; }
-        .btn-calc { background: #facc15; color: #000; font-size: 14px; padding: 10px; }
+        .whatsapp { background: #22c55e; color: white; font-family: inherit; font-size: 16px; margin-top: 10px; }
 
         @keyframes brilhoPassandoConstante { 0% { left: -150%; } 100% { left: 150%; } }
-        @keyframes pulsarConstante { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.03); } 
-        }
+        @keyframes pulsarConstante { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
         .hidden { display: none; }
 
@@ -148,11 +140,13 @@
     <span class="frase-topo">"Enxergar o mundo com clareza é o primeiro passo."</span>
     <h2 id="sub-title">Excelência em Saúde Visual</h2>
     
-    <div class="calc-box" id="caixa-calculadora">
-        <h3 style="font-size: 15px; color: #facc15;"><i class="fas fa-calculator"></i> Orçamento de Lente</h3>
-        <input type="number" id="grau-valor" step="0.25" placeholder="Digite seu grau (ex: -2.75)" class="calc-input">
-        <button onclick="gerarOrcamento()" class="botao btn-calc">VER LENTE IDEAL</button>
-        <div id="res-calc" class="hidden" style="margin-top: 10px; font-size: 13px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;"></div>
+    <div class="calc-box">
+        <h3 style="font-size: 15px; color: #facc15;"><i class="fas fa-weight-hanging"></i> Comparativo de Lentes</h3>
+        <input type="number" id="grau-valor" step="0.25" placeholder="Digite seu grau (ex: -3.50)" class="calc-input">
+        <button onclick="gerarOrcamento()" class="botao" style="background: #facc15; color: #000; font-size: 14px; padding: 10px;">ANALISAR ESPESSURA</button>
+        
+        <div id="res-calc" class="hidden res-tabela">
+            </div>
     </div>
 
     <div id="status-area" class="hidden">
@@ -177,7 +171,7 @@
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos melhorar?"></textarea>
+        <textarea id="texto-melhoria" rows="3" style="width:100%; border-radius:15px; padding:10px; margin-top:10px;" placeholder="O que podemos melhorar?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
             <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
         </button>
@@ -187,10 +181,8 @@
         <strong class="linha-info">📍 Unidade Parque Piratininga</strong>
         <span class="linha-info">R. Joaquim Caetano - Itaquaquecetuba - SP</span>
         <span class="linha-info">🕒 Seg a Sex: 09h às 18h | Sáb: 09h às 17h</span>
-        
         <div style="font-size: 10px; margin-top: 10px; opacity: 0.7;">
-            🔒 CONEXÃO PROTEGIDA | © 2026<br>
-            Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+            🔒 CONEXÃO PROTEGIDA | © 2026 | <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
         </div>
     </div>
 </div>
@@ -199,23 +191,37 @@
     let notaSelecionada = 0;
     const instrucao = document.getElementById('instrucao');
     
-    const frasesEstrelas = {
-        0: "Como foi sua experiência hoje?",
-        1: "Péssima? 😞", 2: "Ruim? 😕", 3: "Regular? 😐", 4: "Boa! 🙂", 5: "Excelente! 😍"
-    };
+    function mostrarFrase(n) { if (notaSelecionada === 0) { instrucao.innerText = ["","Péssima? 😞","Ruim? 😕","Regular? 😐","Boa! 🙂","Excelente! 😍"][n]; instrucao.style.color = "#facc15"; } }
+    function resetarFrase() { if (notaSelecionada === 0) { instrucao.innerText = "Como foi sua experiência hoje?"; instrucao.style.color = "#e2e8f0"; } }
 
-    function mostrarFrase(n) {
-        if (notaSelecionada === 0) {
-            instrucao.innerText = frasesEstrelas[n];
-            instrucao.style.color = "#facc15";
+    function gerarOrcamento() {
+        const grau = parseFloat(document.getElementById('grau-valor').value);
+        const res = document.getElementById('res-calc');
+        if (isNaN(grau)) { alert("Digite um grau válido."); return; }
+        
+        res.classList.remove('hidden');
+        let absGrau = Math.abs(grau);
+        let html = `<p style="color:#facc15; margin-bottom:10px; font-weight:bold;">Sugestões para ${grau.toFixed(2)}:</p>`;
+
+        if (absGrau <= 2.25) {
+            html += renderItem("Resina CR-39", "Padrão", "tag-peso peso-pesado");
+            html += renderItem("Poli (Filtro Azul)", "Leve", "tag-peso peso-leve");
+        } else if (absGrau <= 5.00) {
+            html += renderItem("Poli (Resistente)", "Média", "tag-peso peso-medio");
+            html += renderItem("Lente 1.60", "Leve", "tag-peso peso-leve");
+            html += renderItem("Lente 1.67", "Super Leve", "tag-peso peso-leve");
+        } else {
+            html += renderItem("Lente 1.67", "Média", "tag-peso peso-medio");
+            html += renderItem("Lente 1.74", "Mais Leve", "tag-peso peso-leve");
+            html += renderItem("Lente 1.76 (Mundial)", "Ultra Leve", "tag-peso peso-leve");
         }
+
+        html += `<button onclick="compartilharOrcamento('Consultei lentes leves para meu grau', ${grau})" class="botao whatsapp" style="padding:10px; font-size:12px;">PEDIR VALORES NO WHATSAPP</button>`;
+        res.innerHTML = html;
     }
 
-    function resetarFrase() {
-        if (notaSelecionada === 0) {
-            instrucao.innerText = frasesEstrelas[0];
-            instrucao.style.color = "#e2e8f0";
-        }
+    function renderItem(nome, peso, classe) {
+        return `<div class="item-lente"><span>${nome}</span><span class="${classe}">${peso}</span></div>`;
     }
 
     function avaliar(n) {
@@ -228,53 +234,24 @@
         const statusIcon = document.getElementById('status-icon');
         const imgCasal = document.getElementById('img-casal');
 
-        stars.forEach((s, i) => {
-            if (i < n) s.classList.add('active');
-            else s.classList.remove('active');
-        });
-
+        stars.forEach((s, i) => { s.classList.toggle('active', i < n); });
         logo.classList.add('logo-compacta');
         instrucao.classList.add('hidden');
         statusArea.classList.remove('hidden');
 
         if (n >= 4) {
-            bom.classList.remove('hidden');
-            ruim.classList.add('hidden');
-            statusIcon.innerText = "Ficamos muito felizes! 🎉";
-            statusIcon.className = "status-title status-happy";
-            setTimeout(() => { imgCasal.classList.add('show-img'); }, 100);
+            bom.classList.remove('hidden'); ruim.classList.add('hidden');
+            statusIcon.innerText = "Ficamos muito felizes! 🎉"; statusIcon.className = "status-title status-happy";
+            setTimeout(() => imgCasal.classList.add('show-img'), 100);
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#facc15', '#ffffff', '#2ecc71'] });
         } else {
-            ruim.classList.remove('hidden');
-            bom.classList.add('hidden');
-            statusIcon.innerText = "Sentimos muito... 😔";
-            statusIcon.className = "status-title status-sad";
+            ruim.classList.remove('hidden'); bom.classList.add('hidden');
+            statusIcon.innerText = "Sentimos muito... 😔"; statusIcon.className = "status-title status-sad";
         }
-    }
-
-    function gerarOrcamento() {
-        const grau = parseFloat(document.getElementById('grau-valor').value);
-        const res = document.getElementById('res-calc');
-        if (isNaN(grau)) { alert("Digite um grau válido."); return; }
-        
-        res.classList.remove('hidden');
-        let recomendacao = "";
-        
-        if (Math.abs(grau) <= 2) {
-            recomendacao = "Lente CR-39: Ideal para seu grau. Leve e econômica.";
-        } else if (Math.abs(grau) <= 4) {
-            recomendacao = "Lente Policarbonato: Mais fina e 10x mais resistente.";
-        } else {
-            recomendacao = "Lente 1.67 Alto Índice: Essencial para reduzir a espessura.";
-        }
-
-        res.innerHTML = `<strong>Dica Lionda:</strong> ${recomendacao}<br><br>
-        <button onclick="compartilharOrcamento('${recomendacao}', ${grau})" style="width:100%; background:#22c55e; color:white; border:none; padding:8px; border-radius:5px; cursor:pointer;">
-        COMPARTILHAR NO WHATSAPP</button>`;
     }
 
     function compartilharOrcamento(rec, grau) {
-        const msg = encodeURIComponent(`Olá Óptica Lionda! Usei a calculadora do site. Meu grau é ${grau} e a recomendação foi: ${rec}. Quero um orçamento de armação!`);
+        const msg = encodeURIComponent(`Olá Óptica Lionda! Usei a calculadora. Meu grau é ${grau}. Quais os valores das lentes sugeridas (mais leves)?`);
         window.open(`https://wa.me/5511972319233?text=${msg}`, '_blank');
     }
 
