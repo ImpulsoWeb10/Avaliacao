@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Óptica Lionda | Avalie nossa Qualidade</title>
 
-    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista. Sua saúde visual é nossa prioridade na Óptica Lionda.">
+    <meta name="description" content="Especialistas em Lentes de Grau e Armações Modernas. Sua saúde visual é nossa prioridade na Óptica Lionda.">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -37,29 +37,30 @@
             text-align: center;
         }
 
-        /* LOGO QUE SE ADAPTA NA SEGUNDA TELA */
+        /* LOGO COM RESPIRO AJUSTADO */
         .logo { 
-            width: 130px; 
-            height: 150px; 
+            width: 160px; 
+            height: auto; 
             object-fit: contain; 
-            padding: 8px;
+            padding: 5px;
             border-radius: 22px;
             border: 3px solid #facc15; 
             background: white; 
             margin: 0 auto 15px;
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
         }
 
+        /* DIMINUI NA SEGUNDA TELA */
         .logo-compacta {
-            width: 180px;
-            height: 60px;
-            object-fit: cover;
+            transform: scale(0.7);
+            margin-bottom: -10px;
         }
 
         h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
         h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
         
-        #instrucao { font-size: 15px; color: #e2e8f0; margin-bottom: 15px; }
+        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 15px; }
 
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
         .star-btn {
@@ -68,20 +69,27 @@
         }
         .star-btn.active { color: #facc15; transform: scale(1.15); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-        /* FOTO DO CASAL COM ÓCULOS */
+        /* IMAGEM QUE SURGE DO ZERO E PULSA */
         .img-comemorativa {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
+            width: 90%; 
+            height: 140px; 
+            object-fit: cover; 
             border-radius: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 2px solid rgba(250, 204, 21, 0.3);
+            margin: 0 auto 15px; 
+            border: 2px solid #facc15;
             display: block;
-            animation: fadeIn 0.8s ease;
+            opacity: 0;
+            transform: scale(0);
+            animation: surgirEPulsar 2.5s forwards ease-out;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes surgirEPulsar {
+            0% { opacity: 0; transform: scale(0); }
+            40% { opacity: 1; transform: scale(1.05); }
+            60% { transform: scale(1); }
+            80% { transform: scale(1.03); box-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
+            100% { opacity: 1; transform: scale(1); }
+        }
 
         textarea {
             width: 100%; background: rgba(255,255,255,0.1);
@@ -99,31 +107,31 @@
             margin-bottom: 10px;
         }
 
-        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
+        /* BOTAO AMARELO COM BRILHO E PULSO */
+        .google { background: #facc15; color: #000; animation: pulsarBtn 2s infinite; }
         .google::after {
             content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
             transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
         }
 
         .whatsapp { background: #22c55e; color: white; }
 
         @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
-        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        @keyframes pulsarBtn { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .hidden { display: none; }
 
         .footer { 
-            margin-top: 25px; font-size: 11px; color: #ffffff; 
+            margin-top: 25px; font-size: 11px; color: #cbd5e1; 
             border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+            line-height: 1.6;
         }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
-        .frase-top { font-style: italic; margin-bottom: 8px; display: block; font-size: 13px; color: #facc15; }
+        
+        .venda-link { color: #facc15; text-decoration: none; font-weight: 700; font-size: 12px; display: inline-block; margin-top: 10px;}
+        .marca-footer { color: #22c55e; text-decoration: none; font-weight: 800; }
     </style>
-    <script src="https://t.contentsquare.net/uxa/7bc1302beb4f7.js"></script>
-    
 </head>
-    <script src="https://t.contentsquare.net/uxa/7bc1302beb4f7.js"></script>
 <body>
 
 <div class="container">
@@ -135,85 +143,84 @@
     <p id="instrucao">Como foi sua experiência hoje?</p>
 
     <div class="rating-box">
-        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
+        <i class="fas fa-star star-btn" onmouseover="setFrase(1)" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" onmouseover="setFrase(2)" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" onmouseover="setFrase(3)" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" onmouseover="setFrase(4)" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" onmouseover="setFrase(5)" onclick="avaliar(5)"></i>
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="casal-oculos.png" class="img-comemorativa" alt="Clientes Satisfeitos">
-        
-        <p style="font-size: 17px; margin-bottom: 12px;">Ficamos muito felizes! 🎉</p>
-        <p style="margin-bottom: 15px; font-size: 14px;">Sua avaliação ajuda outras pessoas a cuidarem da visão com qualidade.</p>
-        
-        <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
+        <img src="casal-oculos.png" class="img-comemorativa" id="img-sucesso">
+        <p style="font-size: 17px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
+        <a href="https://www.google.com/search?client=firefox-b-d&q=lionda&lqi=CgZsaW9uZGFI-aHO9MywgIAIWgwQABgAIgZsaW9uZGGSAQhvcHRpY2lhbg#rlimm=14069717634906596944&lrd=0x94ce63199b503025:0xc341ada4f6a82650,3,,,,, " target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 17px; margin-bottom: 12px;">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos fazer para melhorar seu atendimento?"></textarea>
+        <p style="font-size: 18px; margin-bottom: 12px; color: #facc15;" id="msg-desculpa">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" rows="3" placeholder="Conte para nós como podemos melhorar..."></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
+            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo."</span>
-        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div style="margin-top: 5px;">
-            Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+        <div>
+            <b>📍 R. Joaquim Caetano - Parque Piratininga</b><br>
+            Itaquaquecetuba - SP, 08583-670<br>
+            📞 Telefone: (11) 97131-9233
+        </div>
+
+        <a href="https://wa.me/5511954950044?text=Olá, quero um link 'assim' personalizado para minha empresa!" target="_blank" class="venda-link">
+            Deseja um link "assim" personalizado para sua empresa? Saiba mais
+        </a>
+
+        <div style="margin-top: 15px; opacity: 0.8;">
+            © 2026 | Desenvolvido por <a href="https://wa.me/5511954950044" target="_blank" class="marca-footer">ImpulsoWeb10</a>
         </div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
+    
+    const frasesAcalmar = {
+        1: "Sentimos muito. 😔 Vamos ouvir você para melhorar.",
+        2: "Sentimos muito. 😟 Sua opinião é essencial para nós.",
+        3: "Sentimos muito. 😐 Como podemos ser nota 10 para você?",
+        4: "Muito bom! 😊",
+        5: "Excelente! 😍"
+    };
+
+    function setFrase(n) {
+        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frasesAcalmar[n];
+    }
 
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
-        const bom = document.getElementById('feedback-bom');
-        const ruim = document.getElementById('feedback-ruim');
-        const instrucao = document.getElementById('instrucao');
-        const logo = document.getElementById('main-logo');
-        const title = document.getElementById('main-title');
+        stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
 
-        stars.forEach((s, i) => {
-            if (i < n) s.classList.add('active');
-            else s.classList.remove('active');
-        });
-
-        instrucao.classList.add('hidden');
-        
-        // Compacta o topo para caber a foto do casal sem dar scroll
-        logo.classList.add('logo-compacta');
-        title.style.fontSize = "20px";
+        document.getElementById('main-logo').classList.add('logo-compacta');
+        document.getElementById('instrucao').classList.add('hidden');
 
         if (n >= 4) {
-            bom.classList.remove('hidden');
-            ruim.classList.add('hidden');
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.8 },
-                colors: ['#facc15', '#ffffff', '#2ecc71']
-            });
+            document.getElementById('feedback-bom').classList.remove('hidden');
+            document.getElementById('feedback-ruim').classList.add('hidden');
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
         } else {
-            ruim.classList.remove('hidden');
-            bom.classList.add('hidden');
+            document.getElementById('msg-desculpa').innerText = frasesAcalmar[n];
+            document.getElementById('feedback-ruim').classList.remove('hidden');
+            document.getElementById('feedback-bom').classList.add('hidden');
         }
     }
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511972319233"; 
-        if (!texto) { alert("Por favor, digite sua sugestão."); return; }
-        const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+        if (!texto) { alert("Por favor, conte-nos como podemos melhorar."); return; }
+        window.open(`https://wa.me/5511971319233?text=Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`, '_blank');
     }
 </script>
 
