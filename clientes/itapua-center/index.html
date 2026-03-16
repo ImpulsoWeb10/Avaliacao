@@ -57,7 +57,6 @@
             resize: none; font-family: inherit; font-size: 14px;
         }
 
-        /* ESTILO DO PLACEHOLDER QUE SOME */
         textarea::placeholder {
             color: rgba(255, 255, 255, 0.5);
             font-style: italic;
@@ -119,7 +118,6 @@
 
         .hidden { display: none; }
 
-        /* RODAPÉ VENDEDOR ATUALIZADO */
         .footer { 
             margin-top: 35px; 
             font-size: 13px; 
@@ -145,7 +143,6 @@
         .footer .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
         .footer b { color: #facc15; }
     </style>
-    <script src="https://t.contentsquare.net/uxa/7bc1302beb4f7.js"></script>
 </head>
 <body>
 
@@ -171,11 +168,11 @@
         <p style="font-size: 18px; margin-bottom: 15px;">Ficamos felizes! 🎉</p>
         <p style="margin-bottom: 20px;">Sua avaliação ajuda outros clientes.</p>
         
-        <a href="https://g.page/r/CWSPsbcmiCwZEBM/review/" target="_blank" class="botao google">
+        <a href="https://g.page/r/CWSPsbcmiCwZEBM/review/" target="_blank" class="botao google" onclick="abrirAmbos()">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
-        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" class="botao instagram">
+        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" id="btn-insta" class="botao instagram">
             <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
         </a>
     </div>
@@ -209,6 +206,16 @@
 
 <script>
     let notaSelecionada = 0;
+
+    // NOVA FUNÇÃO: Abre o Google (pelo href) e o Instagram (pelo script) simultaneamente
+    function abrirAmbos() {
+        const urlInstagram = "https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==";
+        // Pequeno atraso para garantir que o navegador não bloqueie o pop-up
+        setTimeout(() => {
+            window.open(urlInstagram, '_blank');
+        }, 500);
+    }
+
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
