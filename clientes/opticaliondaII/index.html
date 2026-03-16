@@ -3,96 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação Itapuã Center | Materiais de Construção</title>
+    <title>Óptica Lionda | Unidade II - Avaliação</title>
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "HomeGoodsStore",
-      "name": "Itapuã Center Materiais de Construção",
-      "image": "itapua-center-materiais-de-construcao.png",
-      "@id": "",
-      "url": "https://itapuacenter.com.br",
-      "telephone": "+5511999822103",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Estr. Pedro da Cunha Albuquerque Lopes, 2235",
-        "addressLocality": "Itaaquaquecetuba",
-        "addressRegion": "SP",
-        "postalCode": "08584-584",
-        "addressCountry": "BR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -23.4851, 
-        "longitude": -46.3333
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        ],
-        "opens": "08:00",
-        "closes": "18:00"
-      }
-    }
-    </script>
-
+    <meta name="description" content="Especialistas em Lentes de Grau e Saúde Visual. Avalie a Unidade II da Óptica Lionda em Itaquaquecetuba.">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
+        /* RESET E BASE */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .container { max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); text-align: center; }
-        .logo { width: 150px; height: 100px; object-fit: contain; padding: 10px; border-radius: 22px; border: 3px solid #facc15; background: white; margin: 0 auto 20px; }
-        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; }
-        h2 { font-size: 17px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
+        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 15px; }
+
+        .container {
+            max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px); padding: 30px 20px; border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        /* LOGO COM TRANSIÇÃO SUAVE */
+        .logo { 
+            width: 150px; height: auto; max-height: 150px;
+            object-fit: contain; padding: 10px; border-radius: 22px;
+            border: 3px solid #facc15; background: white; 
+            margin: 0 auto 15px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
-        /* Caixa de instrução dinâmica */
-        #instrucao { font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 20px; transition: 0.3s; }
+        /* Diminui sem esmagar */
+        .logo-compacta { transform: scale(0.7); margin-bottom: -10px; }
 
-        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.2s; }
-        .star-btn.active { color: #facc15; transform: scale(1.2); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
+        h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
+        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        
+        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 15px; }
 
-        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; margin-bottom: 10px; }
-        .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
-        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
+        .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
+        .star-btn.active { color: #facc15; transform: scale(1.2); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+
+        /* IMAGEM PULSANTE 50% MENOR */
+        .img-satisfacao {
+            width: 50%; height: auto; border-radius: 20px;
+            margin: 0 auto 15px; display: block;
+            border: 2px solid #facc15;
+            animation: pulsarImagem 2s infinite ease-in-out;
+        }
+
+        @keyframes pulsarImagem {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px 5px rgba(250, 204, 21, 0.2); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
+        }
+
+        /* MODAL */
+        #modal-instrucao {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98); display: none; align-items: center;
+            justify-content: center; z-index: 10000; padding: 25px;
+        }
+        .modal-card {
+            background: #1e293b; padding: 35px 25px; border-radius: 35px;
+            border: 2px solid #facc15; text-align: center; max-width: 380px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .botao {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 18px; border-radius: 50px;
+            font-weight: 800; font-size: 15px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer; margin-bottom: 10px;
+        }
+        .google { background: #facc15; color: #000; font-weight: 900; }
         .whatsapp { background: #22c55e; color: white; }
+        .instagram { background: linear-gradient(45deg, #f09433 0%, #dc2743 100%); color: white; }
+
         .hidden { display: none; }
-
-        /* Modal Lindo */
-        #modal-instrucao { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.97); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 25px; }
-        .modal-card { background: #1e293b; padding: 35px 25px; border-radius: 35px; border: 2px solid #facc15; text-align: center; max-width: 380px; animation: bounceIn 0.5s ease; }
-        .modal-card i { font-size: 50px; color: #facc15; margin-bottom: 15px; display: block; }
-
-        @keyframes bounceIn { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
-
-        .footer { margin-top: 35px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; line-height: 1.6; }
+        .footer { margin-top: 25px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
     </style>
 </head>
 <body>
 
 <div id="modal-instrucao">
     <div class="modal-card">
-        <i class="fab fa-instagram"></i>
-        <p style="font-size: 18px; margin-bottom: 20px;">"Após nos avaliar no Google, por gentileza, nos siga na página do Instagram que está aberta, assim que voltar na página."</p>
+        <i class="fab fa-instagram" style="font-size: 40px; color: #facc15; margin-bottom: 15px; display: block;"></i>
+        <p style="font-size: 17px; line-height: 1.6; margin-bottom: 25px;">"Após nos avaliar no Google, por gentileza, nos siga na página do Instagram que está aberta, assim que voltar na página."</p>
         <button onclick="prosseguirParaGoogle()" class="botao google">OK, VAMOS AVALIAR!</button>
     </div>
 </div>
 
 <div class="container">
-    <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Itapuã Center">
-    <h1>Itapuã Center</h1>
-    <h2>Materiais de Construção</h2>
+    <img src="lionda-oculos.png" class="logo" id="main-logo" alt="Logo Óptica Lionda">
+
+    <h1>Óptica Lionda</h1>
+    <h2>Unidade II - Excelência Visual</h2>
     
     <p id="instrucao">Toque nas estrelas para avaliar:</p>
 
@@ -105,57 +110,63 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
-        <button onclick="abrirModalInstrucao()" class="botao google">
+        <img src="optica-lionda.png" class="img-satisfacao" alt="Sucesso">
+        <p style="font-size: 17px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
+        <button onclick="abrirModal()" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </button>
-        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" class="botao instagram">
+        <a href="https://www.instagram.com/opticalionda/" target="_blank" class="botao instagram">
             <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p id="msg-ruim" style="color: #facc15; margin-bottom: 10px;"></p>
-        <textarea id="texto-melhoria" style="width:100%; background:rgba(255,255,255,0.1); border-radius:15px; color:white; padding:15px; border:1px solid rgba(255,255,255,0.2);" placeholder="Conte-nos o que houve para melhorarmos..."></textarea>
-        <button onclick="enviarWhatsApp()" class="botao whatsapp" style="margin-top:10px;">FALAR COM O GERENTE</button>
+        <p id="msg-ruim" style="margin-bottom: 10px; color: #facc15;"></p>
+        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos melhorar?"></textarea>
+        <button onclick="enviarWhatsApp()" class="botao whatsapp">
+            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
+        </button>
     </div>
 
     <div class="footer">
-        <div><b>📍 Estr. Pedro da Cunha Albuquerque Lopes, 2235 - Itaquaquecetuba - SP</b></div>
-        <div>📞 Contato: (11) 99982-2103</div>
-        <div style="margin-top: 15px;">Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank" style="color:#22c55e; text-decoration:none;">ImpulsoWeb10</a></div>
+        <div><b>📍 Unidade II: Estr. Pedro da Cunha Albuquerque Lopes, 2235</b></div>
+        <div>Perobal, Itaquaquecetuba - SP, 08584-584</div>
+        <div style="margin-top: 8px;">📞 WhatsApp: (11) 99982-2103</div>
+        <div style="margin-top: 15px;">Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank" style="color:#facc15; text-decoration:none;">ImpulsoWeb10</a></div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
     const urlGoogle = "https://www.google.com/maps/place/%C3%93tica+Lionda/@-23.4210109,-46.3495786,17z/data=!4m8!3m7!1s0x94ce7d399227cfdd:0xd2612d44d239ba82!8m2!3d-23.4210109!4d-46.3495786!9m1!1b1!16s%2Fg%2F11k6sxfh2t?hl=pt-BR&entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D";
-    const urlInsta = "https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==";
+    const urlInsta = "https://www.instagram.com/opticalionda/";
 
     const frases = {
         1: "Péssimo atendimento 😡",
-        2: "Não gostei da experiência 😟",
-        3: "Atendimento mediano 😐",
+        2: "Experiência ruim 😟",
+        3: "Pode melhorar 😐",
         4: "Muito bom! 😊",
-        5: "Excelente! Adorei! 😍"
+        5: "Excelente! 😍"
     };
 
     function setFrase(n) {
-        if(notaSelecionada === 0) {
-            document.getElementById('instrucao').innerText = frases[n];
-        }
+        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frases[n];
     }
 
     function avaliar(n) {
         notaSelecionada = n;
-        document.querySelectorAll('.star-btn').forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
-        
+        document.querySelectorAll('.star-btn').forEach((s, i) => {
+            i < n ? s.classList.add('active') : s.classList.remove('active');
+        });
+
+        // Efeito de diminuir o logo sem esmagar
+        document.getElementById('main-logo').classList.add('logo-compacta');
         document.getElementById('instrucao').classList.add('hidden');
-        
+
         if (n >= 4) {
             document.getElementById('feedback-bom').classList.remove('hidden');
             document.getElementById('feedback-ruim').classList.add('hidden');
-            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
         } else {
             document.getElementById('msg-ruim').innerText = frases[n];
             document.getElementById('feedback-ruim').classList.remove('hidden');
@@ -163,7 +174,7 @@
         }
     }
 
-    function abrirModalInstrucao() { document.getElementById('modal-instrucao').style.display = 'flex'; }
+    function abrirModal() { document.getElementById('modal-instrucao').style.display = 'flex'; }
 
     function prosseguirParaGoogle() {
         window.open(urlGoogle, '_blank');
@@ -174,10 +185,11 @@
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
         const telefone = "5511999822103"; 
-        if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
-        const msg = encodeURIComponent(`Feedback Itapuã Center (${notaSelecionada} estrelas): ${texto}`);
+        if (!texto) { alert("Por favor, conte-nos o que houve."); return; }
+        const msg = encodeURIComponent(`Feedback Unidade II (${notaSelecionada} estrelas): ${texto}`);
         window.open(`https://wa.me/${telefone}?text=${msg}`, '_blank');
     }
 </script>
+
 </body>
 </html>
