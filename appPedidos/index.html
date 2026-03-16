@@ -3,54 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <title>Tintas Qualy Quimy</title>
+
 <style>
+
 body{
 font-family:Arial;
-background:#f5f5f5;
+background:#f4f4f4;
 text-align:center;
 }
 
 .logo{
 width:220px;
-margin:20px;
-}
-
-.produto{
-background:white;
-padding:15px;
-margin:10px;
-border-radius:10px;
-box-shadow:0 0 5px rgba(0,0,0,0.2);
+margin-top:20px;
 }
 
 button{
-background:#1c7ed6;
+background:#1e88e5;
 color:white;
 border:none;
-padding:10px;
-border-radius:5px;
+padding:12px;
+margin:5px;
+border-radius:6px;
 cursor:pointer;
 }
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+}
+
+.modal-content{
+background:white;
+margin:10% auto;
+padding:20px;
+width:90%;
+max-width:400px;
+border-radius:10px;
+}
+
+.produto{
+border-bottom:1px solid #ddd;
+padding:10px;
+}
+
+input{
+width:60px;
+text-align:center;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<img src="logo.jpeg class="logo">
+<h2>Tintas Qualy Quimy</h2>
 
-<h2>Catálogo de Produtos</h2>
+<button onclick="abrirCategorias()">Fazer Pedido</button>
 
-<div class="produto">
-<h3>Qualy Color</h3>
-<p>Preço: R$79,90</p>
-<button>Adicionar ao pedido</button>
+<div id="modalCategorias" class="modal">
+<div class="modal-content">
+
+<h3>Escolha a Categoria</h3>
+
+<button onclick="mostrarProdutos('tintas')">Tintas</button>
+<button onclick="mostrarProdutos('massas')">Massas</button>
+
+</div>
 </div>
 
-<div class="produto">
-<h3>Standard</h3>
-<p>Preço: R$124,90</p>
-<button>Adicionar ao pedido</button>
+<div id="modalProdutos" class="modal">
+<div class="modal-content">
+
+<h3>Produtos</h3>
+
+<div id="listaProdutos"></div>
+
+<div class="total">
+Total: R$ <span id="total">0</span>
 </div>
+
+<button onclick="enviarPedido()">Finalizar Pedido</button>
+
+</div>
+</div>
+
+<script>
+
+let carrinho=[]
+let total=0
+
+let produtos={
+tintas:[
+{nome:"Qualy Color",preco:79.9,atacado:77.9},
+{nome:"Standard",preco:124.9,atacado:116.9},
+{nome:"Premium",preco:219.9,atacado:209.9}
+],
+
+massas:[
+{nome:"Massa PVA",preco:14.99,atacado:14.99}
+]
+}
+
+function abrirCategorias(){
+
+document.getElementById("modalCategorias").style.display="block"
+
+}
+
+function mostrarProdutos(cat){
+
+document.getElementById("modalCategorias").style.display="none"
+document.getElementById("modalProdutos").style.display="block"
+
+let lista=document.getElementById("listaProdutos")
+lista.innerHTML=""
+
+produtos[cat].forEach((p,i)=>{
+
+lista.innerHTML+=`
+
+<div class="produto">
+
+<b>${p.nome}</b><br>
+
+Preço: ${p.preco}<br>
+Atacado: ${p.atacado}<br>
+
+<input type="number" min="0" value="0" onchange="calc(${p.atacado},this.value,'${p.nome}')">
+
+</div>
+
+`
+
+})
+
+}
+
+function calc(preco,qtd,nome){
+
+qtd=parseInt(qtd)
+
+if(qtd>0){
+
+carrinho.push({nome,qtd,preco})
+
+}
+
+total+=preco*qtd
+
+document.getElementById("total").innerText=total.toFixed(2)
+
+}
+
+function enviarPedido(){
+
+let msg="Pedido Tintas Qualy Quimy%0A%0A"
+
+carrinho.forEach(p=>{
+
+msg+=`${p.nome} - ${p.qtd} un %0A`
+
+})
+
+msg+=`%0ATotal: R$ ${total}`
+
+let url=`https://wa.me/5511954950044?text=${msg}`
+
+window.open(url)
+
+}
+
+</script>
 
 </body>
 </html>
