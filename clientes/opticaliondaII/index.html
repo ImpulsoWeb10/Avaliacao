@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Óptica Lionda | Unidade II</title>
+    <title>Óptica Lionda | Unidade II - Avalie nossa Qualidade</title>
+
+    <meta name="description" content="Especialistas em Lentes de Grau e Armações Modernas na Óptica Lionda. Sua saúde visual é nossa prioridade.">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -11,78 +13,155 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 15px; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
 
         .container {
-            max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px); padding: 30px 20px; border-radius: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            text-align: center; position: relative;
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            padding: 30px 20px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            text-align: center;
         }
 
-        /* LOGO AUMENTADO */
+        /* LOGO AJUSTADA */
         .logo { 
-            width: 180px; height: auto; object-fit: contain; padding: 12px; border-radius: 20px;
-            border: 3px solid #facc15; background: white; margin: 0 auto 15px;
-            transition: transform 0.4s ease; display: block;
+            width: 160px; /* Tamanho base ajustado */
+            height: auto; 
+            object-fit: contain; 
+            padding: 5px; /* Diminuído o espaço branco interno */
+            border-radius: 22px;
+            border: 3px solid #facc15; 
+            background: white; 
+            margin: 0 auto 15px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
         }
-        .logo-compacta { transform: scale(0.8); margin-bottom: -15px; }
 
-        h1 { font-size: 26px; margin-bottom: 2px; }
-        h2 { font-size: 16px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        .logo-compacta {
+            transform: scale(0.7); /* Diminui sem esmagar */
+            margin-bottom: -10px;
+        }
+
+        h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
+        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
         
-        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; margin-bottom: 15px; min-height: 24px; }
+        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 15px; }
 
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 44px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.1); }
+        .star-btn {
+            font-size: 40px; color: #475569; cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .star-btn.active { color: #facc15; transform: scale(1.15); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-        .img-retangular {
-            width: 90%; height: 140px; object-fit: cover; border-radius: 15px;
-            margin: 0 auto 20px; border: 2px solid #facc15; display: block;
-            animation: pulsarRetangulo 2s infinite ease-in-out;
+        /* IMAGEM PULSANTE QUE CRESCE AO ENTRAR */
+        .img-comemorativa {
+            width: 50%; height: auto; border-radius: 20px;
+            margin: 0 auto 15px; border: 2px solid #facc15;
+            display: block;
+            opacity: 0; /* Começa invisível */
+            transform: scale(0.5); /* Começa menor */
+            animation: crescerEPulsar 2.5s forwards ease-out;
         }
 
-        @keyframes pulsarRetangulo {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
-            100% { transform: scale(1); }
+        @keyframes crescerEPulsar {
+            0% { opacity: 0; transform: scale(0.5); }
+            30% { opacity: 1; transform: scale(1); } /* Chega no tamanho final */
+            50% { transform: scale(1.05); box-shadow: 0 0 20px 5px rgba(250, 204, 21, 0.2); } /* Pulsação */
+            70% { transform: scale(1); }
+            85% { transform: scale(1.02); } /* Pulsação menor */
+            100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4); }
         }
 
         textarea {
-            width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 15px; color: white; padding: 12px; margin-bottom: 12px; resize: none; outline: none;
+            width: 100%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
+            color: white; padding: 12px; margin-bottom: 12px;
+            resize: none; outline: none; font-family: inherit;
         }
 
         .botao {
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 16px; border-radius: 50px; font-weight: 800;
-            text-decoration: none; transition: 0.3s; border: none; cursor: pointer; margin-bottom: 10px;
+            width: 100%; padding: 16px; border-radius: 50px;
+            font-weight: 800; font-size: 15px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer;
+            margin-bottom: 10px;
+            position: relative; /* Necessário para o brilho */
+            overflow: hidden; /* Corta o brilho fora do botão */
         }
-        .google { background: #facc15; color: #000; }
+
+        /* BOTÃO AMARELO PULSANDO E BRILHANDO */
+        .google { 
+            background: #facc15; 
+            color: #000; 
+            animation: pulsarBtn 2s infinite ease-in-out; 
+        }
+
+        .google::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg);
+            animation: brilhoPassando 3s infinite;
+        }
+
         .whatsapp { background: #22c55e; color: white; }
+
+        @keyframes pulsarBtn { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
 
         .hidden { display: none; }
 
         /* RODAPÉ E CORES PERSONALIZADAS */
-        .footer { margin-top: 25px; font-size: 11px; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
-        
-        .link-personalizado { 
-            display: inline-block; margin-top: 12px; color: #22c55e; /* Verde WhatsApp */
-            text-decoration: none; font-weight: 800; font-size: 13px;
-            background: rgba(34, 197, 94, 0.1); padding: 5px 15px; border-radius: 20px;
+        .footer { 
+            margin-top: 25px; font-size: 11px; color: #94a3b8; 
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+            line-height: 1.6;
         }
         
-        .marca-impulsoweb { color: #38bdf8; text-decoration: none; font-weight: 700; } /* Azul Celeste */
+        /* Cor diferente para o Saiba mais */
+        .link-personalizado { 
+            color: #facc15; 
+            text-decoration: none; 
+            font-weight: 700; 
+            display: inline-block; 
+            margin-top: 5px; 
+            font-size: 12px;
+        }
+
+        /* Cor diferente para o seu link no WhatsApp */
+        .wats-venda {
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: 800;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="lionda-oculos.png" class="logo" id="main-logo" alt="Logo">
+    <img src="lionda-oculos.png" class="logo" id="main-logo" alt="Óptica Lionda">
 
-    <h1 id="titulo">Óptica Lionda</h1>
-    <h2 id="subtitulo">Unidade II</h2>
+    <h1>Óptica Lionda</h1>
+    <h2>Unidade II - Itaquaquecetuba</h2>
     
     <p id="instrucao">Como foi sua experiência hoje?</p>
 
@@ -95,86 +174,89 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="optica-lionda.png" class="img-retangular" alt="Sucesso">
-        <p style="font-size: 17px; margin-bottom: 15px;">Ficamos muito felizes! 🎉</p>
+        <img src="optica-lionda.png" class="img-comemorativa" alt="Excelência">
+        <p style="font-size: 17px; margin-bottom: 12px;">Ficamos muito felizes! 🎉</p>
         <a href="https://www.google.com/maps/place/%C3%93tica+Lionda/@-23.4210109,-46.3495786,17z/data=!4m8!3m7!1s0x94ce7d399227cfdd:0xd2612d44d239ba82!8m2!3d-23.4210109!4d-46.3495786!9m1!1b1!16s%2Fg%2F11k6sxfh2t?hl=pt-BR&entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 12px; color: #facc15;" id="msg-desculpa">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" rows="3" placeholder="Conte para nós como podemos melhorar..."></textarea>
-        <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
+        <p style="font-size: 17px; margin-bottom: 12px; color: #facc15;" id="msg-ruim">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos fazer para melhorar seu atendimento?"></textarea>
+        <button onclick="enviarWhatsApp Gerente()" class="botao whatsapp">
+            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <div id="info-loja">
-            <b>📍 Estrada Pedro da Cunha Albuquerque Lopes, 2235</b><br>
-            Perobal, Itaquaquecetuba - SP<br>
-            <i class="fas fa-phone-alt" style="margin-top:5px;"></i> (11) 99982-2103
+        <div><b>📍 Estrada Pedro da Cunha Albuquerque Lopes, 2235</b></div>
+        <div>Perobal, Itaquaquecetuba - SP, 08584-584</div>
+        <div style="margin-top: 5px;">📞 WhatsApp: (11) 99982-2103</div>
+        
+        <div style="margin-top: 15px;">
+            Deseja um link "assim" personalizado para sua empresa? <a href="https://wa.me/5511954950044?text=Olá, quero um link personalizado para minha empresa!" target="_blank" class="link-personalizado">Saiba mais</a>
         </div>
-        
-        <a href="https://wa.me/5511954950044?text=Olá, quero um link de avaliação personalizado para minha empresa!" target="_blank" class="link-personalizado">
-            🚀 Link personalizado para sua empresa? Saiba mais
-        </a>
-        
-        <div style="margin-top: 15px; opacity: 0.8;">
-            © 2026 | Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank" class="marca-impulsoweb">ImpulsoWeb10</a>
+
+        <div style="margin-top: 10px;">
+            🔒 CONEXÃO PROTEGIDA | © 2026<br>
+            Desenvolvido por <a href="https://wa.me/5511954950044" target="_blank" class="wats-venda">ImpulsoWeb10</a>
         </div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
-    
-    // FRASES DINÂMICAS COM CARINHA TRISTE (SINTIMOS MUITO)
-    const frasesInput = {
-        1: "Sentimos muito. 😔",
-        2: "Sentimos muito. 😟",
-        3: "Sentimos muito. 😐",
+    const frases = {
+        1: "Péssimo atendimento 😡",
+        2: "Experiência ruim 😟",
+        3: "Pode melhorar 😐",
         4: "Muito bom! 😊",
         5: "Excelente! 😍"
     };
 
-    // FRASES DENTRO DA CAIXA DE DESCULPA (FEEDBACK RUIM)
-    const frasesDesculpas = {
-        1: "Sentimos muito por sua experiência ter sido ruim. 😔 Queremos entender o que houve.",
-        2: "Sentimos muito... 😟 Sua opinião é muito importante para corrigirmos nossas falhas.",
-        3: "Sentimos muito. 😐 Como podemos tornar seu próximo atendimento nota 10?"
-    };
-
     function setFrase(n) {
-        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frasesInput[n];
+        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frases[n];
     }
 
     function avaliar(n) {
         notaSelecionada = n;
-        document.querySelectorAll('.star-btn').forEach((s, i) => {
-            i < n ? s.classList.add('active') : s.classList.remove('active');
+        const stars = document.querySelectorAll('.star-btn');
+        const bom = document.getElementById('feedback-bom');
+        const ruim = document.getElementById('feedback-ruim');
+        const instrucao = document.getElementById('instrucao');
+        const logo = document.getElementById('main-logo');
+
+        stars.forEach((s, i) => {
+            if (i < n) s.classList.add('active');
+            else s.classList.remove('active');
         });
 
-        document.getElementById('main-logo').classList.add('logo-compacta');
-        document.getElementById('instrucao').classList.add('hidden');
+        instrucao.classList.add('hidden');
+        logo.classList.add('logo-compacta');
 
         if (n >= 4) {
-            document.getElementById('feedback-bom').classList.remove('hidden');
-            document.getElementById('feedback-ruim').classList.add('hidden');
-            confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
+            bom.classList.remove('hidden');
+            ruim.classList.add('hidden');
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.8 },
+                colors: ['#facc15', '#ffffff']
+            });
         } else {
-            // Aplica a frase específica de desculpa com carinha triste
-            document.getElementById('msg-desculpa').innerText = frasesDesculpas[n];
-            document.getElementById('feedback-ruim').classList.remove('hidden');
-            document.getElementById('feedback-bom').classList.add('hidden');
+            document.getElementById('msg-ruim').innerText = frases[n];
+            ruim.classList.remove('hidden');
+            bom.classList.add('hidden');
         }
     }
 
-    function enviarWhatsApp() {
+    function enviarWhatsAppGerente() {
         const texto = document.getElementById('texto-melhoria').value;
-        if (!texto) { alert("Por favor, conte-nos como podemos melhorar."); return; }
-        window.open(`https://wa.me/5511999822103?text=Feedback Unidade II (${notaSelecionada} estrelas): ${texto}`, '_blank');
+        const telefone = "5511999822103"; 
+        if (!texto) { alert("Por favor, digite sua sugestão."); return; }
+        const mensagem = encodeURIComponent(`Feedback Unidade II (${notaSelecionada} estrelas): ${texto}`);
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
 
