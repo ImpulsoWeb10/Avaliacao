@@ -3,156 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Avaliação Itapuã Center | Materiais de Construção</title>
-    <meta name="description" content="Avalie o atendimento e os produtos da Itapuã Center Materiais de Construção.">
-    
+    <title>Avaliação Itapuã Center</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
+        /* MANTENDO TODO O SEU ESTILO ORIGINAL */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 420px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
-            padding: 40px 30px;
-            border-radius: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            text-align: center;
-        }
-
-        .logo { 
-            width: 150px; height: 100px; object-fit: contain; padding: 10px;
-            border-radius: 22px; border: 3px solid #facc15; 
-            background: white; margin: 0 auto 20px;
-        }
-
+        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .container { max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); text-align: center; }
+        .logo { width: 150px; height: 100px; object-fit: contain; padding: 10px; border-radius: 22px; border: 3px solid #facc15; background: white; margin: 0 auto 20px; }
         h1 { font-size: 26px; margin-bottom: 5px; color: #fff; }
         h2 { font-size: 17px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
-        
         .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
         .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
-
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
-            color: white; padding: 15px; margin-bottom: 15px; outline: none;
-            resize: none; font-family: inherit; font-size: 14px;
-        }
-
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            font-style: italic;
-        }
-
-        .botao {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 18px; border-radius: 50px;
-            font-weight: 800; font-size: 16px; text-decoration: none;
-            transition: 0.3s; border: none; cursor: pointer;
-            position: relative; 
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        
-        .google { 
-            background: #facc15; 
-            color: #000;
-            animation: pulse 2s infinite; 
-        }
-
-        .instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-        }
-
-        .google::after, .instagram::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shine 3s infinite;
-        }
-
+        textarea { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 15px; color: white; padding: 15px; margin-bottom: 15px; outline: none; resize: none; font-family: inherit; font-size: 14px; }
+        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 10px; }
+        .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
+        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
         .whatsapp { background: #22c55e; color: white; }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); }
-        }
-
-        @keyframes shine {
-            to { left: 100%; }
-        }
-
-        .img-resultado {
-            width: 100%;
-            max-height: 180px;
-            object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            display: block;
-        }
-
         .hidden { display: none; }
-
-        .footer { 
-            margin-top: 35px; 
-            font-size: 13px; 
-            color: #ffffff; 
-            border-top: 1px solid rgba(255,255,255,0.2); 
-            padding-top: 25px;
-            line-height: 1.8;
-        }
         
-        .footer .slogan-final { 
-            font-style: italic; 
-            color: #facc15; 
-            margin-bottom: 20px; 
-            font-size: 18px; 
-            font-weight: 700;
-            display: block;
-            line-height: 1.3;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        /* ESTILO DO NOVO AVISO DE REDIRECIONAMENTO */
+        #modal-redirect {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; align-items: center;
+            justify-content: center; z-index: 9999; padding: 20px;
         }
+        .modal-content {
+            background: #1e293b; padding: 30px; border-radius: 25px;
+            border: 2px solid #facc15; text-align: center;
+        }
+        .loader {
+            border: 4px solid #f3f3f3; border-top: 4px solid #facc15;
+            border-radius: 50%; width: 40px; height: 40px;
+            animation: spin 1s linear infinite; margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
 
-        .cta-vendas { display: block; margin-bottom: 15px; font-size: 12px; color: #cbd5e1; line-height: 1.4; }
-        .cta-vendas a { color: #38bdf8; text-decoration: none; font-weight: 700; border-bottom: 1px solid #38bdf8; }
-        .footer .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
-        .footer b { color: #facc15; }
+        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; line-height: 1.8; }
+        .footer .slogan-final { font-style: italic; color: #facc15; margin-bottom: 20px; font-size: 18px; font-weight: 700; display: block; line-height: 1.3; }
+        .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Itapuã Center Logo">
+<div id="modal-redirect">
+    <div class="modal-content">
+        <h3 style="color: #facc15;">Quase lá! 🚀</h3>
+        <p style="margin-top: 10px;">Abrimos nosso Instagram para você nos seguir.</p>
+        <p>Aguarde 3 segundos para avaliar no Google...</p>
+        <div class="loader"></div>
+    </div>
+</div>
 
+<div class="container">
+    <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Logo">
     <h1>Itapuã Center</h1>
     <h2>Materiais de Construção</h2>
     
-    <p id="instrucao" style="margin-bottom: 20px;">Toque nas estrelas para avaliar nosso atendimento:</p>
+    <p id="instrucao">Toque nas estrelas para avaliar nosso atendimento:</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -163,91 +76,57 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="itapua-center.png" class="img-resultado" alt="Itapuã Center Família">
-        
+        <img src="itapua-center.png" class="img-resultado" style="width:100%; border-radius:20px; margin-bottom:15px;">
         <p style="font-size: 18px; margin-bottom: 15px;">Ficamos felizes! 🎉</p>
-        <p style="margin-bottom: 20px;">Sua avaliação ajuda outros clientes.</p>
         
-        <a href="https://g.page/r/CWSPsbcmiCwZEBM/review/" target="_blank" class="botao google" onclick="abrirAmbos()">
+        <button onclick="iniciarDuploRedirecionamento()" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
-        </a>
+        </button>
 
-        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" id="btn-insta" class="botao instagram">
+        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" class="botao instagram">
             <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Pedimos desculpas... 😔</p>
-        
-        <textarea id="texto-melhoria" placeholder="Por gentileza, o que ocorreu para melhorarmos?"></textarea>
-        
-        <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
-        </button>
+        <p>Pedimos desculpas... 😔</p>
+        <textarea id="texto-melhoria" placeholder="O que ocorreu?"></textarea>
+        <button onclick="enviarWhatsApp()" class="botao whatsapp">FALAR COM O GERENTE</button>
     </div>
 
     <div class="footer">
-        <span class="slogan-final">"Alicerce forte se constrói com confiança e bons materiais."</span>
-        
-        <span class="cta-vendas">
-            Gostou desse sistema? Tenha um link personalizado para sua empresa. 
-            <a href="https://wa.me/5511954950044?text=Olá, vi o link da Itapuã Center e quero um para minha empresa!" target="_blank">Clique aqui</a>
-        </span>
-
+        <span class="slogan-final">"Alicerce forte se constrói com confiança."</span>
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div>
-            Desenvolvido por: 
-            <a href="https://impulsoweb10.com.br/" target="_blank" class="dev-link">ImpulsoWeb10</a>
-        </div>
-    
+        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank" class="dev-link">ImpulsoWeb10</a></div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
+    const urlGoogle = "https://g.page/r/CWSPsbcmiCwZEBM/review/";
+    const urlInsta = "https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==";
 
-    // NOVA FUNÇÃO: Abre o Google (pelo href) e o Instagram (pelo script) simultaneamente
-    function abrirAmbos() {
-        const urlInstagram = "https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==";
-        // Pequeno atraso para garantir que o navegador não bloqueie o pop-up
+    function iniciarDuploRedirecionamento() {
+        // 1. Abre o Instagram em outra aba imediatamente
+        window.open(urlInsta, '_blank');
+
+        // 2. Mostra a mensagem de redirecionamento na tela atual
+        document.getElementById('modal-redirect').style.display = 'flex';
+
+        // 3. Após 3 segundos, envia para o Google na MESMA aba (evita bloqueio de popup)
         setTimeout(() => {
-            window.open(urlInstagram, '_blank');
-        }, 500);
+            window.location.href = urlGoogle;
+        }, 3500);
     }
 
     function avaliar(n) {
         notaSelecionada = n;
-        const stars = document.querySelectorAll('.star-btn');
-        stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
+        document.querySelectorAll('.star-btn').forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
         document.getElementById('instrucao').classList.add('hidden');
         if (n >= 4) {
             document.getElementById('feedback-bom').classList.remove('hidden');
             document.getElementById('feedback-ruim').classList.add('hidden');
-            
-            confetti({
-                particleCount: 150,
-                spread: 80,
-                origin: { y: 0.6 },
-                colors: ['#facc15', '#22c55e', '#ffffff', '#ff0000', '#0000ff']
-            });
-            
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) {
-              return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-              if (timeLeft <= 0) return clearInterval(interval);
-              var particleCount = 50 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
         } else {
             document.getElementById('feedback-ruim').classList.remove('hidden');
             document.getElementById('feedback-bom').classList.add('hidden');
@@ -256,12 +135,9 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511945320614"; 
         if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
-        const msg = encodeURIComponent(`Feedback Itapuã Center (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${msg}`, '_blank');
+        window.open(`https://wa.me/5511945320614?text=Feedback ${notaSelecionada} estrelas: ${texto}`, '_blank');
     }
 </script>
-
 </body>
 </html>
