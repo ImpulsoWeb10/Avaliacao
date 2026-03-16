@@ -1,1 +1,262 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Óptica Lionda | Avalie nossa Qualidade</title>
+
+    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista em Itaquaquecetuba. Segunda loja da rede Lionda. Sua saúde visual é nossa prioridade.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Optician",
+      "name": "Óptica Lionda",
+      "description": "Segunda loja da rede Lionda. Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista.",
+      "image": "logo-optica-lionda.png",
+      "telephone": "+5511972319233",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "R. Joaquim Caetano",
+        "addressLocality": "Itaquaquecetuba",
+        "addressRegion": "SP",
+        "postalCode": "08583-670",
+        "addressCountry": "BR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "00:00",
+          "closes": "00:00",
+          "note": "Fechado"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            padding: 30px 20px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .logo { 
+            width: 130px; 
+            height: 150px; 
+            object-fit: contain; 
+            padding: 8px;
+            border-radius: 22px;
+            border: 3px solid #facc15; 
+            background: white; 
+            margin: 0 auto 15px;
+            transition: 0.4s;
+        }
+
+        .logo-compacta {
+            width: 180px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
+        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        
+        #instrucao { font-size: 15px; color: #e2e8f0; margin-bottom: 15px; }
+
+        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
+        .star-btn {
+            font-size: 40px; color: #475569; cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .star-btn.active { color: #facc15; transform: scale(1.15); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+
+        .img-comemorativa {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 2px solid rgba(250, 204, 21, 0.3);
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        textarea {
+            width: 100%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
+            color: white; padding: 12px; margin-bottom: 12px;
+            resize: none; outline: none; font-family: inherit;
+        }
+
+        .botao {
+            position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; border-radius: 50px;
+            font-weight: 800; font-size: 15px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
+        .google::after {
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
+        }
+
+        .whatsapp { background: #22c55e; color: white; }
+
+        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        .hidden { display: none; }
+
+        .footer { 
+            margin-top: 25px; font-size: 11px; color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+        }
+        .info-loja { margin: 10px 0; font-size: 12px; line-height: 1.5; opacity: 0.9; }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
+        .frase-top { font-style: italic; margin-bottom: 8px; display: block; font-size: 13px; color: #facc15; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="logo-optica-lionda.png" class="logo" id="main-logo" alt="Óptica Lionda">
+
+    <h1 id="main-title">Óptica Lionda</h1>
+    <h2 id="sub-title">Excelência em Saúde Visual</h2>
+    
+    <p id="instrucao">Como foi sua experiência hoje?</p>
+
+    <div class="rating-box">
+        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
+    </div>
+
+    <div id="feedback-bom" class="hidden">
+        <img src="casal-oculos.png" class="img-comemorativa" alt="Clientes Satisfeitos">
+        <p style="font-size: 17px; margin-bottom: 12px;">Ficamos muito felizes! 🎉</p>
+        <p style="margin-bottom: 15px; font-size: 14px;">Sua avaliação ajuda outras pessoas a cuidarem da visão com qualidade.</p>
+        <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
+            <i class="fab fa-google"></i> AVALIAR NO GOOGLE
+        </a>
+    </div>
+
+    <div id="feedback-ruim" class="hidden">
+        <p style="font-size: 17px; margin-bottom: 12px;">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos fazer para melhorar seu atendimento?"></textarea>
+        <button onclick="enviarWhatsApp()" class="botao whatsapp">
+            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
+        </button>
+    </div>
+
+    <div class="footer">
+        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo."</span>
+        
+        <div class="info-loja">
+            <strong>Unidade Parque Piratininga</strong><br>
+            R. Joaquim Caetano - Itaquaquecetuba - SP<br>
+            Segunda a Sexta: 09h às 18h | Sáb: 09h às 17h<br>
+            <i class="fab fa-whatsapp"></i> (11) 97231-9233
+        </div>
+
+        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
+        <div style="margin-top: 5px;">
+            Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let notaSelecionada = 0;
+
+    function avaliar(n) {
+        notaSelecionada = n;
+        const stars = document.querySelectorAll('.star-btn');
+        const bom = document.getElementById('feedback-bom');
+        const ruim = document.getElementById('feedback-ruim');
+        const instrucao = document.getElementById('instrucao');
+        const logo = document.getElementById('main-logo');
+        const title = document.getElementById('main-title');
+
+        stars.forEach((s, i) => {
+            if (i < n) s.classList.add('active');
+            else s.classList.remove('active');
+        });
+
+        instrucao.classList.add('hidden');
+        logo.classList.add('logo-compacta');
+        title.style.fontSize = "20px";
+
+        if (n >= 4) {
+            bom.classList.remove('hidden');
+            ruim.classList.add('hidden');
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.8 },
+                colors: ['#facc15', '#ffffff', '#2ecc71']
+            });
+        } else {
+            ruim.classList.remove('hidden');
+            bom.classList.add('hidden');
+        }
+    }
+
+    function enviarWhatsApp() {
+        const texto = document.getElementById('texto-melhoria').value;
+        const telefone = "5511972319233"; 
+        if (!texto) { alert("Por favor, digite sua sugestão."); return; }
+        const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
