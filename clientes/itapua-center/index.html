@@ -22,36 +22,37 @@
         .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
         .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
         .hidden { display: none; }
-
-        /* MODAL DESIGN */
+        
+        /* MODAL LINDÃO */
         #modal-instrucao {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.98); display: none; align-items: center;
+            background: rgba(15, 23, 42, 0.96); display: none; align-items: center;
             justify-content: center; z-index: 10000; padding: 25px;
         }
         .modal-card {
-            background: #1e293b; padding: 35px 25px; border-radius: 30px;
+            background: #1e293b; padding: 35px 25px; border-radius: 35px;
             border: 2px solid #facc15; text-align: center; max-width: 380px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        .modal-card i { font-size: 45px; color: #facc15; margin-bottom: 15px; }
-        .modal-card h3 { color: #fff; margin-bottom: 10px; font-size: 22px; }
-        .modal-card p { font-size: 16px; line-height: 1.6; color: #cbd5e1; margin-bottom: 25px; }
+        .modal-card i { font-size: 50px; color: #facc15; margin-bottom: 15px; display: block; }
+        .modal-card p { font-size: 17px; line-height: 1.6; color: #f8fafc; margin-bottom: 25px; font-weight: 500; }
 
+        @keyframes bounceIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
-        .footer { margin-top: 35px; font-size: 12px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        
+        .img-resultado { width: 100%; max-height: 180px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); }
+        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; }
     </style>
 </head>
 <body>
 
 <div id="modal-instrucao">
     <div class="modal-card">
-        <i class="fas fa-star"></i>
-        <h3>Excelente escolha!</h3>
-        <p>"Após nos avaliar no Google, por gentileza, nos siga na página do Instagram que será aberta em seguida, assim que você voltar nesta página."</p>
-        
-        <button onclick="irParaAvaliacao()" class="botao google">
-            <i class="fab fa-google"></i> AVALIAR AGORA
+        <i class="fab fa-instagram"></i>
+        <p>"Após nos avaliar no Google, por gentileza, nos siga na página do Instagram que está aberta, assim que voltar na página."</p>
+        <button onclick="prosseguirParaGoogle()" class="botao google">
+            <i class="fab fa-google"></i> OK, VAMOS AVALIAR!
         </button>
     </div>
 </div>
@@ -71,15 +72,28 @@
         <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
+    <div id="feedback-bom" class="hidden">
+        <img src="itapua-center.png" class="img-resultado">
+        <p style="font-size: 18px; margin-bottom: 15px;">Ficamos felizes! 🎉</p>
+        
+        <button onclick="abrirModalInstrucao()" class="botao google">
+            <i class="fab fa-google"></i> AVALIAR NO GOOGLE
+        </button>
+
+        <a href="https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==" target="_blank" class="botao instagram">
+            <i class="fab fa-instagram"></i> NOS SIGA NO INSTAGRAM
+        </a>
+    </div>
+
     <div id="feedback-ruim" class="hidden">
         <p>Pedimos desculpas... 😔</p>
-        <textarea id="texto-melhoria" style="width:100%; background:rgba(255,255,255,0.1); border-radius:15px; color:white; padding:15px; margin-top:10px; border: 1px solid rgba(255,255,255,0.2);" placeholder="O que ocorreu?"></textarea>
+        <textarea id="texto-melhoria" style="width:100%; background:rgba(255,255,255,0.1); border-radius:15px; color:white; padding:15px; margin-top:10px; border:1px solid rgba(255,255,255,0.2);" placeholder="O que ocorreu?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao" style="background:#22c55e; color:white; margin-top:10px;">FALAR COM O GERENTE</button>
     </div>
 
     <div class="footer">
         <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank" style="color:#22c55e; text-decoration:none;">ImpulsoWeb10</a></div>
+        <div>Desenvolvido por: <a href="https://impulsoweb10.com.br/" target="_blank" style="color:#22c55e; text-decoration:none; font-weight:800;">ImpulsoWeb10</a></div>
     </div>
 </div>
 
@@ -91,26 +105,32 @@
     function avaliar(n) {
         notaSelecionada = n;
         document.querySelectorAll('.star-btn').forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
+        document.getElementById('instrucao').classList.add('hidden');
         
         if (n >= 4) {
-            // MOSTRA O MODAL IMEDIATAMENTE APÓS CLICAR NAS ESTRELAS
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            document.getElementById('modal-instrucao').style.display = 'flex';
+            document.getElementById('feedback-bom').classList.remove('hidden');
+            document.getElementById('feedback-ruim').classList.add('hidden');
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
         } else {
-            document.getElementById('instrucao').classList.add('hidden');
             document.getElementById('feedback-ruim').classList.remove('hidden');
+            document.getElementById('feedback-bom').classList.add('hidden');
         }
     }
 
-    function irParaAvaliacao() {
-        // 1. Abre o Google em nova aba
-        window.open(urlGoogle, '_blank');
+    // DISPARA O MODAL QUANDO CLICA NO BOTÃO DO GOOGLE
+    function abrirModalInstrucao() {
+        document.getElementById('modal-instrucao').style.display = 'flex';
+    }
 
-        // 2. Fecha o modal da tela
+    // DISPARA OS LINKS AO CLICAR NO "OK" DO MODAL
+    function prosseguirParaGoogle() {
+        // Abre o Google
+        window.open(urlGoogle, '_blank');
+        
+        // Esconde o modal
         document.getElementById('modal-instrucao').style.display = 'none';
 
-        // 3. Após 2 segundos, abre o Instagram em background (outra aba)
-        // Assim, quando o cliente voltar, o Insta já vai estar lá.
+        // Abre o Instagram em segundo plano após 2 segundos
         setTimeout(() => {
             window.open(urlInsta, '_blank');
         }, 2000);
