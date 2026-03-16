@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação Itapuã Center</title>
+    <title>Avaliação Itapuã Center | Materiais de Construção</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* Mantendo seu estilo original */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .container { max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); text-align: center; }
@@ -19,23 +18,51 @@
         .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
         .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
-        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; margin-bottom: 10px; }
+        .botao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 10px; }
         .google { background: #facc15; color: #000; animation: pulse 2s infinite; }
         .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .whatsapp { background: #22c55e; color: white; }
         .hidden { display: none; }
+
+        /* MODAL PERSONALIZADO */
+        #modal-instrucao {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95); display: none; align-items: center;
+            justify-content: center; z-index: 10000; padding: 20px;
+        }
+        .modal-card {
+            background: #1e293b; padding: 30px; border-radius: 30px;
+            border: 2px solid #facc15; text-align: center; max-width: 350px;
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+        .modal-card i { font-size: 50px; color: #facc15; margin-bottom: 20px; }
+        .modal-card p { font-size: 16px; line-height: 1.5; color: #f8fafc; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(250, 204, 21, 0); } 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
-        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; }
+
+        .footer { margin-top: 35px; font-size: 13px; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; line-height: 1.8; }
         .dev-link { color: #22c55e; text-decoration: none; font-weight: 800; }
     </style>
 </head>
 <body>
+
+<div id="modal-instrucao">
+    <div class="modal-card">
+        <i class="fab fa-instagram"></i>
+        <p><strong>Quase lá!</strong></p>
+        <p style="margin-top: 10px;">Após nos avaliar no Google, por gentileza, <b>nos siga na página do Instagram</b> que acabamos de abrir para você!</p>
+        <button onclick="fecharModal()" class="botao" style="background: #facc15; color: #000; margin-top: 20px; padding: 12px;">ENTENDI</button>
+    </div>
+</div>
 
 <div class="container">
     <img src="itapua-center-materiais-de-construcao.png" class="logo" alt="Logo">
     <h1>Itapuã Center</h1>
     <h2>Materiais de Construção</h2>
     
-    <p id="instrucao">Toque nas estrelas para avaliar nosso atendimento:</p>
+    <p id="instrucao" style="margin-bottom: 20px;">Toque nas estrelas para avaliar nosso atendimento:</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
@@ -46,9 +73,10 @@
     </div>
 
     <div id="feedback-bom" class="hidden">
+        <img src="itapua-center.png" class="img-resultado" style="width:100%; border-radius:20px; margin-bottom:15px; border: 1px solid rgba(255,255,255,0.1);">
         <p style="font-size: 18px; margin-bottom: 15px;">Ficamos felizes! 🎉</p>
         
-        <button onclick="avaliarEInstagram()" class="botao google">
+        <button onclick="executarFluxo()" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </button>
 
@@ -59,8 +87,8 @@
 
     <div id="feedback-ruim" class="hidden">
         <p>Pedimos desculpas... 😔</p>
-        <textarea id="texto-melhoria" style="width:100%; background:rgba(255,255,255,0.1); border-radius:15px; color:white; padding:15px; margin-top:10px;" placeholder="O que ocorreu?"></textarea>
-        <button onclick="enviarWhatsApp()" class="botao" style="background:#22c55e; color:white; margin-top:10px;">FALAR COM O GERENTE</button>
+        <textarea id="texto-melhoria" style="width:100%; background:rgba(255,255,255,0.1); border-radius:15px; color:white; padding:15px; margin-top:10px; border: 1px solid rgba(255,255,255,0.2);" placeholder="O que ocorreu?"></textarea>
+        <button onclick="enviarWhatsApp()" class="botao whatsapp" style="margin-top:10px;">FALAR COM O GERENTE</button>
     </div>
 
     <div class="footer">
@@ -74,16 +102,21 @@
     const urlGoogle = "https://g.page/r/CWSPsbcmiCwZEBM/review/";
     const urlInsta = "https://www.instagram.com/itapua_center?utm_source=qr&igsh=MW9vbDl1OGtsbGU4Yw==";
 
-    function avaliarEInstagram() {
-        // 1. Abre o Google em uma nova aba (foco do cliente)
+    function executarFluxo() {
+        // 1. Abre o Google imediatamente
         window.open(urlGoogle, '_blank');
 
-        // 2. Muda a página atual para o Instagram
-        // Assim, quando ele terminar no Google e fechar a aba ou voltar, 
-        // ele já cai direto no seu perfil.
+        // 2. Mostra o Modal Bonito na tela principal
+        document.getElementById('modal-instrucao').style.display = 'flex';
+
+        // 3. Após 3 segundos, abre o Instagram em uma nova aba (segundo plano)
         setTimeout(() => {
-            window.location.href = urlInsta;
-        }, 100);
+            window.open(urlInsta, '_blank');
+        }, 3000);
+    }
+
+    function fecharModal() {
+        document.getElementById('modal-instrucao').style.display = 'none';
     }
 
     function avaliar(n) {
@@ -102,8 +135,8 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        if (!texto) { alert("Por favor, conte-nos."); return; }
-        window.open(`https://wa.me/5511945320614?text=Feedback ${notaSelecionada} estrelas: ${texto}`, '_blank');
+        if (!texto) { alert("Por favor, conte-nos o que podemos melhorar."); return; }
+        window.open(`https://wa.me/5511945320614?text=Feedback Itapuã Center (${notaSelecionada} estrelas): ${texto}`, '_blank');
     }
 </script>
 </body>
