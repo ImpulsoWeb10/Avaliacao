@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Óptica Lionda | Avalie nossa Qualidade</title>
 
-    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista em Itaquaquecetuba. Segunda loja da rede Lionda. Sua saúde visual é nossa prioridade.">
+    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista em Itaquaquecetuba. Segunda loja da rede Lionda.">
     
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Optician",
       "name": "Óptica Lionda",
-      "description": "Segunda loja da rede Lionda. Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista.",
+      "description": "Segunda loja da rede Lionda. Especialistas em Lentes de Grau e Saúde Visual.",
       "image": "logo-optica-lionda.png",
       "telephone": "+5511972319233",
       "address": {
@@ -22,28 +22,7 @@
         "addressRegion": "SP",
         "postalCode": "08583-670",
         "addressCountry": "BR"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Saturday",
-          "opens": "09:00",
-          "closes": "17:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Sunday",
-          "opens": "00:00",
-          "closes": "00:00",
-          "note": "Fechado"
-        }
-      ]
+      }
     }
     </script>
 
@@ -70,7 +49,7 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px);
-            padding: 30px 20px;
+            padding: 25px 20px;
             border-radius: 35px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
@@ -78,128 +57,76 @@
         }
 
         .logo { 
-            width: 130px; 
-            height: 150px; 
-            object-fit: contain; 
-            padding: 8px;
-            border-radius: 22px;
-            border: 3px solid #facc15; 
-            background: white; 
-            margin: 0 auto 15px;
-            transition: 0.4s;
+            width: 120px; height: 140px; object-fit: contain; 
+            padding: 8px; border-radius: 22px; border: 3px solid #facc15; 
+            background: white; margin: 0 auto 10px; transition: 0.4s;
         }
 
-        .logo-compacta {
-            width: 180px;
-            height: 60px;
-            object-fit: cover;
-        }
+        .logo-compacta { width: 160px; height: 50px; object-fit: cover; }
 
-        h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
-        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        h1 { font-size: 22px; color: #fff; margin-bottom: 2px; }
+        .frase-topo { font-size: 14px; color: #facc15; font-style: italic; margin-bottom: 5px; display: block; }
+        h2 { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; font-weight: normal; }
         
-        /* Títulos de Desculpa/Felicidade */
-        .status-title { font-size: 28px; font-weight: bold; margin-bottom: 5px; display: block; }
-        .status-sad { color: #ef4444; } /* Vermelho */
-        .status-happy { color: #22c55e; } /* Verde */
+        .status-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; display: block; }
+        .status-sad { color: #ef4444; }
+        .status-happy { color: #22c55e; }
 
-        #instrucao { font-size: 16px; color: #e2e8f0; margin-bottom: 20px; font-weight: bold; min-height: 24px;}
+        #instrucao { font-size: 16px; color: #e2e8f0; margin-bottom: 20px; font-weight: bold; min-height: 24px; }
 
-        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 10px; }
-        .star-btn {
-            font-size: 45px; color: #475569; cursor: pointer;
-            transition: 0.2s ease-in-out;
-            position: relative;
-        }
-        
-        /* Efeito Hover nas Estrelas */
+        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
+        .star-btn { font-size: 42px; color: #475569; cursor: pointer; transition: 0.2s; }
         .star-btn:hover { color: #fde047; transform: scale(1.1); }
-        .star-btn.active { color: #facc15; transform: scale(1.15); text-shadow: 0 0 15px rgba(250, 204, 21, 0.6); }
+        .star-btn.active { color: #facc15; transform: scale(1.1); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
 
-        /* NOVA ANIMAÇÃO DA IMAGEM: Crescendo do Centro */
         .img-comemorativa {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            border: 3px solid rgba(250, 204, 21, 0.4);
-            display: block;
-            
-            /* Estado Inicial */
-            opacity: 0;
-            transform: scale(0.5); /* Começa pela metade */
-            
-            /* Animação Triggered via JS class */
+            width: 100%; height: 170px; object-fit: cover; border-radius: 20px;
+            margin-bottom: 15px; border: 3px solid rgba(250, 204, 21, 0.4);
+            display: block; opacity: 0; transform: scale(0.5);
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        
-        /* Classe que ativa a animação */
-        .img-comemorativa.show-img {
-            opacity: 1;
-            transform: scale(1); /* Vai para o tamanho normal */
-        }
+        .img-comemorativa.show-img { opacity: 1; transform: scale(1); }
 
         textarea {
             width: 100%; background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
-            color: white; padding: 15px; margin-bottom: 15px;
-            resize: none; outline: none; font-family: inherit; font-size: 14px;
+            color: white; padding: 12px; margin-bottom: 12px; outline: none; font-family: inherit;
         }
 
         .botao {
-            position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            width: 100%; padding: 18px; border-radius: 50px;
-            font-weight: 800; font-size: 16px; text-decoration: none;
-            transition: 0.3s ease; border: none; cursor: pointer;
-            margin-bottom: 15px;
+            position: relative; overflow: hidden; display: flex; align-items: center; 
+            justify-content: center; gap: 10px; width: 100%; padding: 16px; 
+            border-radius: 50px; font-weight: 800; text-decoration: none; cursor: pointer;
         }
 
-        /* NOVA ANIMAÇÃO DO BOTÃO GOOGLE: Pulsando com Brilho Passando */
         .google { 
-            background: #facc15; 
-            color: #000; 
-            box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3);
-            animation: pulsarConstante 1.5s infinite ease-in-out; /* Pulso */
+            background: #facc15; color: #000; margin-bottom: 10px;
+            animation: pulsarConstante 1.5s infinite ease-in-out;
         }
-        
-        /* O efeito de brilho passando */
         .google::after {
-            content: ""; 
-            position: absolute; 
-            top: 0; 
-            left: -150%; 
-            width: 100%; 
-            height: 100%;
+            content: ""; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: skewX(-25deg); 
-            animation: brilhoPassandoConstante 2.5s infinite; /* Brilho */
+            transform: skewX(-25deg); animation: brilhoPassandoConstante 2.5s infinite;
         }
 
-        .whatsapp { background: #22c55e; color: white; box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3); }
+        .whatsapp { background: #22c55e; color: white; border: none; font-family: inherit; font-size: 16px; }
 
-        /* Definição das Novas Animações */
-        @keyframes brilhoPassandoConstante { 
-            0% { left: -150%; } 
-            100% { left: 150%; } 
-        }
+        @keyframes brilhoPassandoConstante { 0% { left: -150%; } 100% { left: 150%; } }
         @keyframes pulsarConstante { 
-            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); } 
-            50% { transform: scale(1.04); box-shadow: 0 8px 25px rgba(250, 204, 21, 0.5); } 
-            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); } 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.03); } 
         }
 
         .hidden { display: none; }
 
+        /* RODAPÉ ORGANIZADO */
         .footer { 
-            margin-top: 30px; font-size: 11px; color: #ffffff; 
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;
+            margin-top: 20px; font-size: 12px; color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
         }
-        .info-loja { margin: 10px 0; font-size: 12px; line-height: 1.6; opacity: 0.9; }
+        .linha-info { display: block; margin-bottom: 4px; opacity: 0.9; }
         .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
-        .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 13px; color: #facc15; }
+        .dev { font-size: 10px; margin-top: 10px; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -208,6 +135,7 @@
     <img src="logo-optica-lionda.png" class="logo" id="main-logo" alt="Óptica Lionda">
 
     <h1 id="main-title">Óptica Lionda</h1>
+    <span class="frase-topo">"Enxergar o mundo com clareza é o primeiro passo."</span>
     <h2 id="sub-title">Excelência em Saúde Visual</h2>
     
     <div id="status-area" class="hidden">
@@ -217,40 +145,34 @@
     <p id="instrucao">Como foi sua experiência hoje?</p>
 
     <div class="rating-box" onmouseleave="resetarFrase()">
-        <i class="fas fa-star star-btn" data-index="1" onmouseover="mostrarFrase(1)" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" data-index="2" onmouseover="mostrarFrase(2)" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" data-index="3" onmouseover="mostrarFrase(3)" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" data-index="4" onmouseover="mostrarFrase(4)" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" data-index="5" onmouseover="mostrarFrase(5)" onclick="avaliar(5)"></i>
+        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(1)" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(2)" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(3)" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(4)" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(5)" onclick="avaliar(5)"></i>
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="lionda-oculos.png" class="img-comemorativa" id="img-casal" alt="Clientes Satisfeitos">
-        <p style="margin-bottom: 20px; font-size: 15px; line-height: 1.4;">Sua avaliação positiva ajuda outras pessoas a cuidarem da visão com qualidade na região.</p>
+        <img src="casal-oculos.png" class="img-comemorativa" id="img-casal" alt="Clientes Satisfeitos">
         <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <textarea id="texto-melhoria" rows="4" placeholder="O que podemos fazer para melhorar nosso atendimento ou produtos?"></textarea>
+        <textarea id="texto-melhoria" rows="3" placeholder="O que podemos melhorar?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR FEEDBACK PRIVADO
+            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo."</span>
+        <strong class="linha-info">📍 Unidade Parque Piratininga</strong>
+        <span class="linha-info">R. Joaquim Caetano - Itaquaquecetuba - SP</span>
+        <span class="linha-info">🕒 Seg a Sex: 09h às 18h | Sáb: 09h às 17h</span>
         
-        <div class="info-loja">
-            <strong>Unidade Parque Piratininga</strong><br>
-            R. Joaquim Caetano - Itaquaquecetuba - SP<br>
-            Segunda a Sexta: 09h às 18h | Sáb: 09h às 17h<br>
-            <i class="fab fa-whatsapp"></i> (11) 97231-9233
-        </div>
-
-        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
-        <div style="margin-top: 5px;">
+        <div class="dev">
+            🔒 CONEXÃO PROTEGIDA | © 2026<br>
             Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
         </div>
     </div>
@@ -262,87 +184,52 @@
     const statusArea = document.getElementById('status-area');
     const statusIcon = document.getElementById('status-icon');
     
-    // DEFINIÇÃO DAS FRASES PARA CADA ESTRELA
     const frasesEstrelas = {
         0: "Como foi sua experiência hoje?",
-        1: "Péssima? 😞",
-        2: "Ruim? 😕",
-        3: "Regular? 😐",
-        4: "Boa! 🙂",
-        5: "Excelente! 😍"
+        1: "Péssima? 😞", 2: "Ruim? 😕", 3: "Regular? 😐", 4: "Boa! 🙂", 5: "Excelente! 😍"
     };
 
-    // Função para mudar a frase no HOVER (passar o mouse)
     function mostrarFrase(n) {
-        if (notaSelecionada === 0) { // Só muda se ainda não clicou
+        if (notaSelecionada === 0) {
             instrucao.innerText = frasesEstrelas[n];
-            instrucao.style.color = "#fde047"; // Cor amarela no hover
+            instrucao.style.color = "#fde047";
         }
     }
 
-    // Função para resetar a frase quando tira o mouse
     function resetarFrase() {
         if (notaSelecionada === 0) {
             instrucao.innerText = frasesEstrelas[0];
-            instrucao.style.color = "#e2e8f0"; // Volta cor normal
+            instrucao.style.color = "#e2e8f0";
         }
     }
 
-    // Função principal de VOTAÇÃO (CLICK)
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
         const bom = document.getElementById('feedback-bom');
         const ruim = document.getElementById('feedback-ruim');
         const logo = document.getElementById('main-logo');
-        const title = document.getElementById('main-title');
         const imgCasal = document.getElementById('img-casal');
 
-        // 1. Atualiza visual das estrelas clicadas
         stars.forEach((s, i) => {
             if (i < n) s.classList.add('active');
             else s.classList.remove('active');
         });
 
-        // 2. Compacta o topo e fixa a frase final
         logo.classList.add('logo-compacta');
-        title.style.fontSize = "20px";
-        instrucao.innerText = "Você avaliou com " + n + (n === 1 ? " estrela." : " estrelas.");
-        instrucao.style.color = "#fff"; // Fixa cor branca
-
-        // 3. Mostra Status (Triste/Feliz)
+        instrucao.classList.add('hidden'); // REMOVE O TEXTO "VOCÊ AVALIOU..."
         statusArea.classList.remove('hidden');
 
         if (n >= 4) {
-            // FEEDBACK BOM
             bom.classList.remove('hidden');
             ruim.classList.add('hidden');
-            
-            // Título Feliz
             statusIcon.innerText = "Ficamos muito felizes! 🎉";
             statusIcon.className = "status-title status-happy";
-
-            // Ativa a animação da imagem crescendo (Zoom-in)
-            setTimeout(() => {
-                imgCasal.classList.add('show-img');
-            }, 100); // Pequeno delay para garantir o render
-
-            // Confetti
-            confetti({
-                particleCount: 180,
-                spread: 80,
-                origin: { y: 0.8 },
-                colors: ['#facc15', '#ffffff', '#2ecc71']
-            });
+            setTimeout(() => { imgCasal.classList.add('show-img'); }, 100);
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#facc15', '#ffffff', '#2ecc71'] });
         } else {
-            // FEEDBACK RUIM
             ruim.classList.remove('hidden');
             bom.classList.add('hidden');
-            
-            // Reseta imagem se tiver voltado de uma nota boa
-            imgCasal.classList.remove('show-img');
-
-            // Título de Desculpa Triste
             statusIcon.innerText = "Sentimos muito... 😔";
             statusIcon.className = "status-title status-sad";
         }
@@ -350,10 +237,9 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        const telefone = "5511972319233"; 
-        if (!texto) { alert("Por favor, digite sua sugestão para que possamos melhorar."); return; }
+        if (!texto) { alert("Por favor, digite sua sugestão."); return; }
         const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+        window.open(`https://wa.me/5511972319233?text=${mensagem}`, '_blank');
     }
 </script>
 
