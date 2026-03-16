@@ -20,33 +20,33 @@
             text-align: center; position: relative;
         }
 
+        /* LOGO AUMENTADO */
         .logo { 
-            width: 140px; height: auto; object-fit: contain; padding: 10px; border-radius: 20px;
+            width: 180px; height: auto; object-fit: contain; padding: 12px; border-radius: 20px;
             border: 3px solid #facc15; background: white; margin: 0 auto 15px;
             transition: transform 0.4s ease; display: block;
         }
-        .logo-compacta { transform: scale(0.7); margin-bottom: -15px; }
+        .logo-compacta { transform: scale(0.8); margin-bottom: -15px; }
 
-        h1 { font-size: 24px; margin-bottom: 2px; }
-        h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
+        h1 { font-size: 26px; margin-bottom: 2px; }
+        h2 { font-size: 16px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
         
         #instrucao { font-size: 16px; font-weight: 700; color: #facc15; margin-bottom: 15px; min-height: 24px; }
 
         .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 42px; color: #475569; cursor: pointer; transition: 0.3s; }
+        .star-btn { font-size: 44px; color: #475569; cursor: pointer; transition: 0.3s; }
         .star-btn.active { color: #facc15; transform: scale(1.1); }
 
-        /* IMAGEM RETANGULAR PULSANTE */
         .img-retangular {
-            width: 85%; height: 140px; object-fit: cover; border-radius: 15px;
+            width: 90%; height: 140px; object-fit: cover; border-radius: 15px;
             margin: 0 auto 20px; border: 2px solid #facc15; display: block;
             animation: pulsarRetangulo 2s infinite ease-in-out;
         }
 
         @keyframes pulsarRetangulo {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
-            100% { transform: scale(1); opacity: 0.9; }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(250, 204, 21, 0.3); }
+            100% { transform: scale(1); }
         }
 
         textarea {
@@ -64,8 +64,16 @@
 
         .hidden { display: none; }
 
-        .footer { margin-top: 25px; font-size: 11px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
-        .link-personalizado { display: block; margin-top: 10px; color: #facc15; text-decoration: none; font-weight: 700; font-size: 12px; }
+        /* RODAPÉ E CORES PERSONALIZADAS */
+        .footer { margin-top: 25px; font-size: 11px; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        
+        .link-personalizado { 
+            display: inline-block; margin-top: 12px; color: #22c55e; /* Verde WhatsApp */
+            text-decoration: none; font-weight: 800; font-size: 13px;
+            background: rgba(34, 197, 94, 0.1); padding: 5px 15px; border-radius: 20px;
+        }
+        
+        .marca-impulsoweb { color: #38bdf8; text-decoration: none; font-weight: 700; } /* Azul Celeste */
     </style>
 </head>
 <body>
@@ -76,7 +84,7 @@
     <h1 id="titulo">Óptica Lionda</h1>
     <h2 id="subtitulo">Unidade II</h2>
     
-    <p id="instrucao">Toque nas estrelas para avaliar:</p>
+    <p id="instrucao">Como foi sua experiência hoje?</p>
 
     <div class="rating-box">
         <i class="fas fa-star star-btn" onmouseover="setFrase(1)" onclick="avaliar(1)"></i>
@@ -95,41 +103,51 @@
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 12px; color: #facc15;">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" rows="3" placeholder="Como podemos melhorar?"></textarea>
+        <p style="font-size: 18px; margin-bottom: 12px; color: #facc15;" id="msg-desculpa">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" rows="3" placeholder="Conte para nós como podemos melhorar..."></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
+            <i class="fab fa-whatsapp"></i> FALAR COM O GERENTE
         </button>
     </div>
 
-    <div class="footer" id="rodape-info">
-        <div id="endereco-base">
+    <div class="footer">
+        <div id="info-loja">
             <b>📍 Estrada Pedro da Cunha Albuquerque Lopes, 2235</b><br>
-            Perobal, Itaquaquecetuba - SP
+            Perobal, Itaquaquecetuba - SP<br>
+            <i class="fas fa-phone-alt" style="margin-top:5px;"></i> (11) 99982-2103
         </div>
         
         <a href="https://wa.me/5511954950044?text=Olá, quero um link de avaliação personalizado para minha empresa!" target="_blank" class="link-personalizado">
-            🚀 Quer um link personalizado para sua empresa? Saiba mais!
+            🚀 Link personalizado para sua empresa? Saiba mais
         </a>
         
-        <div style="margin-top: 15px; opacity: 0.7;">
-            © 2026 | Desenvolvido por ImpulsoWeb10
+        <div style="margin-top: 15px; opacity: 0.8;">
+            © 2026 | Desenvolvido por <a href="https://impulsoweb10.com.br/" target="_blank" class="marca-impulsoweb">ImpulsoWeb10</a>
         </div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
-    const frases = {
-        1: "Sentimos muito. 😡",
+    
+    // FRASES DINÂMICAS COM CARINHA TRISTE (SINTIMOS MUITO)
+    const frasesInput = {
+        1: "Sentimos muito. 😔",
         2: "Sentimos muito. 😟",
         3: "Sentimos muito. 😐",
         4: "Muito bom! 😊",
         5: "Excelente! 😍"
     };
 
+    // FRASES DENTRO DA CAIXA DE DESCULPA (FEEDBACK RUIM)
+    const frasesDesculpas = {
+        1: "Sentimos muito por sua experiência ter sido ruim. 😔 Queremos entender o que houve.",
+        2: "Sentimos muito... 😟 Sua opinião é muito importante para corrigirmos nossas falhas.",
+        3: "Sentimos muito. 😐 Como podemos tornar seu próximo atendimento nota 10?"
+    };
+
     function setFrase(n) {
-        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frases[n];
+        if(notaSelecionada === 0) document.getElementById('instrucao').innerText = frasesInput[n];
     }
 
     function avaliar(n) {
@@ -146,8 +164,8 @@
             document.getElementById('feedback-ruim').classList.add('hidden');
             confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
         } else {
-            // Remove o endereço no feedback ruim para focar na mensagem
-            document.getElementById('endereco-base').classList.add('hidden');
+            // Aplica a frase específica de desculpa com carinha triste
+            document.getElementById('msg-desculpa').innerText = frasesDesculpas[n];
             document.getElementById('feedback-ruim').classList.remove('hidden');
             document.getElementById('feedback-bom').classList.add('hidden');
         }
@@ -155,7 +173,7 @@
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
-        if (!texto) { alert("Por favor, conte-nos o que houve."); return; }
+        if (!texto) { alert("Por favor, conte-nos como podemos melhorar."); return; }
         window.open(`https://wa.me/5511999822103?text=Feedback Unidade II (${notaSelecionada} estrelas): ${texto}`, '_blank');
     }
 </script>
