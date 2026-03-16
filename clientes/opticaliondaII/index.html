@@ -3,29 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Óptica Lionda | Calculadora de Lentes e Avaliação</title>
+    <title>Óptica Lionda | Avalie nossa Qualidade</title>
 
-    <meta name="description" content="Óptica Lionda em Itaquaquecetuba. Use nossa calculadora inteligente para descobrir a lente mais leve para o seu grau.">
+    <meta name="description" content="Especialistas em Lentes de Grau, Armações Modernas e Exames de Vista. Sua saúde visual é nossa prioridade na Óptica Lionda.">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Optician",
-      "name": "Óptica Lionda",
-      "description": "Segunda loja da rede Lionda. Especialistas em Lentes de Grau e Saúde Visual.",
-      "image": "logo-optica-lionda.png",
-      "telephone": "+5511972319233",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "R. Joaquim Caetano",
-        "addressLocality": "Itaquaquecetuba",
-        "addressRegion": "SP",
-        "postalCode": "08583-670",
-        "addressCountry": "BR"
-      }
-    }
-    </script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -38,228 +19,186 @@
             background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
             display: flex;
-            align-items: center; justify-content: center;
-            min-height: 100vh; padding: 15px;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            max-width: 420px; width: 100%;
+            max-width: 420px;
+            width: 100%;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px);
-            padding: 25px 20px; border-radius: 35px;
+            padding: 40px 30px;
+            border-radius: 35px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
 
         .logo { 
-            width: 110px; height: 130px; object-fit: contain; 
-            padding: 8px; border-radius: 20px; border: 3px solid #facc15; 
-            background: white; margin: 0 auto 10px; transition: 0.4s;
+            width: 130px; 
+            height: 130px; 
+            object-fit: contain; 
+            padding: 5px;
+            border-radius: 22px;
+            border: 3px solid #facc15; 
+            background: white; 
+            margin: 0 auto 20px;
         }
 
-        .logo-compacta { width: 150px; height: 45px; object-fit: cover; }
-
-        h1 { font-size: 22px; color: #fff; margin-bottom: 2px; }
-        .frase-topo { font-size: 13px; color: #facc15; font-style: italic; margin-bottom: 8px; display: block; line-height: 1.2; }
-        h2 { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; font-weight: normal; }
+        h1 { font-size: 26px; margin-bottom: 5px; color: #fff; }
+        h2 { font-size: 17px; color: #facc15; margin-bottom: 25px; font-weight: normal; }
         
-        /* CALCULADORA ATUALIZADA */
-        .calc-box {
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px;
-            border: 1px solid rgba(250, 204, 21, 0.3); margin: 15px 0; text-align: left;
+        #instrucao { font-size: 16px; color: #e2e8f0; margin-bottom: 20px; }
+
+        .rating-box { margin-bottom: 25px; display: flex; justify-content: center; gap: 8px; }
+        .star-btn {
+            font-size: 40px; color: #475569; cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .calc-input {
-            width: 100%; padding: 12px; border-radius: 10px; border: none;
-            margin: 10px 0; font-family: inherit; font-size: 14px; outline: none;
+        .star-btn.active { color: #facc15; transform: scale(1.25); text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
+
+        textarea {
+            width: 100%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 15px;
+            color: white; padding: 15px; margin-bottom: 15px;
+            resize: none; outline: none; font-family: inherit;
         }
 
-        .res-tabela { margin-top: 12px; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px; font-size: 12px; }
-        .item-lente { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .item-lente:last-child { border: none; }
-        .tag-peso { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
-        .peso-leve { background: #22c55e; color: white; }
-        .peso-medio { background: #facc15; color: black; }
-        .peso-pesado { background: #64748b; color: white; }
-
-        .status-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; display: block; }
-        .status-sad { color: #ef4444; }
-        .status-happy { color: #22c55e; }
-
-        #instrucao { font-size: 15px; color: #e2e8f0; margin-bottom: 15px; font-weight: bold; }
-
-        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
-        .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.2s; }
-        .star-btn.active { color: #facc15; transform: scale(1.1); text-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
-
-        .img-comemorativa {
-            width: 100%; height: 170px; object-fit: cover; border-radius: 20px;
-            margin-bottom: 15px; border: 3px solid rgba(250, 204, 21, 0.4);
-            display: block; opacity: 0; transform: scale(0.5);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .img-comemorativa.show-img { opacity: 1; transform: scale(1); }
-
+        /* BOTÃO GOOGLE COM BRILHO E PULSAR */
         .botao {
-            position: relative; overflow: hidden; display: flex; align-items: center; 
-            justify-content: center; gap: 10px; width: 100%; padding: 16px; 
-            border-radius: 50px; font-weight: 800; text-decoration: none; cursor: pointer; border: none;
+            position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 18px; border-radius: 50px;
+            font-weight: 800; font-size: 16px; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer;
         }
 
-        .google { 
-            background: #facc15; color: #000; margin-bottom: 10px;
-            animation: pulsarConstante 1.5s infinite ease-in-out;
-        }
+        .google { background: #facc15; color: #000; animation: pulsar 2s infinite; }
+        
         .google::after {
-            content: ""; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: skewX(-25deg); animation: brilhoPassandoConstante 2.5s infinite;
+            content: ""; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg); animation: brilhoPassando 3s infinite;
         }
 
-        .whatsapp { background: #22c55e; color: white; font-family: inherit; font-size: 16px; margin-top: 10px; }
+        .whatsapp { background: #22c55e; color: white; animation: pulsar 2s infinite; }
 
-        @keyframes brilhoPassandoConstante { 0% { left: -150%; } 100% { left: 150%; } }
-        @keyframes pulsarConstante { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        @keyframes brilhoPassando { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .hidden { display: none; }
 
-        .footer { 
-            margin-top: 20px; font-size: 12px; color: #ffffff; 
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+        /* FOTO DO CASAL CORRIGIDA */
+        .img-comemorativa {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 2px solid rgba(250, 204, 21, 0.5);
+            display: block;
+            animation: fadeIn 0.8s ease;
         }
-        .linha-info { display: block; margin-bottom: 4px; opacity: 0.9; }
-        .footer a { color: #facc15; text-decoration: none; font-weight: 700; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .footer { 
+            margin-top: 35px; font-size: 13px; color: #ffffff; 
+            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px;
+        }
+        .footer a { color: #facc15; text-decoration: none; font-weight: 700; border-bottom: 1px solid #facc15; }
+        .footer b { color: #facc15; }
+        .frase-top { font-style: italic; margin-bottom: 10px; display: block; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo-optica-lionda.png" class="logo" id="main-logo" alt="Óptica Lionda">
+    <img src="logo-optica-lionda.png" class="logo" alt="Óptica Lionda">
 
-    <h1 id="main-title">Óptica Lionda</h1>
-    <span class="frase-topo">"Enxergar o mundo com clareza é o primeiro passo."</span>
-    <h2 id="sub-title">Excelência em Saúde Visual</h2>
+    <h1>Óptica Lionda</h1>
+    <h2>Excelência em Saúde Visual</h2>
     
-    <div class="calc-box">
-        <h3 style="font-size: 15px; color: #facc15;"><i class="fas fa-weight-hanging"></i> Comparativo de Lentes</h3>
-        <input type="number" id="grau-valor" step="0.25" placeholder="Digite seu grau (ex: -3.50)" class="calc-input">
-        <button onclick="gerarOrcamento()" class="botao" style="background: #facc15; color: #000; font-size: 14px; padding: 10px;">ANALISAR ESPESSURA</button>
-        
-        <div id="res-calc" class="hidden res-tabela">
-            </div>
-    </div>
+    <p id="instrucao">Toque nas estrelas para avaliar nosso serviço:</p>
 
-    <div id="status-area" class="hidden">
-        <span id="status-icon" class="status-title"></span>
-    </div>
-
-    <p id="instrucao">Como foi sua experiência hoje?</p>
-
-    <div class="rating-box" onmouseleave="resetarFrase()">
-        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(1)" onclick="avaliar(1)"></i>
-        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(2)" onclick="avaliar(2)"></i>
-        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(3)" onclick="avaliar(3)"></i>
-        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(4)" onclick="avaliar(4)"></i>
-        <i class="fas fa-star star-btn" onmouseover="mostrarFrase(5)" onclick="avaliar(5)"></i>
+    <div class="rating-box">
+        <i class="fas fa-star star-btn" onclick="avaliar(1)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(2)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(3)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(4)"></i>
+        <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
     <div id="feedback-bom" class="hidden">
-        <img src="casal-oculos.png" class="img-comemorativa" id="img-casal" alt="Clientes Satisfeitos">
+        <img src="casal-oculos.jpg" class="img-comemorativa" alt="Clientes Óptica Lionda">
+        
+        <p style="font-size: 18px; margin-bottom: 15px;">Isso é fantástico! 🎉</p>
+        <p style="margin-bottom: 15px;">Sua satisfação nos motiva. Que tal nos dar uma força no Google?</p>
         <a href="https://g.page/r/CU9S7S0T4uY7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
     </div>
 
     <div id="feedback-ruim" class="hidden">
-        <textarea id="texto-melhoria" rows="3" style="width:100%; border-radius:15px; padding:10px; margin-top:10px;" placeholder="O que podemos melhorar?"></textarea>
+        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
+        <textarea id="texto-melhoria" placeholder="Em que podemos melhorar?"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR AO GERENTE
+            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
         </button>
     </div>
 
     <div class="footer">
-        <strong class="linha-info">📍 Unidade Parque Piratininga</strong>
-        <span class="linha-info">R. Joaquim Caetano - Itaquaquecetuba - SP</span>
-        <span class="linha-info">🕒 Seg a Sex: 09h às 18h | Sáb: 09h às 17h</span>
-        <div style="font-size: 10px; margin-top: 10px; opacity: 0.7;">
-            🔒 CONEXÃO PROTEGIDA | © 2026 | <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
+        <span class="frase-top">"Enxergar o mundo com clareza é o primeiro passo para grandes conquistas."</span>
+        <div>🔒 CONEXÃO PROTEGIDA | © 2026</div>
+        <div style="margin-top: 5px;">
+            Desenvolvido por 
+            <a href="https://impulsoweb10.com.br/" target="_blank">ImpulsoWeb10</a>
         </div>
+        <div>Suporte <b>Óptica Lionda</b>: <b>(11) 97231-9233</b></div>
     </div>
 </div>
 
 <script>
     let notaSelecionada = 0;
-    const instrucao = document.getElementById('instrucao');
-    
-    function mostrarFrase(n) { if (notaSelecionada === 0) { instrucao.innerText = ["","Péssima? 😞","Ruim? 😕","Regular? 😐","Boa! 🙂","Excelente! 😍"][n]; instrucao.style.color = "#facc15"; } }
-    function resetarFrase() { if (notaSelecionada === 0) { instrucao.innerText = "Como foi sua experiência hoje?"; instrucao.style.color = "#e2e8f0"; } }
-
-    function gerarOrcamento() {
-        const grau = parseFloat(document.getElementById('grau-valor').value);
-        const res = document.getElementById('res-calc');
-        if (isNaN(grau)) { alert("Digite um grau válido."); return; }
-        
-        res.classList.remove('hidden');
-        let absGrau = Math.abs(grau);
-        let html = `<p style="color:#facc15; margin-bottom:10px; font-weight:bold;">Sugestões para ${grau.toFixed(2)}:</p>`;
-
-        if (absGrau <= 2.25) {
-            html += renderItem("Resina CR-39", "Padrão", "tag-peso peso-pesado");
-            html += renderItem("Poli (Filtro Azul)", "Leve", "tag-peso peso-leve");
-        } else if (absGrau <= 5.00) {
-            html += renderItem("Poli (Resistente)", "Média", "tag-peso peso-medio");
-            html += renderItem("Lente 1.60", "Leve", "tag-peso peso-leve");
-            html += renderItem("Lente 1.67", "Super Leve", "tag-peso peso-leve");
-        } else {
-            html += renderItem("Lente 1.67", "Média", "tag-peso peso-medio");
-            html += renderItem("Lente 1.74", "Mais Leve", "tag-peso peso-leve");
-            html += renderItem("Lente 1.76 (Mundial)", "Ultra Leve", "tag-peso peso-leve");
-        }
-
-        html += `<button onclick="compartilharOrcamento('Consultei lentes leves para meu grau', ${grau})" class="botao whatsapp" style="padding:10px; font-size:12px;">PEDIR VALORES NO WHATSAPP</button>`;
-        res.innerHTML = html;
-    }
-
-    function renderItem(nome, peso, classe) {
-        return `<div class="item-lente"><span>${nome}</span><span class="${classe}">${peso}</span></div>`;
-    }
 
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
         const bom = document.getElementById('feedback-bom');
         const ruim = document.getElementById('feedback-ruim');
-        const logo = document.getElementById('main-logo');
-        const statusArea = document.getElementById('status-area');
-        const statusIcon = document.getElementById('status-icon');
-        const imgCasal = document.getElementById('img-casal');
+        const instrucao = document.getElementById('instrucao');
 
-        stars.forEach((s, i) => { s.classList.toggle('active', i < n); });
-        logo.classList.add('logo-compacta');
+        stars.forEach((s, i) => {
+            if (i < n) s.classList.add('active');
+            else s.classList.remove('active');
+        });
+
         instrucao.classList.add('hidden');
-        statusArea.classList.remove('hidden');
 
         if (n >= 4) {
-            bom.classList.remove('hidden'); ruim.classList.add('hidden');
-            statusIcon.innerText = "Ficamos muito felizes! 🎉"; statusIcon.className = "status-title status-happy";
-            setTimeout(() => imgCasal.classList.add('show-img'), 100);
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#facc15', '#ffffff', '#2ecc71'] });
+            bom.classList.remove('hidden');
+            ruim.classList.add('hidden');
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#facc15', '#ffffff', '#2ecc71']
+            });
         } else {
-            ruim.classList.remove('hidden'); bom.classList.add('hidden');
-            statusIcon.innerText = "Sentimos muito... 😔"; statusIcon.className = "status-title status-sad";
+            ruim.classList.remove('hidden');
+            bom.classList.add('hidden');
         }
-    }
-
-    function compartilharOrcamento(rec, grau) {
-        const msg = encodeURIComponent(`Olá Óptica Lionda! Usei a calculadora. Meu grau é ${grau}. Quais os valores das lentes sugeridas (mais leves)?`);
-        window.open(`https://wa.me/5511972319233?text=${msg}`, '_blank');
     }
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
+        const telefone = "5511972319233"; 
         if (!texto) { alert("Por favor, digite sua sugestão."); return; }
         const mensagem = encodeURIComponent(`Feedback Óptica Lionda (${notaSelecionada} estrelas): ${texto}`);
-        window.open(`https://wa.me/5511972319233?text=${mensagem}`, '_blank');
+        window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
     }
 </script>
 
