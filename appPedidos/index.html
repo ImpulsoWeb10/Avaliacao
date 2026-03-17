@@ -13,37 +13,19 @@ input{width:90%;padding:10px;margin:5px auto;display:block;border-radius:8px;bor
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;}
 .categoria{background:#1e293b;padding:20px;border-radius:12px;text-align:center;cursor:pointer;}
 
-/* CARRINHO FIXO */
-.carrinho{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#020617;
-padding:10px;
-border-top:2px solid #22c55e;
-}
-
-.carrinho button{
-width:100%;padding:12px;border:none;border-radius:8px;background:#22c55e;color:#000;font-weight:bold;
-}
-
+.carrinho{position:fixed;bottom:0;left:0;width:100%;background:#020617;padding:10px;border-top:2px solid #22c55e;}
+.carrinho button{width:100%;padding:12px;border:none;border-radius:8px;background:#22c55e;color:#000;font-weight:bold;}
 .total{font-size:18px;font-weight:bold;text-align:center;margin-bottom:5px;}
 
-/* MODAL */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;display:none;justify-content:center;align-items:center;}
 .modal-content{background:#fff;color:#000;padding:20px;width:90%;border-radius:12px;max-height:90%;overflow:auto;}
 
 .produto{padding:10px;border-bottom:1px solid #ccc;cursor:pointer;}
-
 .qtd-box{display:flex;justify-content:center;gap:10px;margin:10px 0;}
 
 button{width:100%;padding:10px;margin-top:8px;border:none;border-radius:8px;background:#22c55e;color:#000;}
 .voltar{background:#ccc;}
 .remover{background:#ef4444;color:#fff;margin-top:5px;}
-
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th,td{border:1px solid #ccc;padding:6px;text-align:center;}
 
 </style>
 </head>
@@ -64,7 +46,6 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center;}
 <div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
 </div>
 
-<!-- CARRINHO FIXO -->
 <div class="carrinho">
 <div class="total">💰 R$ <span id="total">0.00</span></div>
 <button onclick="finalizar()">Fechar Pedido</button>
@@ -92,12 +73,22 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center;}
 
 <div class="modal" id="modalFinal">
 <div class="modal-content">
-<h3>Resumo</h3>
+<h3>Resumo do Pedido</h3>
+<p id="info"></p>
+<p id="data"></p>
 <div id="resumo"></div>
 <h3 id="totalFinal"></h3>
+
 <button onclick="pix()">Pix (-3%)</button>
-<button onclick="cartao()">Cartão 3x</button>
+<div>Cartão em até 3x sem juros</div>
 <div id="pagamento"></div>
+
+<div style="background:#e0f2fe;padding:10px;border-radius:8px;margin-top:10px;font-size:13px;">
+Pedido mínimo: R$ 1.000<br>
+Entrega acima de R$ 500<br>
+Prazo: até 7 dias úteis
+</div>
+
 <button onclick="enviar()">WhatsApp</button>
 <button onclick="window.print()">PDF</button>
 <button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
@@ -106,21 +97,6 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center;}
 
 <script>
 let produtos={
-tintas:[{nome:"Tinta Econômica",regras:[{min:20,preco:70},{min:1,preco:80}]}]
-};
-
-let carrinho=[],atual,total=0;
-
-function abrir(cat){
-let html="<h3>Produtos</h3>";
-produtos[cat].forEach(p=>{
-html+=`<div class='produto' onclick="sel('${cat}','${p.nome}')">${p.nome}</div>`;
-});
-html+=`<button class='voltar' onclick="fechar('modalProdutos')">Voltar</button>`;
-lista.innerHTML=html;
-modalProdutos.style.display="flex";
-}
-
-function sel(cat,nome){
-atual=produtos[cat].find(p=>p.nome==nome);
-modalProdutos.style.display="non
+tintas:[
+{nome:"Tinta Econômica",regras:[{min:20,preco:70},{min:1,preco:80}]},
+{nome:"Tinta Premium",regras:[{min:
