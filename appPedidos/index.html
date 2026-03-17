@@ -9,60 +9,58 @@
 body {
 margin:0;
 font-family:Arial;
-background:linear-gradient(180deg,#0f172a,#1e293b);
-color:#fff;
-display:flex;
-flex-direction:column;
-height:100vh;
+background:#f3f4f6;
 }
 
-/* TOPO */
 header {
 text-align:center;
-padding:10px;
+padding:15px;
+background:#111827;
+color:#fff;
 }
 
-header h2 {margin:0;}
 header p {
-margin:0;
 font-size:13px;
+margin:0;
 opacity:0.7;
 }
 
-/* INPUTS */
-.topo {
-display:flex;
-gap:5px;
-padding:10px;
-}
-
 input {
-flex:1;
-padding:8px;
+width:90%;
+padding:10px;
+margin:5px auto;
+display:block;
 border-radius:8px;
-border:none;
+border:1px solid #ccc;
 }
 
-/* GRID */
 .grid {
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
 padding:10px;
-flex:1;
-overflow:auto;
 }
 
 .categoria {
 background:#fff;
-color:#000;
-padding:18px;
+padding:20px;
 border-radius:12px;
 text-align:center;
 font-weight:bold;
+cursor:pointer;
 }
 
-/* MODAL */
+.botao-total {
+margin:10px;
+background:#111827;
+color:#fff;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+}
+
 .modal {
 position:fixed;
 top:0;left:0;
@@ -75,58 +73,57 @@ align-items:center;
 
 .modal-content {
 background:#fff;
-color:#000;
 padding:20px;
 width:90%;
 border-radius:12px;
 }
 
-/* QTD */
+.produto {
+padding:10px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+}
+
 .qtd-box {
 display:flex;
 justify-content:center;
 gap:10px;
-margin-top:10px;
+margin:10px 0;
 }
 
 .qtd-box button {
 width:40px;
 }
 
-/* BOTÕES */
 button {
+width:100%;
+padding:10px;
+margin-top:8px;
+border:none;
+border-radius:8px;
 background:#25D366;
 color:#fff;
-border:none;
-padding:10px;
-border-radius:8px;
-width:100%;
-margin-top:8px;
 }
 
 .voltar {background:#888;}
 
-.total-bar {
-position:fixed;
-bottom:60px;
+table {
 width:100%;
-background:#111827;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th, td {
+border:1px solid #ccc;
+padding:6px;
 text-align:center;
-padding:12px;
-font-size:18px;
 }
 
 footer {
-position:fixed;
-bottom:0;
-width:100%;
-background:#020617;
 text-align:center;
-padding:10px;
+padding:15px;
 font-size:12px;
 }
-
-a {color:#25D366;}
 </style>
 </head>
 
@@ -137,16 +134,18 @@ a {color:#25D366;}
 <p>Tintas e Texturas</p>
 </header>
 
-<div class="topo">
 <input id="vendedor" placeholder="Vendedor">
 <input id="cliente" placeholder="Cliente">
-</div>
 
 <div class="grid">
 <div class="categoria" onclick="abrir('tintas')">🎨 Tintas</div>
 <div class="categoria" onclick="abrir('massas')">🧱 Massas</div>
 <div class="categoria" onclick="abrir('texturas')">🪵 Texturas</div>
 <div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
+</div>
+
+<div class="botao-total" onclick="finalizar()">
+💰 Ver Total / Fechar Pedido
 </div>
 
 <!-- MODAIS -->
@@ -156,6 +155,7 @@ a {color:#25D366;}
 
 <div class="modal" id="modalQtd">
 <div class="modal-content">
+
 <h3 id="nome"></h3>
 <p id="regras"></p>
 <p id="melhor" style="color:green;"></p>
@@ -168,55 +168,44 @@ a {color:#25D366;}
 
 <button onclick="add()">Adicionar</button>
 <button class="voltar" onclick="fechar('modalQtd')">Voltar</button>
+
 </div>
 </div>
 
 <div class="modal" id="modalFinal">
 <div class="modal-content">
 
-<h3>Tintas Qualy Quimy</h3>
-<p style="font-size:13px;">Tintas e Texturas</p>
+<h3>Resumo do Pedido</h3>
 
-<p id="infoCliente"></p>
+<p id="info"></p>
 
-<div id="resumo"></div>
+<div id="tabela"></div>
 
-<h4>Pagamento</h4>
-<button onclick="pagamento('pix')">Pix / Espécie (-3%)</button>
-<div>Cartão em até 3x sem juros</div>
-
-<div id="totalFinal"></div>
+<h4 id="total"></h4>
 
 <button onclick="enviar()">📲 WhatsApp</button>
 <button onclick="imprimir()">🧾 PDF</button>
 
 <button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
+
 </div>
 </div>
 
-<!-- TOTAL FIXO -->
-<div class="total-bar">
-💰 Total: R$ <span id="total">0.00</span>
-</div>
-
-<!-- RODAPÉ -->
 <footer>
 <p>🔒 Site seguro</p>
-<p>
-Desenvolvido por 
-<a href="https://wa.me/5511954950044">ImpulsoWeb10</a>
-</p>
+<p>Desenvolvido por <a href="https://wa.me/5511954950044">ImpulsoWeb10</a></p>
+<p>© 2026</p>
 </footer>
 
 <script>
 let produtos={
-tintas:[{nome:"Tinta Econômica 18L",regras:[{min:20,preco:71.90},{min:1,preco:76.90}]}],
-massas:[{nome:"Massa Corrida",regras:[{min:20,preco:31.90},{min:1,preco:33.90}]}],
-texturas:[{nome:"Grafiato",regras:[{min:1,preco:55.90}]}],
-prep:[{nome:"Selador",regras:[{min:1,preco:69.90}]}]
+tintas:[{nome:"Tinta Econômica",regras:[{min:20,preco:71.9},{min:1,preco:76.9}]}],
+massas:[{nome:"Massa Corrida",regras:[{min:20,preco:31.9},{min:1,preco:33.9}]}],
+texturas:[{nome:"Grafiato",regras:[{min:1,preco:55.9}]}],
+prep:[{nome:"Selador",regras:[{min:1,preco:69.9}]}]
 };
 
-let carrinho=[], atual, total=0;
+let carrinho=[], atual;
 
 function abrir(cat){
 let html="<h3>Produtos</h3>";
@@ -243,48 +232,33 @@ function add(){
 let q=parseInt(qtd.value);
 let regra=atual.regras.find(r=>q>=r.min);
 
-if(regra.min>1){
-melhor.innerText="Melhor preço aplicado!";
-}else{
-melhor.innerText="";
-}
+melhor.innerText = regra.min>1 ? "Melhor preço aplicado!" : "";
 
 carrinho.push({nome:atual.nome,qtd:q,preco:regra.preco});
 modalQtd.style.display="none";
-calc();
-}
-
-function calc(){
-total=0;
-carrinho.forEach(i=>total+=i.qtd*i.preco);
-document.getElementById("total").innerText=total.toFixed(2);
 }
 
 function finalizar(){
-let vendedor=document.getElementById("vendedor").value;
-let cliente=document.getElementById("cliente").value;
+let vendedor=vendedor.value;
+let cliente=cliente.value;
 
-infoCliente.innerHTML=`Vendedor: ${vendedor}<br>Cliente: ${cliente}`;
+info.innerHTML=`Vendedor: ${vendedor}<br>Cliente: ${cliente}`;
 
-let html="";
+let html="<table><tr><th>Produto</th><th>Qtd</th><th>Valor</th></tr>";
+let total=0;
+
 carrinho.forEach(i=>{
-html+=`${i.nome} x${i.qtd}<br>`;
+let sub=i.qtd*i.preco;
+total+=sub;
+html+=`<tr><td>${i.nome}</td><td>${i.qtd}</td><td>${sub.toFixed(2)}</td></tr>`;
 });
-resumo.innerHTML=html;
 
-totalFinal.innerHTML=`Total: R$ ${total.toFixed(2)}`;
+html+="</table>";
+tabela.innerHTML=html;
+
+document.getElementById("total").innerText="Total: R$ "+total.toFixed(2);
 
 modalFinal.style.display="flex";
-}
-
-function pagamento(tipo){
-if(tipo=="pix"){
-let f=total*0.97;
-totalFinal.innerHTML+=`<br>Total com desconto: R$ ${f.toFixed(2)}`;
-}else{
-let p=(total/3).toFixed(2);
-totalFinal.innerHTML+=`<br>3x de R$ ${p}`;
-}
 }
 
 function enviar(){
