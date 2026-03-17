@@ -3,263 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tintas Qualy Quimy</title>
-
-<style>
-body{
-font-family: Arial;
-background:#0f172a;
-color:#fff;
-margin:0;
-padding:10px;
-}
-
-h1{
-text-align:center;
-margin:5px;
-}
-
-.sub{
-text-align:center;
-font-size:12px;
-color:#94a3b8;
-margin-bottom:10px;
-}
-
-input{
-padding:8px;
-width:48%;
-margin:5px 1%;
-border-radius:6px;
-border:none;
-}
-
-button{
-padding:12px;
-margin:5px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.categoria{
-background:#1e293b;
-color:#fff;
-width:100%;
-}
-
-.totalBox{
-background:#020617;
-padding:10px;
-margin-top:10px;
-border-top:1px solid #334155;
-text-align:center;
-font-size:18px;
-}
-
-.fechar{
-background:#22c55e;
-width:100%;
-}
-
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
-}
-
-.modal-content{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-text-align:center;
-width:90%;
-}
-
-.voltar{
-background:#475569;
-margin-top:10px;
-}
-
-.melhor{
-color:#22c55e;
-font-size:12px;
-}
-
-.obs{
-color:#facc15;
-font-size:12px;
-margin-top:5px;
-}
-</style>
+<title>Pedidos - Qualy Quimy</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-100">
 
-<body>
+<div class="p-4 max-w-md mx-auto">
+  <h1 class="text-xl font-bold text-center">Tintas Qualy Quimy</h1>
+  <p class="text-center text-sm mb-4">Qualidade em Tintas e Complementos</p>
 
-<h1>Tintas Qualy Quimy</h1>
-<div class="sub">Tintas e Texturas</div>
+  <input id="vendedor" placeholder="Nome do vendedor" class="w-full p-2 mb-2 border rounded" />
+  <input id="deposito" placeholder="Nome do depósito" class="w-full p-2 mb-4 border rounded" />
 
-<input placeholder="Nome do Vendedor" id="vendedor">
-<input placeholder="Nome da Loja" id="loja">
+  <div id="categorias" class="grid grid-cols-2 gap-2"></div>
 
-<!-- CATEGORIAS -->
-<button class="categoria" onclick="abrirCategoria('tintas')">Tintas</button>
-<button class="categoria" onclick="abrirCategoria('massas')">Massas</button>
-<button class="categoria" onclick="abrirCategoria('texturas')">Texturas</button>
-
-<div class="totalBox" id="totalBox">
-Total: R$ 0,00
+  <button onclick="fecharPedido()" class="w-full mt-4 bg-green-600 text-white p-3 rounded">Fechar Pedido</button>
 </div>
 
-<button class="fechar" onclick="fecharPedido()">FECHAR PEDIDO</button>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-<div class="modal-content" id="modalContent"></div>
+<!-- Modal Produto -->
+<div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
+  <div class="bg-white p-4 rounded w-80">
+    <button onclick="fecharModal()">⬅ Voltar</button>
+    <h2 id="produtoNome" class="font-bold my-2"></h2>
+    <div class="flex items-center justify-center gap-4">
+      <button onclick="menos()">-</button>
+      <span id="qtd">1</span>
+      <button onclick="mais()">+</button>
+    </div>
+    <select id="tipo" class="w-full mt-3 border p-2">
+      <option value="varejo">Varejo</option>
+      <option value="atacado">Atacado</option>
+    </select>
+    <button onclick="addCarrinho()" class="w-full mt-3 bg-blue-600 text-white p-2">Adicionar</button>
+  </div>
 </div>
 
 <script>
-let carrinho = [];
-
-// PRODUTOS (RESUMO DA SUA TABELA)
 const produtos = {
-tintas:[
-{name:"Balde 18L Econômica", preco:76.90, atacado:71.90, min:20},
-{name:"Lata 18L Standard", preco:124.90, atacado:116.90, min:10},
-{name:"Galão 3.6L Standard", preco:34.90, atacado:36.90, min:20},
-{name:"Tinta Premium 18L", preco:219.90}
-],
-
-massas:[
-{name:"Massa Corrida 28kg", preco:58.90, atacado:55.90, min:30},
-{name:"Massa Acrílica 28kg", preco:72.90, atacado:69.90, min:30}
-],
-
-texturas:[
-{name:"Textura 25kg", preco:48.90, atacado:45.90, min:20},
-{name:"Grafiato 25kg", preco:55.90}
-]
+  "Tintas": [
+    {nome:"Tinta 18L", preco:79.90, atacado:77.90}
+  ],
+  "Massas": [
+    {nome:"Massa Corrida 25kg", preco:33.90, atacado:31.90}
+  ]
 };
 
+let carrinho = [];
+let produtoAtual = null;
+let quantidade = 1;
+
+const catDiv = document.getElementById("categorias");
+
+Object.keys(produtos).forEach(cat => {
+  let btn = document.createElement("button");
+  btn.className = "bg-white p-3 rounded shadow";
+  btn.innerText = cat;
+  btn.onclick = () => abrirCategoria(cat);
+  catDiv.appendChild(btn);
+});
+
 function abrirCategoria(cat){
-let html = "<h3>Escolha produto</h3>";
-
-produtos[cat].forEach((p,i)=>{
-html += `<button onclick="selecionarProduto('${cat}',${i})">${p.name}</button><br>`;
-});
-
-html += `<button class="voltar" onclick="fecharModal()">Voltar</button>`;
-
-mostrarModal(html);
+  let lista = produtos[cat];
+  lista.forEach(p => abrirModal(p));
 }
 
-function selecionarProduto(cat,i){
-let p = produtos[cat][i];
-
-let html = `
-<h3>${p.name}</h3>
-<div>Preço: R$ ${p.preco}</div>
-<br>
-<button onclick="addQtd('${cat}',${i},1)">+</button>
-<button onclick="addQtd('${cat}',${i},-1)">-</button>
-<br><br>
-<input id="qtd" type="number" value="1">
-<br><br>
-<button onclick="confirmarProduto('${cat}',${i})">Adicionar</button>
-<button class="voltar" onclick="abrirCategoria('${cat}')">Voltar</button>
-`;
-
-mostrarModal(html);
-}
-
-function confirmarProduto(cat,i){
-let qtd = parseInt(document.getElementById("qtd").value);
-let p = produtos[cat][i];
-
-let preco = p.preco;
-let msg = "";
-
-if(p.atacado && qtd >= p.min){
-preco = p.atacado;
-msg = "melhor preço";
-}
-
-carrinho.push({
-nome:p.name,
-qtd,
-preco
-});
-
-fecharModal();
-atualizarTotal();
-}
-
-function atualizarTotal(){
-let total = 0;
-carrinho.forEach(i=>{
-total += i.qtd * i.preco;
-});
-
-document.getElementById("totalBox").innerHTML =
-"Total: R$ " + total.toFixed(2);
-}
-
-function fecharPedido(){
-let vendedor = document.getElementById("vendedor").value;
-let loja = document.getElementById("loja").value;
-
-let html = `<h3>Resumo do Pedido</h3>`;
-html += `<div>Vendedor: ${vendedor}</div>`;
-html += `<div>Cliente: ${loja}</div><hr>`;
-
-let total = 0;
-
-carrinho.forEach(i=>{
-html += `<div>${i.nome} - ${i.qtd}x</div>`;
-total += i.qtd * i.preco;
-});
-
-html += `<hr>Total: R$ ${total.toFixed(2)}`;
-
-let desconto = total * 0.97;
-
-html += `<div class="obs">PIX / Espécie: R$ ${desconto.toFixed(2)}</div>`;
-html += `<div>Cartão até 3x sem juros</div>`;
-html += `<div class="obs">Pedido mínimo: R$ 1000</div>`;
-
-html += `<br>
-<button onclick="gerarWhats()">Enviar WhatsApp</button>
-<button onclick="window.print()">Salvar PDF</button>
-<button class="voltar" onclick="fecharModal()">Voltar</button>
-`;
-
-mostrarModal(html);
-}
-
-function gerarWhats(){
-let texto = "Pedido:%0A";
-
-carrinho.forEach(i=>{
-texto += `${i.nome} - ${i.qtd}x%0A`;
-});
-
-window.open("https://wa.me/5511954950044?text="+texto);
-}
-
-function mostrarModal(html){
-document.getElementById("modal").style.display="flex";
-document.getElementById("modalContent").innerHTML=html;
+function abrirModal(prod){
+  produtoAtual = prod;
+  quantidade = 1;
+  document.getElementById("qtd").innerText = quantidade;
+  document.getElementById("produtoNome").innerText = prod.nome;
+  document.getElementById("modal").classList.remove("hidden");
 }
 
 function fecharModal(){
-document.getElementById("modal").style.display="none";
+  document.getElementById("modal").classList.add("hidden");
+}
+
+function mais(){ quantidade++; document.getElementById("qtd").innerText = quantidade; }
+function menos(){ if(quantidade>1) quantidade--; document.getElementById("qtd").innerText = quantidade; }
+
+function addCarrinho(){
+  let tipo = document.getElementById("tipo").value;
+  let valor = tipo === "atacado" ? produtoAtual.atacado : produtoAtual.preco;
+
+  carrinho.push({
+    nome: produtoAtual.nome,
+    qtd: quantidade,
+    tipo,
+    valor
+  });
+
+  fecharModal();
+}
+
+function fecharPedido(){
+  let total = 0;
+  let texto = "Pedido:%0A";
+
+  carrinho.forEach(item => {
+    let subtotal = item.qtd * item.valor;
+    total += subtotal;
+    texto += `${item.nome} - ${item.qtd}x R$${item.valor} = R$${subtotal}%0A`;
+  });
+
+  texto += `%0ATotal: R$${total}`;
+
+  window.open(`https://wa.me/?text=${texto}`);
 }
 </script>
 
