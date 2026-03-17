@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qualy Quimy - App Oficial</title>
+    <title>Qualy Quimy - Oficial</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F1F5F9; }
-        .sidebar-blue { background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%); }
-        .card-menu { transition: all 0.2s ease; cursor: pointer; border: 1px solid #e2e8f0; }
-        .card-menu:active { transform: scale(0.95); }
-        .bottom-sheet { animation: slideUp 0.3s ease-out; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        .sidebar-blue { background: linear-gradient(180deg, #0F172A 0%, #1E3A8A 100%); }
+        .card-menu { transition: all 0.2s ease; cursor: pointer; border-radius: 2rem; overflow: hidden; }
+        .card-menu:active { transform: scale(0.95); opacity: 0.9; }
+        .bottom-sheet { animation: slideUp 0.3s ease-out; border-radius: 3rem 3rem 0 0; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .price-tag { background: rgba(0,0,0,0.05); border-radius: 0.75rem; padding: 2px 8px; }
     </style>
 </head>
 <body>
@@ -22,123 +23,126 @@
 <div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col bg-white shadow-2xl">
     
     <div v-if="tela === 'home'" class="flex flex-col flex-1">
-        <header class="sidebar-blue text-white p-8 rounded-b-[3rem] shadow-xl">
+        <header class="sidebar-blue text-white p-8 pb-12 rounded-b-[3.5rem] shadow-xl">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-extrabold italic uppercase">Qualy Quimy</h1>
-                <div class="bg-white/10 p-3 rounded-xl border border-white/20"><i class="fas fa-paint-roller"></i></div>
+                <h1 class="text-2xl font-black italic tracking-tighter uppercase">Qualy Quimy</h1>
+                <i class="fas fa-paint-roller text-2xl opacity-50"></i>
             </div>
             <div class="space-y-3">
-                <input v-model="vendedor" placeholder="Vendedor" class="w-full bg-white/10 border border-white/20 p-3 rounded-xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all text-white">
-                <input v-model="cliente" placeholder="Cliente" class="w-full bg-white/10 border border-white/20 p-3 rounded-xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all text-white">
+                <input v-model="vendedor" placeholder="Vendedor" class="w-full bg-white/10 border border-white/20 p-4 rounded-2xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all">
+                <input v-model="cliente" placeholder="Cliente" class="w-full bg-white/10 border border-white/20 p-4 rounded-2xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all">
             </div>
         </header>
 
-        <main class="p-6 flex-1">
-            <h2 class="font-bold text-slate-800 mb-6 uppercase text-xs tracking-widest">Categorias</h2>
+        <main class="p-6 -mt-6 flex-1 bg-white rounded-t-[3rem]">
             <div class="grid grid-cols-2 gap-4">
                 <div v-for="cat in categoriasSetup" :key="cat.nome" @click="abrirCategoria(cat.nome)"
-                     class="card-menu bg-white p-5 rounded-[2.5rem] shadow-sm flex flex-col items-center justify-center text-center">
-                    <div :class="cat.bg" class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3">
-                        <i :class="[cat.icon, cat.color]" class="text-2xl"></i>
-                    </div>
-                    <span class="font-bold text-gray-700 text-[10px] uppercase tracking-tighter leading-tight">{{ cat.nome }}</span>
+                     :class="cat.bg" class="card-menu p-6 flex flex-col items-center justify-center text-center shadow-md">
+                    <i :class="[cat.icon, 'text-white text-3xl mb-3']"></i>
+                    <span class="font-extrabold text-white text-[11px] uppercase leading-tight">{{ cat.nome }}</span>
                 </div>
             </div>
 
-            <div v-if="carrinho.length > 0" class="mt-8 bg-slate-900 p-6 rounded-[2.5rem] text-white flex justify-between items-center">
+            <div v-if="carrinho.length > 0" class="mt-8 bg-slate-900 p-6 rounded-[2.5rem] text-white flex justify-between items-center shadow-2xl">
                 <div>
-                    <p class="text-slate-500 text-[10px] font-bold uppercase">Total Atual</p>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Subtotal</p>
                     <p class="text-2xl font-black italic">R$ {{ totalPedido.toFixed(2) }}</p>
                 </div>
                 <button @click="tela = 'resumo'" class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
-                    <i class="fas fa-shopping-basket"></i>
+                    <i class="fas fa-shopping-cart"></i>
                 </button>
             </div>
         </main>
     </div>
 
-    <div v-if="tela === 'resumo'" class="flex flex-col flex-1 p-6 bottom-sheet">
+    <div v-if="tela === 'resumo'" class="flex flex-col flex-1 p-6 bottom-sheet bg-white">
         <div class="flex items-center gap-4 mb-6">
             <button @click="tela = 'home'" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center"><i class="fas fa-chevron-left"></i></button>
-            <h2 class="text-xl font-black text-slate-800 uppercase italic">Conferir Pedido</h2>
+            <h2 class="text-xl font-black text-slate-800 italic uppercase">Fechar Pedido</h2>
         </div>
 
         <div class="flex-1 overflow-y-auto space-y-3 mb-6">
             <div v-for="(item, idx) in carrinho" :key="idx" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex justify-between items-center">
                 <div class="flex-1">
-                    <p class="font-bold text-slate-800 text-sm leading-tight">{{ item.qtd }}x {{ item.nome }}</p>
-                    <p class="text-[10px] text-blue-600 font-bold mt-1">UN: R$ {{ (item.total/item.qtd).toFixed(2) }}</p>
+                    <p class="font-bold text-slate-800 text-sm">{{ item.qtd }}x {{ item.nome }}</p>
+                    <p class="text-[10px] text-blue-600 font-bold uppercase">Preço Unit: R$ {{ (item.total/item.qtd).toFixed(2) }}</p>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-4">
                     <p class="font-black text-slate-900 text-sm">R$ {{ item.total.toFixed(2) }}</p>
                     <button @click="removerItem(idx)" class="text-red-400"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white border p-6 rounded-[2.5rem] mb-6 shadow-sm">
-            <h3 class="font-bold text-slate-400 text-[10px] uppercase mb-4 text-center tracking-widest">Pagamento</h3>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <button @click="pagamento = 'pix'" :class="pagamento == 'pix' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'" class="p-4 rounded-2xl font-bold text-xs uppercase transition-all">PIX (-3%)</button>
-                <button @click="pagamento = 'cartao'" :class="pagamento == 'cartao' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'" class="p-4 rounded-2xl font-bold text-xs uppercase transition-all">Cartão</button>
+        <div class="bg-slate-900 p-6 rounded-[2.5rem] text-white shadow-xl mb-4">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-slate-400 text-xs font-bold">FORMA DE PAGAMENTO</span>
+                <select v-model="pagamento" class="bg-white/10 border-none rounded-lg text-xs font-bold p-1">
+                    <option value="cartao">CARTÃO</option>
+                    <option value="pix">PIX (-3%)</option>
+                </select>
             </div>
-            <div class="p-4 bg-slate-900 rounded-2xl text-center">
-                <p class="text-3xl font-black text-white italic">R$ {{ totalFinal.toFixed(2) }}</p>
+            <div class="text-center border-t border-white/10 pt-4">
+                <p class="text-3xl font-black italic">R$ {{ totalFinal.toFixed(2) }}</p>
             </div>
         </div>
 
-        <button @click="enviarWhats" class="w-full bg-green-600 text-white py-5 rounded-[2rem] font-black shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all">
-            <i class="fab fa-whatsapp text-2xl"></i> ENVIAR PEDIDO
+        <button @click="enviarWhats" class="w-full bg-green-600 text-white py-5 rounded-[2rem] font-black shadow-lg flex items-center justify-center gap-3">
+            <i class="fab fa-whatsapp text-2xl"></i> ENVIAR PELO WHATSAPP
         </button>
     </div>
 
-    <div v-if="modal == 'produtos'" class="fixed inset-0 bg-black/60 z-50 flex items-end">
-        <div class="bg-white w-full rounded-t-[3rem] p-8 bottom-sheet max-h-[85vh] flex flex-col">
+    <div v-if="modal == 'produtos'" class="fixed inset-0 bg-black/60 z-50 flex items-end backdrop-blur-sm">
+        <div class="bg-white w-full p-8 bottom-sheet max-h-[85vh] flex flex-col">
             <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-6"></div>
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-black text-slate-800 uppercase italic">{{ categoriaAtiva }}</h3>
                 <button @click="modal = null" class="w-10 h-10 bg-slate-50 rounded-full text-slate-400">&times;</button>
             </div>
             <div class="overflow-y-auto space-y-2 pb-10">
-                <div v-for="p in produtosFiltrados" @click="selecionarProduto(p)" class="p-4 border border-slate-50 rounded-2xl hover:bg-blue-50 transition-all flex justify-between items-center cursor-pointer">
-                    <div class="flex-1 pr-4">
-                        <p class="font-bold text-slate-800 text-sm leading-tight">{{ p.produto }}</p>
-                        <p class="text-[9px] text-slate-400 mt-1 uppercase">{{ p.sub || categoriaAtiva }}</p>
-                    </div>
+                <div v-for="p in produtosFiltrados" @click="selecionarProduto(p)" class="p-4 border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all flex justify-between items-center cursor-pointer">
+                    <p class="font-bold text-slate-800 text-sm flex-1 pr-4">{{ p.produto }}</p>
                     <div class="text-right">
                         <p class="text-blue-700 font-black text-sm">R$ {{ p.un.toFixed(2) }}</p>
-                        <p v-if="p.atacado" class="text-[9px] text-orange-600 font-bold uppercase tracking-tighter">Atacado p/ {{ p.min }}+</p>
+                        <p v-if="p.atacado" class="text-[9px] text-orange-600 font-bold uppercase">Atacado p/ {{ p.min }}+</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-if="modal == 'detalhe'" class="fixed inset-0 z-[60] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-6">
-        <div class="bg-white rounded-[3rem] p-8 w-full max-w-sm shadow-2xl text-center relative overflow-hidden">
-            <div v-if="qtd >= prodSel.min" class="absolute top-0 left-0 w-full bg-orange-500 text-white text-[10px] py-1 font-black uppercase tracking-widest">Preço Atacado Ativado!</div>
+    <div v-if="modal == 'detalhe'" class="fixed inset-0 z-[60] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-6">
+        <div class="bg-white rounded-[3rem] p-8 w-full max-w-sm shadow-2xl text-center">
+            <span class="text-[10px] font-black bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase mb-4 inline-block">{{ categoriaAtiva }}</span>
+            <h4 class="font-black text-slate-800 mb-6 leading-tight">{{ prodSel.produto }}</h4>
             
-            <h4 class="font-black text-slate-800 mt-4 leading-tight">{{ prodSel.produto }}</h4>
-            
-            <div class="flex items-center justify-center gap-6 my-8">
+            <div class="flex items-center justify-center gap-8 mb-8">
                 <button @click="qtd > 1 ? qtd-- : null" class="w-14 h-14 rounded-2xl bg-slate-100 font-bold text-xl">-</button>
                 <span class="text-4xl font-black text-slate-800 w-12">{{ qtd }}</span>
                 <button @click="qtd++" class="w-14 h-14 rounded-2xl bg-blue-600 text-white font-bold text-xl shadow-lg">+</button>
             </div>
 
-            <div class="bg-slate-50 p-4 rounded-2xl mb-6">
-                <div class="flex justify-between text-xs mb-1">
-                    <span class="text-slate-400">Preço Normal:</span>
-                    <span class="font-bold text-slate-600">R$ {{ (prodSel.un * qtd).toFixed(2) }}</span>
+            <div v-if="prodSel.atacado" class="bg-slate-50 p-5 rounded-[2rem] mb-8 border-2 border-dashed border-slate-200">
+                <div class="flex justify-between text-xs mb-2">
+                    <span class="text-slate-400 font-bold">NORMAL</span>
+                    <span class="text-slate-500 line-through">R$ {{ (prodSel.un * qtd).toFixed(2) }}</span>
                 </div>
-                <div v-if="prodSel.atacado" class="flex justify-between text-sm">
-                    <span class="text-slate-400">Preço Atual:</span>
-                    <span :class="qtd >= prodSel.min ? 'text-green-600' : 'text-blue-600'" class="font-black">R$ {{ subtotalItem.toFixed(2) }}</span>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-800 font-black text-xs">PREÇO ATUAL</span>
+                    <span :class="qtd >= prodSel.min ? 'text-green-600' : 'text-blue-600'" class="text-2xl font-black">R$ {{ subtotalItem.toFixed(2) }}</span>
                 </div>
+                <p v-if="qtd < prodSel.min" class="text-[9px] text-orange-500 font-bold mt-2 uppercase">
+                    Faltam {{ prodSel.min - qtd }} unidades para o preço de atacado!
+                </p>
+                <p v-else class="text-[9px] text-green-500 font-bold mt-2 uppercase tracking-widest animate-pulse">
+                    ✅ PREÇO DE ATACADO APLICADO!
+                </p>
             </div>
 
-            <button @click="confirmarItem" class="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-bold shadow-xl active:scale-95 transition-all">CONFIRMAR ITEM</button>
-            <button @click="modal = 'produtos'" class="mt-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">Voltar</button>
+            <button @click="confirmarItem" class="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-black shadow-xl active:scale-95 transition-all">
+                ADICIONAR AO PEDIDO
+            </button>
+            <button @click="modal = 'produtos'" class="mt-4 text-slate-400 text-[10px] font-bold uppercase">Voltar</button>
         </div>
     </div>
 
@@ -152,61 +156,36 @@ createApp({
             tela: 'home', modal: null, vendedor: '', cliente: '', pagamento: 'cartao',
             categoriaAtiva: '', prodSel: {}, qtd: 1, carrinho: [],
             categoriasSetup: [
-                { nome: 'Qualy Color Econômica', icon: 'fas fa-tint', color: 'text-blue-600', bg: 'bg-blue-50' },
-                { nome: 'Latex Uso Interno', icon: 'fas fa-home', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-                { nome: 'Standard', icon: 'fas fa-shield-alt', color: 'text-orange-600', bg: 'bg-orange-50' },
-                { nome: 'Premium', icon: 'fas fa-crown', color: 'text-purple-600', bg: 'bg-purple-50' },
-                { nome: 'Massas', icon: 'fas fa-hammer', color: 'text-stone-600', bg: 'bg-stone-50' },
-                { nome: 'Texturas / Acabamentos', icon: 'fas fa-magic', color: 'text-pink-600', bg: 'bg-pink-50' },
-                { nome: 'Complementos', icon: 'fas fa-tools', color: 'text-rose-600', bg: 'bg-rose-50' }
+                { nome: 'Tintas', icon: 'fas fa-tint', bg: 'bg-gray-500' }, // Cinza Médio
+                { nome: 'Massas', icon: 'fas fa-fill-drip', bg: 'bg-blue-600' }, // Azul
+                { nome: 'Selantes / Complementos', icon: 'fas fa-tools', bg: 'bg-gray-300' }, // Cinza Claro
+                { nome: 'Acabamentos Decorativos', icon: 'fas fa-magic', bg: 'bg-red-600' } // Vermelho
             ],
             produtos: [
-                // TINTAS ECONÔMICA
-                { cat: 'Qualy Color Econômica', produto: 'Pote 1lt Branca', un: 8.90 },
-                { cat: 'Qualy Color Econômica', produto: 'Galão 3,6lts Branca', un: 26.90, atacado: 23.90, min: 20 },
-                { cat: 'Qualy Color Econômica', produto: 'Galão 3,6lts Na Cor', un: 30.00 },
-                { cat: 'Qualy Color Econômica', produto: 'Balde 18L Branca', un: 76.90, atacado: 71.90, min: 20 },
-                { cat: 'Qualy Color Econômica', produto: 'Balde 18L Branca (100+)', un: 65.99, min: 100 },
-                { cat: 'Qualy Color Econômica', produto: 'Balde 18L Na Cor', un: 76.90 },
-                { cat: 'Qualy Color Econômica', produto: 'Lata 18L Branca', un: 79.90, atacado: 77.90, min: 20 },
+                // TINTAS
+                { cat: 'Tintas', produto: 'Econômica Balde 18L Branca', un: 76.90, atacado: 71.90, min: 20 },
+                { cat: 'Tintas', produto: 'Econômica Balde 18L Branca (100+)', un: 76.90, atacado: 65.99, min: 100 },
+                { cat: 'Tintas', produto: 'Standard Lata 18L Branca', un: 124.90, atacado: 116.90, min: 10 },
+                { cat: 'Tintas', produto: 'Premium Balde 18L Branca', un: 155.00, atacado: 145.00, min: 10 },
+                { cat: 'Tintas', produto: 'Piso Balde 18L (Cores)', un: 135.00, atacado: 125.00, min: 5 },
                 
-                // LATEX USO INTERNO
-                { cat: 'Latex Uso Interno', produto: 'Lata 18L Branca', un: 64.90, atacado: 62.90, min: 20 },
-                { cat: 'Latex Uso Interno', produto: 'Balde 16L Branca', un: 51.90, atacado: 49.90, min: 50 },
-                { cat: 'Latex Uso Interno', produto: 'Balde 16L Branca (100+)', un: 46.90, min: 100 },
-
-                // STANDARD
-                { cat: 'Standard', produto: 'Pote 1lt Branca', un: 15.90, atacado: 13.90, min: 20 },
-                { cat: 'Standard', produto: 'Galão 3,6lts Branca', un: 34.90 },
-                { cat: 'Standard', produto: 'Galão 3,6lts Na Cor', un: 37.90 },
-                { cat: 'Standard', produto: 'Lata 18L Branca', un: 124.90, atacado: 116.90, min: 10 },
-                { cat: 'Standard', produto: 'Lata 18L Na Cor Claras', un: 124.90 },
-                { cat: 'Standard', produto: 'Lata 18L Na Cor Médias', un: 145.00 },
-                { cat: 'Standard', produto: 'Lata 18L Na Cor Fortes', un: 185.00 },
-
-                // PREMIUM
-                { cat: 'Premium', produto: 'Galão 3,6lts Branca', un: 45.00, atacado: 40.00, min: 10 },
-                { cat: 'Premium', produto: 'Balde 18L Branca', un: 155.00, atacado: 145.00, min: 10 },
-
                 // MASSAS
-                { cat: 'Massas', produto: 'Massa Corrida PVA Lata 28kg', un: 58.90, atacado: 55.90, min: 30 },
-                { cat: 'Massas', produto: 'Massa Corrida PVA Barrica 25kg', un: 33.90, atacado: 31.90, min: 20 },
+                { cat: 'Massas', produto: 'Massa PVA Lata 28kg', un: 58.90, atacado: 55.90, min: 30 },
+                { cat: 'Massas', produto: 'Massa PVA Barrica 25kg', un: 33.90, atacado: 31.90, min: 20 },
                 { cat: 'Massas', produto: 'Massa Acrílica Lata 28kg', un: 72.90, atacado: 69.90, min: 30 },
                 { cat: 'Massas', produto: 'Massa Acrílica Barrica 25kg', un: 43.90, atacado: 41.99, min: 20 },
 
-                // TEXTURAS / ACABAMENTOS
-                { cat: 'Texturas / Acabamentos', produto: 'Grafiato Barrica 25kg (Claras)', un: 55.90, atacado: 52.00, min: 20 },
-                { cat: 'Texturas / Acabamentos', produto: 'Grafiato Barrica 50kg (Claras)', un: 105.90, atacado: 99.00, min: 10 },
-                { cat: 'Texturas / Acabamentos', produto: 'Textura Barrica 25kg (Cores)', un: 79.90, atacado: 75.00, min: 20 },
-                { cat: 'Texturas / Acabamentos', produto: 'Esmalte Base Água Lata 18L', un: 320.00 },
-                { cat: 'Texturas / Acabamentos', produto: 'Tinta Emborrachada Lata 18L', un: 272.90, atacado: 260.00, min: 5 },
-                { cat: 'Texturas / Acabamentos', produto: 'Cimento Queimado Balde 25kg', un: 188.00, atacado: 175.00, min: 5 },
+                // SELANTES / COMPLEMENTOS
+                { cat: 'Selantes / Complementos', produto: 'Selador Acrílico 18L', un: 85.00, atacado: 78.00, min: 10 },
+                { cat: 'Selantes / Complementos', produto: 'Selador Gesso 18L', un: 110.00 },
+                { cat: 'Selantes / Complementos', produto: 'Primer Fundo 18L', un: 158.00, atacado: 145.00, min: 5 },
+                { cat: 'Selantes / Complementos', produto: 'Vedalaje 16L', un: 138.90, atacado: 129.00, min: 5 },
 
-                // COMPLEMENTOS
-                { cat: 'Complementos', produto: 'Selador Acrílico Galão 3,6L', un: 19.90 },
-                { cat: 'Complementos', produto: 'Selador Gesso Lata 18L', un: 110.00 },
-                { cat: 'Complementos', produto: 'Primer Fundo Lata 18L', un: 158.00, atacado: 145.00, min: 5 },
-                { cat: 'Complementos', produto: 'Vedalaje Balde 16L', un: 138.90, atacado: 129.00, min: 5 }
+                // ACABAMENTOS
+                { cat: 'Acabamentos Decorativos', produto: 'Grafiato Barrica 25kg', un: 55.90, atacado: 52.00, min: 20 },
+                { cat: 'Acabamentos Decorativos', produto: 'Textura Barrica 25kg', un: 79.90, atacado: 75.00, min: 20 },
+                { cat: 'Acabamentos Decorativos', produto: 'Cimento Queimado 25kg', un: 188.00, atacado: 175.00, min: 5 },
+                { cat: 'Acabamentos Decorativos', produto: 'Tinta Emborrachada 18L', un: 272.90, atacado: 260.00, min: 5 }
             ]
         }
     },
@@ -214,7 +193,7 @@ createApp({
         produtosFiltrados() { return this.produtos.filter(p => p.cat === this.categoriaAtiva); },
         subtotalItem() {
             if(!this.prodSel.un) return 0;
-            const p = (this.prodSel.atacado && this.qtd >= this.prodSel.min) ? this.prodSel.atacado : (this.prodSel.un);
+            const p = (this.prodSel.atacado && this.qtd >= this.prodSel.min) ? this.prodSel.atacado : this.prodSel.un;
             return p * this.qtd;
         },
         totalPedido() { return this.carrinho.reduce((acc, i) => acc + i.total, 0); },
@@ -231,7 +210,7 @@ createApp({
         enviarWhats() {
             let m = `*PEDIDO QUALY QUIMY*\n\n*Vendedor:* ${this.vendedor}\n*Cliente:* ${this.cliente}\n\n`;
             this.carrinho.forEach(i => m += `• ${i.qtd}x ${i.nome} = R$ ${i.total.toFixed(2)}\n`);
-            m += `\n*PAGAMENTO:* ${this.pagamento.toUpperCase()}\n*TOTAL LÍQUIDO: R$ ${this.totalFinal.toFixed(2)}*`;
+            m += `\n*PAGAMENTO:* ${this.pagamento.toUpperCase()}\n*TOTAL: R$ ${this.totalFinal.toFixed(2)}*`;
             window.open(`https://wa.me/?text=${encodeURIComponent(m)}`);
         }
     }
