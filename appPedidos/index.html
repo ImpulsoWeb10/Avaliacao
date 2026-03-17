@@ -6,97 +6,262 @@
 <title>Tintas Qualy Quimy</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:#fff;}
-header{text-align:center;padding:15px;background:#020617;}
-input{width:90%;padding:10px;margin:5px auto;display:block;border-radius:8px;border:none;}
+body{
+font-family: Arial;
+background:#0f172a;
+color:#fff;
+margin:0;
+padding:10px;
+}
 
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;}
-.categoria{background:#1e293b;padding:20px;border-radius:12px;text-align:center;cursor:pointer;}
+h1{
+text-align:center;
+margin:5px;
+}
 
-.carrinho{position:fixed;bottom:0;left:0;width:100%;background:#020617;padding:10px;border-top:2px solid #22c55e;}
-.carrinho button{width:100%;padding:12px;border:none;border-radius:8px;background:#22c55e;color:#000;font-weight:bold;}
-.total{font-size:18px;font-weight:bold;text-align:center;margin-bottom:5px;}
+.sub{
+text-align:center;
+font-size:12px;
+color:#94a3b8;
+margin-bottom:10px;
+}
 
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;display:none;justify-content:center;align-items:center;}
-.modal-content{background:#fff;color:#000;padding:20px;width:90%;border-radius:12px;max-height:90%;overflow:auto;}
+input{
+padding:8px;
+width:48%;
+margin:5px 1%;
+border-radius:6px;
+border:none;
+}
 
-.produto{padding:10px;border-bottom:1px solid #ccc;cursor:pointer;}
-.qtd-box{display:flex;justify-content:center;gap:10px;margin:10px 0;}
+button{
+padding:12px;
+margin:5px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
 
-button{width:100%;padding:10px;margin-top:8px;border:none;border-radius:8px;background:#22c55e;color:#000;}
-.voltar{background:#ccc;}
-.remover{background:#ef4444;color:#fff;margin-top:5px;}
+.categoria{
+background:#1e293b;
+color:#fff;
+width:100%;
+}
 
+.totalBox{
+background:#020617;
+padding:10px;
+margin-top:10px;
+border-top:1px solid #334155;
+text-align:center;
+font-size:18px;
+}
+
+.fechar{
+background:#22c55e;
+width:100%;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+text-align:center;
+width:90%;
+}
+
+.voltar{
+background:#475569;
+margin-top:10px;
+}
+
+.melhor{
+color:#22c55e;
+font-size:12px;
+}
+
+.obs{
+color:#facc15;
+font-size:12px;
+margin-top:5px;
+}
 </style>
 </head>
+
 <body>
 
-<header>
-<h2>Tintas Qualy Quimy</h2>
-<p style="font-size:12px;opacity:0.7;">Tintas e Texturas</p>
-</header>
+<h1>Tintas Qualy Quimy</h1>
+<div class="sub">Tintas e Texturas</div>
 
-<input id="vendedor" placeholder="Vendedor">
-<input id="cliente" placeholder="Cliente">
+<input placeholder="Nome do Vendedor" id="vendedor">
+<input placeholder="Nome da Loja" id="loja">
 
-<div class="grid">
-<div class="categoria" onclick="abrir('tintas')">🎨 Tintas</div>
-<div class="categoria" onclick="abrir('massas')">🧱 Massas</div>
-<div class="categoria" onclick="abrir('texturas')">🪵 Texturas</div>
-<div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
+<!-- CATEGORIAS -->
+<button class="categoria" onclick="abrirCategoria('tintas')">Tintas</button>
+<button class="categoria" onclick="abrirCategoria('massas')">Massas</button>
+<button class="categoria" onclick="abrirCategoria('texturas')">Texturas</button>
+
+<div class="totalBox" id="totalBox">
+Total: R$ 0,00
 </div>
 
-<div class="carrinho">
-<div class="total">💰 R$ <span id="total">0.00</span></div>
-<button onclick="finalizar()">Fechar Pedido</button>
-</div>
+<button class="fechar" onclick="fecharPedido()">FECHAR PEDIDO</button>
 
-<!-- MODAIS -->
-<div class="modal" id="modalProdutos"><div class="modal-content" id="lista"></div></div>
-
-<div class="modal" id="modalQtd">
-<div class="modal-content">
-<h3 id="nome"></h3>
-<p id="regras"></p>
-<p id="economia" style="color:green;"></p>
-
-<div class="qtd-box">
-<button onclick="menos()">-</button>
-<input type="number" id="qtd" value="1" style="width:60px;text-align:center;">
-<button onclick="mais()">+</button>
-</div>
-
-<button onclick="add()">Adicionar</button>
-<button class="voltar" onclick="fechar('modalQtd')">Voltar</button>
-</div>
-</div>
-
-<div class="modal" id="modalFinal">
-<div class="modal-content">
-<h3>Resumo do Pedido</h3>
-<p id="info"></p>
-<p id="data"></p>
-<div id="resumo"></div>
-<h3 id="totalFinal"></h3>
-
-<button onclick="pix()">Pix (-3%)</button>
-<div>Cartão em até 3x sem juros</div>
-<div id="pagamento"></div>
-
-<div style="background:#e0f2fe;padding:10px;border-radius:8px;margin-top:10px;font-size:13px;">
-Pedido mínimo: R$ 1.000<br>
-Entrega acima de R$ 500<br>
-Prazo: até 7 dias úteis
-</div>
-
-<button onclick="enviar()">WhatsApp</button>
-<button onclick="window.print()">PDF</button>
-<button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
-</div>
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content" id="modalContent"></div>
 </div>
 
 <script>
-let produtos={
+let carrinho = [];
+
+// PRODUTOS (RESUMO DA SUA TABELA)
+const produtos = {
 tintas:[
-{nome:"Tinta Econômica",regras:[{min:20,preco:70},{min:1,preco:80}]},
-{nome:"Tinta Premium",regras:[{min:
+{name:"Balde 18L Econômica", preco:76.90, atacado:71.90, min:20},
+{name:"Lata 18L Standard", preco:124.90, atacado:116.90, min:10},
+{name:"Galão 3.6L Standard", preco:34.90, atacado:36.90, min:20},
+{name:"Tinta Premium 18L", preco:219.90}
+],
+
+massas:[
+{name:"Massa Corrida 28kg", preco:58.90, atacado:55.90, min:30},
+{name:"Massa Acrílica 28kg", preco:72.90, atacado:69.90, min:30}
+],
+
+texturas:[
+{name:"Textura 25kg", preco:48.90, atacado:45.90, min:20},
+{name:"Grafiato 25kg", preco:55.90}
+]
+};
+
+function abrirCategoria(cat){
+let html = "<h3>Escolha produto</h3>";
+
+produtos[cat].forEach((p,i)=>{
+html += `<button onclick="selecionarProduto('${cat}',${i})">${p.name}</button><br>`;
+});
+
+html += `<button class="voltar" onclick="fecharModal()">Voltar</button>`;
+
+mostrarModal(html);
+}
+
+function selecionarProduto(cat,i){
+let p = produtos[cat][i];
+
+let html = `
+<h3>${p.name}</h3>
+<div>Preço: R$ ${p.preco}</div>
+<br>
+<button onclick="addQtd('${cat}',${i},1)">+</button>
+<button onclick="addQtd('${cat}',${i},-1)">-</button>
+<br><br>
+<input id="qtd" type="number" value="1">
+<br><br>
+<button onclick="confirmarProduto('${cat}',${i})">Adicionar</button>
+<button class="voltar" onclick="abrirCategoria('${cat}')">Voltar</button>
+`;
+
+mostrarModal(html);
+}
+
+function confirmarProduto(cat,i){
+let qtd = parseInt(document.getElementById("qtd").value);
+let p = produtos[cat][i];
+
+let preco = p.preco;
+let msg = "";
+
+if(p.atacado && qtd >= p.min){
+preco = p.atacado;
+msg = "melhor preço";
+}
+
+carrinho.push({
+nome:p.name,
+qtd,
+preco
+});
+
+fecharModal();
+atualizarTotal();
+}
+
+function atualizarTotal(){
+let total = 0;
+carrinho.forEach(i=>{
+total += i.qtd * i.preco;
+});
+
+document.getElementById("totalBox").innerHTML =
+"Total: R$ " + total.toFixed(2);
+}
+
+function fecharPedido(){
+let vendedor = document.getElementById("vendedor").value;
+let loja = document.getElementById("loja").value;
+
+let html = `<h3>Resumo do Pedido</h3>`;
+html += `<div>Vendedor: ${vendedor}</div>`;
+html += `<div>Cliente: ${loja}</div><hr>`;
+
+let total = 0;
+
+carrinho.forEach(i=>{
+html += `<div>${i.nome} - ${i.qtd}x</div>`;
+total += i.qtd * i.preco;
+});
+
+html += `<hr>Total: R$ ${total.toFixed(2)}`;
+
+let desconto = total * 0.97;
+
+html += `<div class="obs">PIX / Espécie: R$ ${desconto.toFixed(2)}</div>`;
+html += `<div>Cartão até 3x sem juros</div>`;
+html += `<div class="obs">Pedido mínimo: R$ 1000</div>`;
+
+html += `<br>
+<button onclick="gerarWhats()">Enviar WhatsApp</button>
+<button onclick="window.print()">Salvar PDF</button>
+<button class="voltar" onclick="fecharModal()">Voltar</button>
+`;
+
+mostrarModal(html);
+}
+
+function gerarWhats(){
+let texto = "Pedido:%0A";
+
+carrinho.forEach(i=>{
+texto += `${i.nome} - ${i.qtd}x%0A`;
+});
+
+window.open("https://wa.me/5511954950044?text="+texto);
+}
+
+function mostrarModal(html){
+document.getElementById("modal").style.display="flex";
+document.getElementById("modalContent").innerHTML=html;
+}
+
+function fecharModal(){
+document.getElementById("modal").style.display="none";
+}
+</script>
+
+</body>
+</html>
