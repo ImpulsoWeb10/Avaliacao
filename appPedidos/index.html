@@ -1,189 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tintas Qualy Quimy</title>
 
 <style>
-
-body{
-font-family:Arial;
-background:#f4f4f4;
-text-align:center;
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5;
 }
 
-.logo{
-width:220px;
-margin-top:20px;
+header {
+    background: #0f172a;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
 
-button{
-background:#1e88e5;
-color:white;
-border:none;
-padding:12px;
-margin:5px;
-border-radius:6px;
-cursor:pointer;
+.categoria {
+    margin: 15px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
+.card {
+    background: white;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.modal-content{
-background:white;
-margin:10% auto;
-padding:20px;
-width:90%;
-max-width:400px;
-border-radius:10px;
+.preco {
+    color: green;
+    font-weight: bold;
 }
 
-.produto{
-border-bottom:1px solid #ddd;
-padding:10px;
+button {
+    background: #25D366;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
-input{
-width:60px;
-text-align:center;
+.carrinho {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #0f172a;
+    color: white;
+    padding: 15px;
+    text-align: center;
 }
-
-.total{
-font-size:20px;
-margin-top:10px;
-}
-
 </style>
 
 </head>
-
 <body>
 
+<header>
 <h2>Tintas Qualy Quimy</h2>
+<p>Peça pelo WhatsApp e receba em casa 🚚</p>
+</header>
 
-<button onclick="abrirCategorias()">Fazer Pedido</button>
+<div class="categoria">🎨 Tintas</div>
 
-<div id="modalCategorias" class="modal">
-<div class="modal-content">
-
-<h3>Escolha a Categoria</h3>
-
-<button onclick="mostrarProdutos('tintas')">Tintas</button>
-<button onclick="mostrarProdutos('massas')">Massas</button>
-
-</div>
+<div class="card">
+Tinta Standard 18L<br>
+<span class="preco">R$ 124,90</span><br>
+Atacado: R$ 116,90 (10+)
+<button onclick="add('Tinta Standard 18L')">Adicionar</button>
 </div>
 
-<div id="modalProdutos" class="modal">
-<div class="modal-content">
-
-<h3>Produtos</h3>
-
-<div id="listaProdutos"></div>
-
-<div class="total">
-Total: R$ <span id="total">0</span>
+<div class="card">
+Tinta Premium 18L<br>
+<span class="preco">R$ 219,90</span>
+<button onclick="add('Tinta Premium 18L')">Adicionar</button>
 </div>
 
-<button onclick="enviarPedido()">Finalizar Pedido</button>
+<div class="categoria">🧱 Massas</div>
 
+<div class="card">
+Massa Corrida 25kg<br>
+<span class="preco">R$ 33,90</span>
+<button onclick="add('Massa Corrida 25kg')">Adicionar</button>
 </div>
+
+<div class="card">
+Massa Acrílica 25kg<br>
+<span class="preco">R$ 43,90</span>
+<button onclick="add('Massa Acrílica 25kg')">Adicionar</button>
+</div>
+
+<div class="categoria">🪵 Texturas</div>
+
+<div class="card">
+Grafiato 25kg<br>
+<span class="preco">R$ 55,90</span>
+<button onclick="add('Grafiato 25kg')">Adicionar</button>
+</div>
+
+<div class="categoria">🧴 Preparador</div>
+
+<div class="card">
+Selador Acrílico 18L<br>
+<span class="preco">R$ 69,90</span>
+<button onclick="add('Selador Acrílico 18L')">Adicionar</button>
+</div>
+
+<div class="carrinho" onclick="enviar()">
+🛒 Enviar pedido no WhatsApp
 </div>
 
 <script>
+let carrinho = [];
 
-let carrinho=[]
-let total=0
-
-let produtos={
-tintas:[
-{nome:"Qualy Color",preco:79.9,atacado:77.9},
-{nome:"Standard",preco:124.9,atacado:116.9},
-{nome:"Premium",preco:219.9,atacado:209.9}
-],
-
-massas:[
-{nome:"Massa PVA",preco:14.99,atacado:14.99}
-]
+function add(produto){
+    carrinho.push(produto);
+    alert(produto + " adicionado!");
 }
 
-function abrirCategorias(){
+function enviar(){
+    let texto = "Olá! Quero fazer um pedido:%0A";
+    
+    carrinho.forEach(p => {
+        texto += "- " + p + "%0A";
+    });
 
-document.getElementById("modalCategorias").style.display="block"
-
+    window.open("https://wa.me/5511954950044?text=" + texto);
 }
-
-function mostrarProdutos(cat){
-
-document.getElementById("modalCategorias").style.display="none"
-document.getElementById("modalProdutos").style.display="block"
-
-let lista=document.getElementById("listaProdutos")
-lista.innerHTML=""
-
-produtos[cat].forEach((p,i)=>{
-
-lista.innerHTML+=`
-
-<div class="produto">
-
-<b>${p.nome}</b><br>
-
-Preço: ${p.preco}<br>
-Atacado: ${p.atacado}<br>
-
-<input type="number" min="0" value="0" onchange="calc(${p.atacado},this.value,'${p.nome}')">
-
-</div>
-
-`
-
-})
-
-}
-
-function calc(preco,qtd,nome){
-
-qtd=parseInt(qtd)
-
-if(qtd>0){
-
-carrinho.push({nome,qtd,preco})
-
-}
-
-total+=preco*qtd
-
-document.getElementById("total").innerText=total.toFixed(2)
-
-}
-
-function enviarPedido(){
-
-let msg="Pedido Tintas Qualy Quimy%0A%0A"
-
-carrinho.forEach(p=>{
-
-msg+=`${p.nome} - ${p.qtd} un %0A`
-
-})
-
-msg+=`%0ATotal: R$ ${total}`
-
-let url=`https://wa.me/5511954950044?text=${msg}`
-
-window.open(url)
-
-}
-
 </script>
 
 </body>
