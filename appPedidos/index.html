@@ -25,6 +25,7 @@
   <div class="bg-white p-4 rounded w-80">
     <button onclick="fecharModal()">⬅ Voltar</button>
     <h2 id="produtoNome" class="font-bold my-2"></h2>
+    <p id="descricao" class="text-sm mb-2"></p>
     <div class="flex items-center justify-center gap-4">
       <button onclick="menos()">-</button>
       <span id="qtd">1</span>
@@ -41,10 +42,38 @@
 <script>
 const produtos = {
   "Tintas": [
-    {nome:"Tinta 18L", preco:79.90, atacado:77.90}
+    {nome:"Econômica 18L", desc:"Uso interno", preco:76.90, atacado:71.90},
+    {nome:"Latex 18L", desc:"Uso interno", preco:64.90, atacado:62.90},
+    {nome:"Standard 18L", desc:"Interno e externo", preco:124.90, atacado:116.90},
+    {nome:"Premium 18L", desc:"Alta qualidade", preco:219.90, atacado:0},
+    {nome:"Piso Standard 18L", desc:"Pisos", preco:139.00, atacado:0},
+    {nome:"Piso Premium 18L", desc:"Pisos", preco:219.90, atacado:0},
+    {nome:"Semibrilho 18L", desc:"Acabamento", preco:225.00, atacado:0},
+    {nome:"Acetinada 18L", desc:"Acabamento", preco:266.90, atacado:0}
   ],
   "Massas": [
-    {nome:"Massa Corrida 25kg", preco:33.90, atacado:31.90}
+    {nome:"Massa Corrida 25kg", desc:"Uso interno", preco:33.90, atacado:31.90},
+    {nome:"Massa Corrida 28kg", desc:"Uso interno", preco:58.90, atacado:55.90},
+    {nome:"Massa Acrílica 25kg", desc:"Interno/Externo", preco:43.90, atacado:41.90},
+    {nome:"Massa Acrílica 28kg", desc:"Interno/Externo", preco:72.90, atacado:69.90}
+  ],
+  "Texturas": [
+    {nome:"Grafiato 25kg", desc:"Cores claras", preco:55.90, atacado:0},
+    {nome:"Grafiato 50kg", desc:"Cores claras", preco:105.90, atacado:0},
+    {nome:"Textura 25kg", desc:"Colorido", preco:79.90, atacado:0},
+    {nome:"Projetada 25kg", desc:"Sob encomenda", preco:63.00, atacado:0}
+  ],
+  "Complementos": [
+    {nome:"Selador Acrílico 18L", desc:"Preparação", preco:69.90, atacado:0},
+    {nome:"Selador Gesso 18L", desc:"Uso interno", preco:110.00, atacado:0},
+    {nome:"Primer 18L", desc:"Fundo preparador", preco:158.00, atacado:0},
+    {nome:"Impermeabilizante 16L", desc:"Vedação", preco:138.90, atacado:0}
+  ],
+  "Acabamentos": [
+    {nome:"Esmalte Base Água", desc:"Acabamento", preco:320.00, atacado:0},
+    {nome:"Emborrachada", desc:"Proteção externa", preco:272.90, atacado:0},
+    {nome:"Liquibrilho", desc:"Brilho final", preco:280.00, atacado:0},
+    {nome:"Cimento Queimado", desc:"Decorativo", preco:188.00, atacado:0}
   ]
 };
 
@@ -58,13 +87,16 @@ Object.keys(produtos).forEach(cat => {
   let btn = document.createElement("button");
   btn.className = "bg-white p-3 rounded shadow";
   btn.innerText = cat;
-  btn.onclick = () => abrirCategoria(cat);
+  btn.onclick = () => mostrarProdutos(cat);
   catDiv.appendChild(btn);
 });
 
-function abrirCategoria(cat){
+function mostrarProdutos(cat){
   let lista = produtos[cat];
-  lista.forEach(p => abrirModal(p));
+  let nomes = lista.map(p=>p.nome).join("\n");
+  let escolha = prompt("Escolha um produto:\n"+nomes);
+  let prod = lista.find(p=>p.nome.toLowerCase()===escolha?.toLowerCase());
+  if(prod) abrirModal(prod);
 }
 
 function abrirModal(prod){
@@ -72,6 +104,7 @@ function abrirModal(prod){
   quantidade = 1;
   document.getElementById("qtd").innerText = quantidade;
   document.getElementById("produtoNome").innerText = prod.nome;
+  document.getElementById("descricao").innerText = prod.desc;
   document.getElementById("modal").classList.remove("hidden");
 }
 
@@ -84,7 +117,7 @@ function menos(){ if(quantidade>1) quantidade--; document.getElementById("qtd").
 
 function addCarrinho(){
   let tipo = document.getElementById("tipo").value;
-  let valor = tipo === "atacado" ? produtoAtual.atacado : produtoAtual.preco;
+  let valor = tipo === "atacado" && produtoAtual.atacado>0 ? produtoAtual.atacado : produtoAtual.preco;
 
   carrinho.push({
     nome: produtoAtual.nome,
@@ -98,15 +131,15 @@ function addCarrinho(){
 
 function fecharPedido(){
   let total = 0;
-  let texto = "Pedido:%0A";
+  let texto = "Pedido Qualy Quimy:%0A";
 
   carrinho.forEach(item => {
     let subtotal = item.qtd * item.valor;
     total += subtotal;
-    texto += `${item.nome} - ${item.qtd}x R$${item.valor} = R$${subtotal}%0A`;
+    texto += `${item.nome} | ${item.qtd} | ${item.tipo} | R$${subtotal}%0A`;
   });
 
-  texto += `%0ATotal: R$${total}`;
+  texto += `%0ATotal: R$${total}%0A%0ADesenvolvido por ImpulsoWeb10`;
 
   window.open(`https://wa.me/?text=${texto}`);
 }
