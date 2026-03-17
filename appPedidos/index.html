@@ -3,146 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedidos - Qualy Quimy</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Tintas Qualy Quimy</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f4f6f9;
+}
+
+.header {
+    text-align: center;
+    padding: 15px;
+    background: #0d47a1;
+    color: white;
+}
+
+.sub {
+    font-size: 14px;
+}
+
+.container {
+    padding: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn {
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fechar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: green;
+    color: white;
+    padding: 15px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.modal button {
+    margin-top: 10px;
+}
+</style>
+
 </head>
-<body class="bg-gray-100">
 
-<div class="p-4 max-w-md mx-auto">
-  <h1 class="text-xl font-bold text-center">Tintas Qualy Quimy</h1>
-  <p class="text-center text-sm mb-4">Qualidade em Tintas e Complementos</p>
+<body>
 
-  <input id="vendedor" placeholder="Nome do vendedor" class="w-full p-2 mb-2 border rounded" />
-  <input id="deposito" placeholder="Nome do depósito" class="w-full p-2 mb-4 border rounded" />
-
-  <div id="categorias" class="grid grid-cols-2 gap-2"></div>
-
-  <button onclick="fecharPedido()" class="w-full mt-4 bg-green-600 text-white p-3 rounded">Fechar Pedido</button>
+<div class="header">
+    <h2>Tintas Qualy Quimy</h2>
+    <div class="sub">Qualidade em Tintas e Complementos</div>
 </div>
 
-<!-- Modal Produto -->
-<div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
-  <div class="bg-white p-4 rounded w-80">
-    <button onclick="fecharModal()">⬅ Voltar</button>
-    <h2 id="produtoNome" class="font-bold my-2"></h2>
-    <p id="descricao" class="text-sm mb-2"></p>
-    <div class="flex items-center justify-center gap-4">
-      <button onclick="menos()">-</button>
-      <span id="qtd">1</span>
-      <button onclick="mais()">+</button>
+<div class="container">
+    <input placeholder="Nome do vendedor">
+    <input placeholder="Nome do cliente">
+
+    <div class="grid">
+        <div class="btn" onclick="abrirCategoria('Tintas')">Tintas</div>
+        <div class="btn" onclick="abrirCategoria('Textura')">Textura</div>
+        <div class="btn" onclick="abrirCategoria('Massas')">Massas</div>
+        <div class="btn" onclick="abrirCategoria('Acabamento')">Acabamento</div>
+        <div class="btn" onclick="abrirCategoria('Complementos')">Complementos</div>
     </div>
-    <select id="tipo" class="w-full mt-3 border p-2">
-      <option value="varejo">Varejo</option>
-      <option value="atacado">Atacado</option>
-    </select>
-    <button onclick="addCarrinho()" class="w-full mt-3 bg-blue-600 text-white p-2">Adicionar</button>
-  </div>
+
+    <div class="total">Total: R$ <span id="total">0.00</span></div>
+</div>
+
+<div class="fechar" onclick="fecharPedido()">Fechar</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content" id="modalContent"></div>
 </div>
 
 <script>
+
+// SIMULAÇÃO DE PRODUTOS (vamos trocar pelo Excel depois)
 const produtos = {
-  "Tintas": [
-    {nome:"Econômica 18L", desc:"Uso interno", preco:76.90, atacado:71.90},
-    {nome:"Latex 18L", desc:"Uso interno", preco:64.90, atacado:62.90},
-    {nome:"Standard 18L", desc:"Interno e externo", preco:124.90, atacado:116.90},
-    {nome:"Premium 18L", desc:"Alta qualidade", preco:219.90, atacado:0},
-    {nome:"Piso Standard 18L", desc:"Pisos", preco:139.00, atacado:0},
-    {nome:"Piso Premium 18L", desc:"Pisos", preco:219.90, atacado:0},
-    {nome:"Semibrilho 18L", desc:"Acabamento", preco:225.00, atacado:0},
-    {nome:"Acetinada 18L", desc:"Acabamento", preco:266.90, atacado:0}
-  ],
-  "Massas": [
-    {nome:"Massa Corrida 25kg", desc:"Uso interno", preco:33.90, atacado:31.90},
-    {nome:"Massa Corrida 28kg", desc:"Uso interno", preco:58.90, atacado:55.90},
-    {nome:"Massa Acrílica 25kg", desc:"Interno/Externo", preco:43.90, atacado:41.90},
-    {nome:"Massa Acrílica 28kg", desc:"Interno/Externo", preco:72.90, atacado:69.90}
-  ],
-  "Texturas": [
-    {nome:"Grafiato 25kg", desc:"Cores claras", preco:55.90, atacado:0},
-    {nome:"Grafiato 50kg", desc:"Cores claras", preco:105.90, atacado:0},
-    {nome:"Textura 25kg", desc:"Colorido", preco:79.90, atacado:0},
-    {nome:"Projetada 25kg", desc:"Sob encomenda", preco:63.00, atacado:0}
-  ],
-  "Complementos": [
-    {nome:"Selador Acrílico 18L", desc:"Preparação", preco:69.90, atacado:0},
-    {nome:"Selador Gesso 18L", desc:"Uso interno", preco:110.00, atacado:0},
-    {nome:"Primer 18L", desc:"Fundo preparador", preco:158.00, atacado:0},
-    {nome:"Impermeabilizante 16L", desc:"Vedação", preco:138.90, atacado:0}
-  ],
-  "Acabamentos": [
-    {nome:"Esmalte Base Água", desc:"Acabamento", preco:320.00, atacado:0},
-    {nome:"Emborrachada", desc:"Proteção externa", preco:272.90, atacado:0},
-    {nome:"Liquibrilho", desc:"Brilho final", preco:280.00, atacado:0},
-    {nome:"Cimento Queimado", desc:"Decorativo", preco:188.00, atacado:0}
-  ]
+    "Tintas": [
+        {nome:"Tinta Branca", preco:50, atacado:45, min:1},
+        {nome:"Tinta Azul", preco:60, atacado:55, min:5}
+    ]
 };
 
-let carrinho = [];
-let produtoAtual = null;
-let quantidade = 1;
+let total = 0;
 
-const catDiv = document.getElementById("categorias");
+// ABRIR CATEGORIA
+function abrirCategoria(cat){
+    let html = `<h3>${cat}</h3>`;
 
-Object.keys(produtos).forEach(cat => {
-  let btn = document.createElement("button");
-  btn.className = "bg-white p-3 rounded shadow";
-  btn.innerText = cat;
-  btn.onclick = () => mostrarProdutos(cat);
-  catDiv.appendChild(btn);
-});
+    produtos[cat].forEach((p,i)=>{
+        html += `<div class="btn" onclick="abrirProduto('${cat}',${i})">${p.nome}</div>`;
+    });
 
-function mostrarProdutos(cat){
-  let lista = produtos[cat];
-  let nomes = lista.map(p=>p.nome).join("\n");
-  let escolha = prompt("Escolha um produto:\n"+nomes);
-  let prod = lista.find(p=>p.nome.toLowerCase()===escolha?.toLowerCase());
-  if(prod) abrirModal(prod);
+    html += `<button onclick="fecharModal()">Voltar</button>`;
+
+    abrirModal(html);
 }
 
-function abrirModal(prod){
-  produtoAtual = prod;
-  quantidade = 1;
-  document.getElementById("qtd").innerText = quantidade;
-  document.getElementById("produtoNome").innerText = prod.nome;
-  document.getElementById("descricao").innerText = prod.desc;
-  document.getElementById("modal").classList.remove("hidden");
+// ABRIR PRODUTO
+function abrirProduto(cat,index){
+    let p = produtos[cat][index];
+
+    let html = `
+    <h3>${p.nome}</h3>
+    <p>Preço: R$ ${p.preco}</p>
+    <p>Atacado: R$ ${p.atacado}</p>
+    <p>Mínimo: ${p.min}</p>
+
+    <input type="number" id="qtd" value="${p.min}" min="${p.min}">
+
+    <button onclick="addProduto(${p.preco}, ${p.min})">Adicionar</button>
+    <button onclick="fecharModal()">Voltar</button>
+    `;
+
+    abrirModal(html);
+}
+
+// ADICIONAR PRODUTO
+function addProduto(preco, min){
+    let qtd = parseInt(document.getElementById("qtd").value);
+
+    if(qtd < min){
+        alert("Quantidade mínima não atingida!");
+        return;
+    }
+
+    total += preco * qtd;
+    document.getElementById("total").innerText = total.toFixed(2);
+
+    fecharModal();
+}
+
+// MODAL
+function abrirModal(html){
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalContent").innerHTML = html;
 }
 
 function fecharModal(){
-  document.getElementById("modal").classList.add("hidden");
+    document.getElementById("modal").style.display = "none";
 }
 
-function mais(){ quantidade++; document.getElementById("qtd").innerText = quantidade; }
-function menos(){ if(quantidade>1) quantidade--; document.getElementById("qtd").innerText = quantidade; }
-
-function addCarrinho(){
-  let tipo = document.getElementById("tipo").value;
-  let valor = tipo === "atacado" && produtoAtual.atacado>0 ? produtoAtual.atacado : produtoAtual.preco;
-
-  carrinho.push({
-    nome: produtoAtual.nome,
-    qtd: quantidade,
-    tipo,
-    valor
-  });
-
-  fecharModal();
-}
-
+// FECHAR PEDIDO
 function fecharPedido(){
-  let total = 0;
-  let texto = "Pedido Qualy Quimy:%0A";
-
-  carrinho.forEach(item => {
-    let subtotal = item.qtd * item.valor;
-    total += subtotal;
-    texto += `${item.nome} | ${item.qtd} | ${item.tipo} | R$${subtotal}%0A`;
-  });
-
-  texto += `%0ATotal: R$${total}%0A%0ADesenvolvido por ImpulsoWeb10`;
-
-  window.open(`https://wa.me/?text=${texto}`);
+    alert("Aqui vai abrir resumo + pagamento (próximo passo)");
 }
+
 </script>
 
 </body>
