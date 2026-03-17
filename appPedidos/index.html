@@ -13,11 +13,23 @@ background:linear-gradient(180deg,#0f172a,#1e293b);
 color:#fff;
 display:flex;
 flex-direction:column;
-min-height:100vh;
+height:100vh;
 }
 
-header {text-align:center;padding:10px;}
+/* TOPO */
+header {
+text-align:center;
+padding:10px;
+}
 
+header h2 {margin:0;}
+header p {
+margin:0;
+font-size:13px;
+opacity:0.7;
+}
+
+/* INPUTS */
 .topo {
 display:flex;
 gap:5px;
@@ -31,11 +43,14 @@ border-radius:8px;
 border:none;
 }
 
+/* GRID */
 .grid {
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
 padding:10px;
+flex:1;
+overflow:auto;
 }
 
 .categoria {
@@ -47,6 +62,7 @@ text-align:center;
 font-weight:bold;
 }
 
+/* MODAL */
 .modal {
 position:fixed;
 top:0;left:0;
@@ -65,21 +81,19 @@ width:90%;
 border-radius:12px;
 }
 
-.produto {padding:10px;border-bottom:1px solid #ddd;}
-
+/* QTD */
 .qtd-box {
 display:flex;
 justify-content:center;
-align-items:center;
 gap:10px;
 margin-top:10px;
 }
 
 .qtd-box button {
 width:40px;
-font-size:18px;
 }
 
+/* BOTÕES */
 button {
 background:#25D366;
 color:#fff;
@@ -92,43 +106,24 @@ margin-top:8px;
 
 .voltar {background:#888;}
 
-.total-box {
-margin-top:10px;
-padding-top:10px;
-border-top:2px solid #fff;
-font-size:18px;
+.total-bar {
+position:fixed;
+bottom:60px;
+width:100%;
+background:#111827;
 text-align:center;
+padding:12px;
+font-size:18px;
 }
 
-.melhor {
-color:green;
-font-weight:bold;
-}
-
-.obs {
-background:#facc15;
-color:#000;
-padding:10px;
-border-radius:8px;
-margin-top:10px;
-font-size:13px;
-}
-
-.carrinho {
+footer {
 position:fixed;
 bottom:0;
 width:100%;
 background:#020617;
+text-align:center;
 padding:10px;
-text-align:center;
-}
-
-footer {
-background:#020617;
-text-align:center;
-padding:15px;
 font-size:12px;
-margin-top:auto;
 }
 
 a {color:#25D366;}
@@ -139,6 +134,7 @@ a {color:#25D366;}
 
 <header>
 <h2>Tintas Qualy Quimy</h2>
+<p>Tintas e Texturas</p>
 </header>
 
 <div class="topo">
@@ -153,18 +149,16 @@ a {color:#25D366;}
 <div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
 </div>
 
-<!-- PRODUTOS -->
+<!-- MODAIS -->
 <div class="modal" id="modalProdutos">
 <div class="modal-content" id="lista"></div>
 </div>
 
-<!-- QUANTIDADE -->
 <div class="modal" id="modalQtd">
 <div class="modal-content">
-
 <h3 id="nome"></h3>
 <p id="regras"></p>
-<p id="melhor"></p>
+<p id="melhor" style="color:green;"></p>
 
 <div class="qtd-box">
 <button onclick="menos()">-</button>
@@ -174,63 +168,52 @@ a {color:#25D366;}
 
 <button onclick="add()">Adicionar</button>
 <button class="voltar" onclick="fechar('modalQtd')">Voltar</button>
-
 </div>
 </div>
 
-<!-- FINAL -->
 <div class="modal" id="modalFinal">
 <div class="modal-content">
 
-<h3>Resumo</h3>
+<h3>Tintas Qualy Quimy</h3>
+<p style="font-size:13px;">Tintas e Texturas</p>
+
+<p id="infoCliente"></p>
+
 <div id="resumo"></div>
 
 <h4>Pagamento</h4>
 <button onclick="pagamento('pix')">Pix / Espécie (-3%)</button>
 <div>Cartão em até 3x sem juros</div>
 
-<div class="total-box" id="totalFinal"></div>
-
-<div class="obs">
-Pedido mínimo: R$ 1.000<br>
-Prazo: até 7 dias úteis<br>
-Entrega: acima de R$ 500 (região)
-</div>
+<div id="totalFinal"></div>
 
 <button onclick="enviar()">📲 WhatsApp</button>
 <button onclick="imprimir()">🧾 PDF</button>
+
 <button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
-
 </div>
 </div>
 
-<div class="carrinho" onclick="finalizar()">
-🛒 Total: R$ <span id="total">0.00</span>
+<!-- TOTAL FIXO -->
+<div class="total-bar">
+💰 Total: R$ <span id="total">0.00</span>
 </div>
 
+<!-- RODAPÉ -->
 <footer>
-<p>🔒 Site seguro com certificado SSL</p>
+<p>🔒 Site seguro</p>
 <p>
 Desenvolvido por 
-<a href="https://wa.me/5511954950044" target="_blank">ImpulsoWeb10</a>
+<a href="https://wa.me/5511954950044">ImpulsoWeb10</a>
 </p>
-<p>© 2026 - Todos os direitos reservados</p>
 </footer>
 
 <script>
 let produtos={
-tintas:[
-{nome:"Tinta Econômica 18L",regras:[{min:100,preco:65.99},{min:20,preco:71.90},{min:1,preco:76.90}]}
-],
-massas:[
-{nome:"Massa Corrida 25kg",regras:[{min:20,preco:31.90},{min:1,preco:33.90}]}
-],
-texturas:[
-{nome:"Grafiato 25kg",regras:[{min:1,preco:55.90}]}
-],
-prep:[
-{nome:"Selador 18L",regras:[{min:1,preco:69.90}]}
-]
+tintas:[{nome:"Tinta Econômica 18L",regras:[{min:20,preco:71.90},{min:1,preco:76.90}]}],
+massas:[{nome:"Massa Corrida",regras:[{min:20,preco:31.90},{min:1,preco:33.90}]}],
+texturas:[{nome:"Grafiato",regras:[{min:1,preco:55.90}]}],
+prep:[{nome:"Selador",regras:[{min:1,preco:69.90}]}]
 };
 
 let carrinho=[], atual, total=0;
@@ -251,16 +234,14 @@ modalProdutos.style.display="none";
 modalQtd.style.display="flex";
 
 regras.innerHTML=atual.regras.map(r=>`Acima de ${r.min} = R$ ${r.preco}`).join("<br>");
-nome.innerText=nome;
 }
 
-function mais(){qtd.value=parseInt(qtd.value)+1;}
+function mais(){qtd.value++;}
 function menos(){if(qtd.value>1)qtd.value--;}
 
 function add(){
 let q=parseInt(qtd.value);
 let regra=atual.regras.find(r=>q>=r.min);
-let preco=regra.preco;
 
 if(regra.min>1){
 melhor.innerText="Melhor preço aplicado!";
@@ -268,69 +249,51 @@ melhor.innerText="Melhor preço aplicado!";
 melhor.innerText="";
 }
 
-carrinho.push({nome:atual.nome,qtd:q,preco:preco});
+carrinho.push({nome:atual.nome,qtd:q,preco:regra.preco});
 modalQtd.style.display="none";
-calcTotal();
+calc();
 }
 
-function calcTotal(){
+function calc(){
 total=0;
 carrinho.forEach(i=>total+=i.qtd*i.preco);
-totalEl.innerText=total.toFixed(2);
+document.getElementById("total").innerText=total.toFixed(2);
 }
 
 function finalizar(){
+let vendedor=document.getElementById("vendedor").value;
+let cliente=document.getElementById("cliente").value;
+
+infoCliente.innerHTML=`Vendedor: ${vendedor}<br>Cliente: ${cliente}`;
+
 let html="";
 carrinho.forEach(i=>{
-html+=`${i.nome} | ${i.qtd} | R$ ${(i.qtd*i.preco).toFixed(2)}<br>`;
+html+=`${i.nome} x${i.qtd}<br>`;
 });
 resumo.innerHTML=html;
 
-let data=new Date().toLocaleDateString();
-totalFinal.innerHTML=`Data: ${data}<br>Total: R$ ${total.toFixed(2)}`;
+totalFinal.innerHTML=`Total: R$ ${total.toFixed(2)}`;
 
 modalFinal.style.display="flex";
 }
 
 function pagamento(tipo){
 if(tipo=="pix"){
-let final=total*0.97;
-totalFinal.innerHTML+=`<br>Total com desconto: R$ ${final.toFixed(2)}`;
+let f=total*0.97;
+totalFinal.innerHTML+=`<br>Total com desconto: R$ ${f.toFixed(2)}`;
 }else{
-let parcela=(total/3).toFixed(2);
-totalFinal.innerHTML+=`<br>3x de R$ ${parcela}`;
+let p=(total/3).toFixed(2);
+totalFinal.innerHTML+=`<br>3x de R$ ${p}`;
 }
 }
 
 function enviar(){
-let vendedor=vendedor.value;
-let cliente=cliente.value;
-
-let texto=`Pedido%0A`;
-texto+=`Vendedor: ${vendedor}%0ACliente: ${cliente}%0A`;
-
-carrinho.forEach(i=>{
-texto+=`${i.nome} x${i.qtd}%0A`;
-});
-
-window.open("https://wa.me/5511954950044?text="+texto);
+window.open("https://wa.me/5511954950044");
 }
 
-function imprimir(){
-let html="<table border='1' style='width:100%;border-collapse:collapse'>";
-html+="<tr><th>Produto</th><th>Qtd</th><th>Total</th></tr>";
-carrinho.forEach(i=>{
-html+=`<tr><td>${i.nome}</td><td>${i.qtd}</td><td>${(i.qtd*i.preco).toFixed(2)}</td></tr>`;
-});
-html+="</table>";
-let w=window.open("");
-w.document.write(html);
-w.print();
-}
+function imprimir(){window.print();}
 
 function fechar(id){document.getElementById(id).style.display="none";}
-
-let totalEl=document.getElementById("total");
 </script>
 
 </body>
