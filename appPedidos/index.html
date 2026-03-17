@@ -6,6 +6,194 @@
 <title>Tintas Qualy Quimy</title>
 
 <style>
+body {font-family:Arial;margin:0;background:#f3f4f6;}
+
+header {background:#111827;color:#fff;padding:15px;text-align:center;}
+
+input {
+width:90%;padding:10px;margin:10px;border-radius:8px;border:1px solid #ccc;
+}
+
+.grid {display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;}
+
+.categoria {background:#fff;padding:20px;border-radius:12px;text-align:center;cursor:pointer;}
+
+.modal {position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;display:none;}
+
+.modal-content {background:#fff;margin:30px auto;padding:20px;width:90%;border-radius:12px;}
+
+.produto {padding:10px;border-bottom:1px solid #ddd;cursor:pointer;}
+
+button {
+background:#25D366;color:#fff;border:none;padding:10px;border-radius:8px;width:100%;margin-top:10px;
+}
+
+.voltar {background:#999;}
+
+.carrinho {
+position:fixed;bottom:0;width:100%;background:#111827;color:#fff;padding:10px;text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Tintas Qualy Quimy</h2>
+<p>Pedido rápido 🚚</p>
+</header>
+
+<input id="vendedor" placeholder="Nome do vendedor">
+
+<div class="grid">
+<div class="categoria" onclick="abrir('tintas')">🎨 Tintas</div>
+<div class="categoria" onclick="abrir('massas')">🧱 Massas</div>
+<div class="categoria" onclick="abrir('texturas')">🪵 Texturas</div>
+<div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
+</div>
+
+<!-- MODAIS -->
+<div class="modal" id="modalProdutos"><div class="modal-content" id="lista"></div></div>
+
+<div class="modal" id="modalQtd">
+<div class="modal-content">
+<h3 id="nome"></h3>
+<p id="regras"></p>
+
+<input type="number" id="qtd" value="1">
+
+<button onclick="add()">Adicionar</button>
+<button class="voltar" onclick="fechar('modalQtd')">Voltar</button>
+</div>
+</div>
+
+<div class="modal" id="modalFinal">
+<div class="modal-content">
+<h3>Fechar Pedido</h3>
+
+<div id="resumo"></div>
+
+<h4>Pagamento</h4>
+<button onclick="pagamento('pix')">Pix / Espécie (-3%)</button>
+<button onclick="pagamento('cartao')">Cartão 3x</button>
+
+<div id="totalFinal"></div>
+
+<button onclick="enviar()">📲 WhatsApp</button>
+<button onclick="imprimir()">🧾 Salvar PDF</button>
+<button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
+</div>
+</div>
+
+<div class="carrinho" onclick="finalizar()">
+🛒 Fechar Pedido | Total: R$ <span id="total">0.00</span>
+</div>
+
+<script>
+let produtos={
+tintas:[
+{nome:"Tinta Econômica 18L",regras:[{min:100,preco:65.99},{min:20,preco:71.90},{min:1,preco:76.90}]},
+{nome:"Tinta Standard 18L",regras:[{min:10,preco:116.90},{min:1,preco:124.90}]},
+{nome:"Tinta Premium 18L",regras:[{min:1,preco:219.90}]}
+],
+massas:[
+{nome:"Massa Corrida 25kg",regras:[{min:20,preco:31.90},{min:1,preco:33.90}]}
+],
+texturas:[
+{nome:"Grafiato 25kg",regras:[{min:1,preco:55.90}]}
+],
+prep:[
+{nome:"Selador Acrílico 18L",regras:[{min:1,preco:69.90}]}
+]
+};
+
+let carrinho=[], atual, total=0, totalFinal=0;
+
+function abrir(cat){
+let html="<h3>Produtos</h3>";
+produtos[cat].forEach(p=>{
+html+=`<div class="produto" onclick="sel('${cat}','${p.nome}')">${p.nome}</div>`;
+});
+html+=`<button class="voltar" onclick="fechar('modalProdutos')">Voltar</button>`;
+lista.innerHTML=html;
+modalProdutos.style.display="block";
+}
+
+function sel(cat,nome){
+atual=produtos[cat].find(p=>p.nome==nome);
+modalProdutos.style.display="none";
+modalQtd.style.display="block";
+
+regras.innerHTML=atual.regras.map(r=>`Acima de ${r.min} = R$ ${r.preco}`).join("<br>");
+nome.innerText=nome;
+}
+
+function add(){
+let q=parseInt(qtd.value);
+let preco=atual.regras.find(r=>q>=r.min).preco;
+carrinho.push({nome:atual.nome,qtd:q,preco:preco});
+modalQtd.style.display="none";
+qtd.value=1;
+calcTotal();
+}
+
+function calcTotal(){
+total=0;
+carrinho.forEach(i=>total+=i.qtd*i.preco);
+document.getElementById("total").innerText=total.toFixed(2);
+}
+
+function finalizar(){
+let html="";
+carrinho.forEach(i=>{
+html+=`${i.nome} x${i.qtd} = R$ ${(i.qtd*i.preco).toFixed(2)}<br>`;
+});
+resumo.innerHTML=html;
+modalFinal.style.display="block";
+}
+
+function pagamento(tipo){
+if(tipo=="pix"){
+totalFinal=total*0.97;
+totalFinal.innerHTML=`Total com desconto: R$ ${totalFinal.toFixed(2)}`;
+}else{
+totalFinal=total;
+let parcela=(total/3).toFixed(2);
+totalFinal.innerHTML=`Total: R$ ${total.toFixed(2)}<br>3x de R$ ${parcela}`;
+}
+}
+
+function enviar(){
+let data=new Date().toLocaleDateString();
+let vendedor=document.getElementById("vendedor").value;
+
+let texto=`Pedido - ${data}%0A`;
+texto+=`Vendedor: ${vendedor}%0A%0A`;
+
+carrinho.forEach(i=>{
+texto+=`${i.nome} x${i.qtd}%0A`;
+});
+
+texto+=`%0ATotal: R$ ${total.toFixed(2)}%0A`;
+texto+=`Obrigado pela preferência!`;
+
+window.open("https://wa.me/5511954950044?text="+texto);
+}
+
+function imprimir(){window.print();}
+
+function fechar(id){document.getElementById(id).style.display="none";}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tintas Qualy Quimy</title>
+
+<style>
 body { font-family: Arial; margin:0; background:#f3f4f6; }
 
 header {
