@@ -1,302 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tintas Qualy Quimy</title>
-
-<style>
-body {
-margin:0;
-font-family:Arial;
-background:#f3f4f6;
-}
-
-header {
-text-align:center;
-padding:15px;
-background:#111827;
-color:#fff;
-}
-
-header p {margin:0;font-size:13px;opacity:0.7;}
-
-input {
-width:90%;
-padding:10px;
-margin:5px auto;
-display:block;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-.grid {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-padding:10px;
-}
-
-.categoria {
-background:#fff;
-padding:20px;
-border-radius:12px;
-text-align:center;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* TOTAL DISCRETO */
-.total-box {
-margin:10px;
-padding:10px;
-background:#fff;
-border-radius:10px;
-text-align:center;
-font-weight:bold;
-font-size:16px;
-}
-
-/* BOTÃO */
-.botao-final {
-margin:10px;
-background:#111827;
-color:#fff;
-padding:12px;
-border-radius:10px;
-text-align:center;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* MODAL */
-.modal {
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:#0008;
-display:none;
-justify-content:center;
-align-items:center;
-}
-
-.modal-content {
-background:#fff;
-padding:20px;
-width:90%;
-border-radius:12px;
-}
-
-.produto {padding:10px;border-bottom:1px solid #ddd;}
-
-.qtd-box {
-display:flex;
-justify-content:center;
-gap:10px;
-margin:10px 0;
-}
-
-button {
-width:100%;
-padding:10px;
-margin-top:8px;
-border:none;
-border-radius:8px;
-background:#25D366;
-color:#fff;
-}
-
-.voltar {background:#888;}
-
-table {
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-th, td {
-border:1px solid #ccc;
-padding:6px;
-text-align:center;
-}
-
-footer {
-text-align:center;
-padding:15px;
-font-size:12px;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h2>Tintas Qualy Quimy</h2>
-<p>Tintas e Texturas</p>
-</header>
-
-<input id="vendedor" placeholder="Vendedor">
-<input id="cliente" placeholder="Cliente">
-
-<div class="grid">
-<div class="categoria" onclick="abrir('tintas')">🎨 Tintas</div>
-<div class="categoria" onclick="abrir('massas')">🧱 Massas</div>
-<div class="categoria" onclick="abrir('texturas')">🪵 Texturas</div>
-<div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
-</div>
-
-<div class="total-box">
-💰 Total atual: R$ <span id="total">0.00</span>
-</div>
-
-<div class="botao-final" onclick="finalizar()">
-📦 Fechar Pedido
-</div>
-
-<!-- MODAIS -->
-<div class="modal" id="modalProdutos">
-<div class="modal-content" id="lista"></div>
-</div>
-
-<div class="modal" id="modalQtd">
-<div class="modal-content">
-
-<h3 id="nome"></h3>
-<p id="regras"></p>
-<p id="melhor" style="color:green;"></p>
-
-<div class="qtd-box">
-<button onclick="menos()">-</button>
-<input type="number" id="qtd" value="1" style="width:60px;text-align:center;">
-<button onclick="mais()">+</button>
-</div>
-
-<button onclick="add()">Adicionar</button>
-<button class="voltar" onclick="fechar('modalQtd')">Voltar</button>
-
-</div>
-</div>
-
 <div class="modal" id="modalFinal">
 <div class="modal-content">
 
-<h3>Resumo do Pedido</h3>
+<h3>Tintas Qualy Quimy</h3>
+<p style="font-size:13px;">Tintas e Texturas</p>
 
 <p id="info"></p>
 
 <div id="tabela"></div>
 
-<h4 id="totalFinal"></h4>
+<h3 id="totalFinal"></h3>
 
-<h4>Pagamento</h4>
-<button onclick="pix()">Pix / Espécie (-3%)</button>
-<button onclick="cartao()">Cartão 3x</button>
+<hr>
 
-<div id="pagamento"></div>
+<h4>Forma de pagamento</h4>
 
-<button onclick="enviar()">📲 WhatsApp</button>
-<button onclick="imprimir()">🧾 PDF</button>
+<button onclick="pix()">💸 Pix / Espécie (-3%)</button>
+
+<div style="margin-top:8px;">
+💳 Cartão em até 3x sem juros
+</div>
+
+<div id="pagamento" style="margin-top:10px;font-weight:bold;"></div>
+
+<div style="background:#facc15;color:#000;padding:10px;border-radius:8px;margin-top:10px;font-size:13px;">
+Pedido mínimo: R$ 1.000<br>
+Prazo: até 7 dias úteis<br>
+Entrega: acima de R$ 500 (região)
+</div>
+
+<button onclick="enviar()">📲 Enviar no WhatsApp</button>
+<button onclick="imprimir()">🧾 Gerar PDF</button>
 
 <button class="voltar" onclick="fechar('modalFinal')">Voltar</button>
 
 </div>
 </div>
-
-<footer>
-<p>🔒 Site seguro</p>
-<p>Desenvolvido por <a href="https://wa.me/5511954950044">ImpulsoWeb10</a></p>
-</footer>
-
-<script>
-let produtos={
-tintas:[{nome:"Tinta Econômica",regras:[{min:20,preco:71.9},{min:1,preco:76.9}]}],
-massas:[{nome:"Massa Corrida",regras:[{min:20,preco:31.9},{min:1,preco:33.9}]}],
-texturas:[{nome:"Grafiato",regras:[{min:1,preco:55.9}]}],
-prep:[{nome:"Selador",regras:[{min:1,preco:69.9}]}]
-};
-
-let carrinho=[], atual, total=0;
-
-function abrir(cat){
-let html="<h3>Produtos</h3>";
-produtos[cat].forEach(p=>{
-html+=`<div class="produto" onclick="sel('${cat}','${p.nome}')">${p.nome}</div>`;
-});
-html+=`<button class="voltar" onclick="fechar('modalProdutos')">Voltar</button>`;
-lista.innerHTML=html;
-modalProdutos.style.display="flex";
-}
-
-function sel(cat,nome){
-atual=produtos[cat].find(p=>p.nome==nome);
-modalProdutos.style.display="none";
-modalQtd.style.display="flex";
-
-regras.innerHTML=atual.regras.map(r=>`Acima de ${r.min} = R$ ${r.preco}`).join("<br>");
-}
-
-function mais(){qtd.value++;}
-function menos(){if(qtd.value>1)qtd.value--;}
-
-function add(){
-let q=parseInt(qtd.value);
-let regra=atual.regras.find(r=>q>=r.min);
-
-melhor.innerText = regra.min>1 ? "Melhor preço aplicado!" : "";
-
-carrinho.push({nome:atual.nome,qtd:q,preco:regra.preco});
-modalQtd.style.display="none";
-
-calcTotal();
-}
-
-function calcTotal(){
-total=0;
-carrinho.forEach(i=>total+=i.qtd*i.preco);
-document.getElementById("total").innerText=total.toFixed(2);
-}
-
-function finalizar(){
-let vendedor=vendedor.value;
-let cliente=cliente.value;
-
-info.innerHTML=`Vendedor: ${vendedor}<br>Cliente: ${cliente}`;
-
-let html="<table><tr><th>Produto</th><th>Qtd</th><th>Total</th></tr>";
-let t=0;
-
-carrinho.forEach(i=>{
-let sub=i.qtd*i.preco;
-t+=sub;
-html+=`<tr><td>${i.nome}</td><td>${i.qtd}</td><td>${sub.toFixed(2)}</td></tr>`;
-});
-
-html+="</table>";
-tabela.innerHTML=html;
-
-totalFinal.innerText="Total: R$ "+t.toFixed(2);
-
-modalFinal.style.display="flex";
-}
-
-function pix(){
-let v=total*0.97;
-pagamento.innerHTML=`Total com desconto: R$ ${v.toFixed(2)}`;
-}
-
-function cartao(){
-let p=(total/3).toFixed(2);
-pagamento.innerHTML=`3x de R$ ${p}`;
-}
-
-function enviar(){
-window.open("https://wa.me/5511954950044");
-}
-
-function imprimir(){window.print();}
-
-function fechar(id){document.getElementById(id).style.display="none";}
-</script>
-
-</body>
-</html>
