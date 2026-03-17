@@ -1,202 +1,244 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tintas Qualy Quimy</title>
-
-<style>
-body {
-    font-family: Arial;
-    margin: 0;
-    background: #f4f6f9;
-}
-
-.header {
-    text-align: center;
-    padding: 15px;
-    background: #0d47a1;
-    color: white;
-}
-
-.sub {
-    font-size: 14px;
-}
-
-.container {
-    padding: 15px;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.btn {
-    padding: 15px;
-    background: white;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    cursor: pointer;
-}
-
-.total {
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.fechar {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: green;
-    color: white;
-    padding: 15px;
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.5);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 10px;
-}
-
-.modal button {
-    margin-top: 10px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tintas Qualy Quimy - Pedidos</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .modal-enter-active, .modal-leave-active { transition: opacity 0.3s ease; }
+        .modal-enter-from, .modal-leave-to { opacity: 0; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
 </head>
+<body class="bg-gray-100 font-sans antialiased">
 
-<body>
+<div id="app" class="max-w-md mx-auto min-h-screen pb-24 shadow-2xl bg-white relative">
+    
+    <header class="bg-blue-800 text-white p-6 rounded-b-3xl shadow-lg">
+        <h1 class="text-2xl font-bold">Tintas Qualy Quimy</h1>
+        <p class="text-blue-200 text-sm">Qualidade em Tintas e Complementos</p>
+        
+        <div class="mt-4 space-y-2 text-black">
+            <input v-model="vendedor" type="text" placeholder="Nome do Vendedor" class="w-full p-2 rounded-lg border-none focus:ring-2 focus:ring-yellow-400 text-sm">
+            <input v-model="cliente" type="text" placeholder="Nome do Cliente" class="w-full p-2 rounded-lg border-none focus:ring-2 focus:ring-yellow-400 text-sm">
+            <div class="flex gap-2">
+                <input v-model="dataPedido" type="date" class="flex-1 p-2 rounded-lg border-none text-sm">
+                <button @click="showCalc = !showCalc" class="bg-yellow-500 p-2 rounded-lg text-white w-12"><i class="fas fa-calculator"></i></button>
+            </div>
+        </div>
+    </header>
 
-<div class="header">
-    <h2>Tintas Qualy Quimy</h2>
-    <div class="sub">Qualidade em Tintas e Complementos</div>
-</div>
+    <main class="p-4">
+        <h3 class="font-bold text-gray-700 mb-4 px-2">Categorias</h3>
+        <div class="grid grid-cols-2 gap-4">
+            <button v-for="cat in categorias" :key="cat.nome" 
+                    @click="abrirCategoria(cat)"
+                    class="bg-white border-2 border-gray-100 p-6 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-blue-500 transition-all active:scale-95 shadow-sm">
+                <i :class="cat.icon" class="text-3xl text-blue-700"></i>
+                <span class="font-bold text-gray-600 text-sm">{{ cat.nome }}</span>
+            </button>
+        </div>
 
-<div class="container">
-    <input placeholder="Nome do vendedor">
-    <input placeholder="Nome do cliente">
+        <div class="mt-8 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-800">
+            <p class="text-xs text-blue-600 uppercase font-bold tracking-wider">Subtotal do Pedido</p>
+            <p class="text-3xl font-black text-blue-900">R$ {{ totalPedido.toFixed(2) }}</p>
+        </div>
+    </main>
 
-    <div class="grid">
-        <div class="btn" onclick="abrirCategoria('Tintas')">Tintas</div>
-        <div class="btn" onclick="abrirCategoria('Textura')">Textura</div>
-        <div class="btn" onclick="abrirCategoria('Massas')">Massas</div>
-        <div class="btn" onclick="abrirCategoria('Acabamento')">Acabamento</div>
-        <div class="btn" onclick="abrirCategoria('Complementos')">Complementos</div>
-    </div>
+    <button @click="abrirResumo" class="fixed bottom-6 right-6 left-6 md:max-w-xs md:mx-auto bg-green-600 text-white p-4 rounded-full shadow-2xl font-bold flex justify-between items-center px-8 active:scale-95 transition-transform">
+        <span>🛒 {{ carrinho.length }} Itens</span>
+        <span>FECHAR PEDIDO <i class="fas fa-chevron-right ml-2"></i></span>
+    </button>
 
-    <div class="total">Total: R$ <span id="total">0.00</span></div>
-</div>
+    <transition name="modal">
+        <div v-if="modalAberto == 'produtos'" class="fixed inset-0 z-50 glass flex items-end sm:items-center justify-center">
+            <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl p-6 max-h-[85vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-blue-800">{{ categoriaSelecionada.nome }}</h2>
+                    <button @click="modalAberto = null" class="text-gray-400 text-2xl">&times;</button>
+                </div>
+                <div class="space-y-3">
+                    <div v-for="prod in produtosFiltrados" @click="selecionarProduto(prod)" 
+                         class="p-4 border rounded-xl hover:bg-blue-50 cursor-pointer flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-gray-800">{{ prod.nome }}</p>
+                            <p class="text-xs text-gray-500">{{ prod.sub }}</p>
+                        </div>
+                        <i class="fas fa-plus text-blue-500"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 
-<div class="fechar" onclick="fecharPedido()">Fechar</div>
+    <transition name="modal">
+        <div v-if="modalAberto == 'detalhe'" class="fixed inset-0 z-[60] glass flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6">
+                <h2 class="text-lg font-bold">{{ produtoSelecionado.nome }}</h2>
+                <p class="text-sm text-gray-500 mb-4">{{ produtoSelecionado.desc }}</p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-3 bg-gray-50 rounded-lg text-center">
+                        <p class="text-xs text-gray-400">Normal</p>
+                        <p class="font-bold">R$ {{ produtoSelecionado.preco.toFixed(2) }}</p>
+                    </div>
+                    <div class="p-3 bg-yellow-50 rounded-lg text-center border border-yellow-200">
+                        <p class="text-xs text-yellow-600 font-bold">Atacado (+{{produtoSelecionado.minAtacado}} un)</p>
+                        <p class="font-bold text-yellow-700">R$ {{ produtoSelecionado.precoAtacado.toFixed(2) }}</p>
+                    </div>
+                </div>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-content" id="modalContent"></div>
+                <div class="flex items-center justify-center gap-6 mb-6">
+                    <button @click="qtd > 1 ? qtd-- : null" class="w-12 h-12 rounded-full bg-gray-100 text-xl font-bold">-</button>
+                    <span class="text-3xl font-bold">{{ qtd }}</span>
+                    <button @click="qtd++" class="w-12 h-12 rounded-full bg-blue-800 text-white text-xl font-bold">+</button>
+                </div>
+
+                <div v-if="qtd < produtoSelecionado.minAtacado && produtoSelecionado.minAtacado > 0" class="text-center mb-4">
+                    <p class="text-xs text-orange-500 italic">Adicione mais {{produtoSelecionado.minAtacado - qtd}} para preço de atacado</p>
+                </div>
+
+                <div class="flex gap-2">
+                    <button @click="modalAberto = 'produtos'" class="flex-1 py-3 font-bold text-gray-500">Voltar</button>
+                    <button @click="adicionarAoCarrinho" class="flex-[2] py-3 bg-blue-800 text-white rounded-xl font-bold shadow-lg">ADICIONAR R$ {{ subtotalItem.toFixed(2) }}</button>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <transition name="modal">
+        <div v-if="modalAberto == 'resumo'" class="fixed inset-0 z-50 bg-white overflow-y-auto">
+            <div class="p-6">
+                <button @click="modalAberto = null" class="mb-4 text-blue-800 font-bold"><i class="fas fa-arrow-left"></i> Voltar</button>
+                <h2 class="text-2xl font-bold mb-6">Resumo do Pedido</h2>
+                
+                <div class="space-y-4 mb-8">
+                    <div v-for="(item, idx) in carrinho" :key="idx" class="flex justify-between border-b pb-2">
+                        <div>
+                            <p class="font-bold text-sm">{{ item.qtd }}x {{ item.nome }}</p>
+                            <p class="text-xs text-gray-400">R$ {{ item.precoUnit.toFixed(2) }} un.</p>
+                        </div>
+                        <p class="font-bold">R$ {{ (item.qtd * item.precoUnit).toFixed(2) }}</p>
+                    </div>
+                </div>
+
+                <h3 class="font-bold mb-4">Forma de Pagamento</h3>
+                <div class="space-y-3 mb-8" v-if="!pagamento">
+                    <button @click="selecionarPagamento('pix')" class="w-full p-4 border-2 rounded-xl text-left flex justify-between">
+                        <span><i class="fas fa-qrcode mr-2 text-green-500"></i> PIX / Dinheiro</span>
+                        <b class="text-green-600">-3% OFF</b>
+                    </button>
+                    <button @click="selecionarPagamento('cartao')" class="w-full p-4 border-2 rounded-xl text-left flex justify-between">
+                        <span><i class="fas fa-credit-card mr-2 text-blue-500"></i> Cartão de Crédito</span>
+                        <span class="text-gray-400 text-sm">Até 3x</span>
+                    </button>
+                </div>
+
+                <div v-else class="p-4 bg-blue-50 rounded-xl relative">
+                    <button @click="pagamento = null" class="absolute top-2 right-2 text-xs text-blue-800 underline">Mudar</button>
+                    <p class="font-bold text-blue-900 uppercase">Selecionado: {{ pagamento.toUpperCase() }}</p>
+                    <p class="text-2xl font-black mt-2">Total: R$ {{ totalFinal.toFixed(2) }}</p>
+                    <p v-if="pagamento == 'cartao'" class="text-sm">3 parcelas de R$ {{ (totalFinal/3).toFixed(2) }}</p>
+                </div>
+
+                <div class="mt-8 space-y-3" v-if="pagamento">
+                    <button @click="finalizar('pdf')" class="w-full py-4 bg-gray-800 text-white rounded-xl font-bold"><i class="fas fa-file-pdf mr-2"></i> Gerar PDF</button>
+                    <button @click="finalizar('whats')" class="w-full py-4 bg-green-600 text-white rounded-xl font-bold"><i class="fab fa-whatsapp mr-2"></i> Enviar via WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </transition>
+
 </div>
 
 <script>
+    const { createApp } = Vue
 
-// SIMULAÇÃO DE PRODUTOS (vamos trocar pelo Excel depois)
-const produtos = {
-    "Tintas": [
-        {nome:"Tinta Branca", preco:50, atacado:45, min:1},
-        {nome:"Tinta Azul", preco:60, atacado:55, min:5}
-    ]
-};
-
-let total = 0;
-
-// ABRIR CATEGORIA
-function abrirCategoria(cat){
-    let html = `<h3>${cat}</h3>`;
-
-    produtos[cat].forEach((p,i)=>{
-        html += `<div class="btn" onclick="abrirProduto('${cat}',${i})">${p.nome}</div>`;
-    });
-
-    html += `<button onclick="fecharModal()">Voltar</button>`;
-
-    abrirModal(html);
-}
-
-// ABRIR PRODUTO
-function abrirProduto(cat,index){
-    let p = produtos[cat][index];
-
-    let html = `
-    <h3>${p.nome}</h3>
-    <p>Preço: R$ ${p.preco}</p>
-    <p>Atacado: R$ ${p.atacado}</p>
-    <p>Mínimo: ${p.min}</p>
-
-    <input type="number" id="qtd" value="${p.min}" min="${p.min}">
-
-    <button onclick="addProduto(${p.preco}, ${p.min})">Adicionar</button>
-    <button onclick="fecharModal()">Voltar</button>
-    `;
-
-    abrirModal(html);
-}
-
-// ADICIONAR PRODUTO
-function addProduto(preco, min){
-    let qtd = parseInt(document.getElementById("qtd").value);
-
-    if(qtd < min){
-        alert("Quantidade mínima não atingida!");
-        return;
-    }
-
-    total += preco * qtd;
-    document.getElementById("total").innerText = total.toFixed(2);
-
-    fecharModal();
-}
-
-// MODAL
-function abrirModal(html){
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("modalContent").innerHTML = html;
-}
-
-function fecharModal(){
-    document.getElementById("modal").style.display = "none";
-}
-
-// FECHAR PEDIDO
-function fecharPedido(){
-    alert("Aqui vai abrir resumo + pagamento (próximo passo)");
-}
-
+    createApp({
+        data() {
+            return {
+                vendedor: '',
+                cliente: '',
+                dataPedido: new Date().toISOString().substr(0, 10),
+                modalAberto: null,
+                categoriaSelecionada: {},
+                produtoSelecionado: {},
+                qtd: 1,
+                carrinho: [],
+                pagamento: null,
+                categorias: [
+                    { nome: 'Tintas', icon: 'fas fa-paint-roller' },
+                    { nome: 'Textura', icon: 'fas fa-brush' },
+                    { nome: 'Massas', icon: 'fas fa-fill-drip' },
+                    { nome: 'Acabamento', icon: 'fas fa-sparkles' },
+                    { nome: 'Complementos', icon: 'fas fa-tools' }
+                ],
+                // Simulando dados que viriam do Excel
+                bancoProdutos: [
+                    { cat: 'Tintas', sub: 'Acrílica', nome: 'Látex Premium 18L', desc: 'Interior e Exterior', preco: 280.00, precoAtacado: 250.00, minAtacado: 5 },
+                    { cat: 'Tintas', sub: 'Esmalte', nome: 'Esmalte Sintético 3.6L', desc: 'Para Madeiras e Metais', preco: 85.00, precoAtacado: 75.00, minAtacado: 10 },
+                    { cat: 'Massas', sub: 'Corrida', nome: 'Massa Corrida 20kg', desc: 'Fácil Lixamento', preco: 65.00, precoAtacado: 55.00, minAtacado: 10 },
+                    { cat: 'Textura', sub: 'Rústica', nome: 'Grafiato 25kg', desc: 'Efeito Riscado', preco: 120.00, precoAtacado: 105.00, minAtacado: 20 }
+                ]
+            }
+        },
+        computed: {
+            produtosFiltrados() {
+                return this.bancoProdutos.filter(p => p.cat === this.categoriaSelecionada.nome);
+            },
+            subtotalItem() {
+                if (!this.produtoSelecionado.preco) return 0;
+                let p = (this.qtd >= this.produtoSelecionado.minAtacado) ? this.produtoSelecionado.precoAtacado : this.produtoSelecionado.preco;
+                return p * this.qtd;
+            },
+            totalPedido() {
+                return this.carrinho.reduce((acc, item) => acc + (item.qtd * item.precoUnit), 0);
+            },
+            totalFinal() {
+                let t = this.totalPedido;
+                if (this.pagamento === 'pix') t *= 0.97;
+                return t;
+            }
+        },
+        methods: {
+            abrirCategoria(cat) {
+                this.categoriaSelecionada = cat;
+                this.modalAberto = 'produtos';
+            },
+            selecionarProduto(prod) {
+                this.produtoSelecionado = prod;
+                this.qtd = 1;
+                this.modalAberto = 'detalhe';
+            },
+            adicionarAoCarrinho() {
+                let precoFinal = (this.qtd >= this.produtoSelecionado.minAtacado) ? this.produtoSelecionado.precoAtacado : this.produtoSelecionado.preco;
+                this.carrinho.push({
+                    nome: this.produtoSelecionado.nome,
+                    qtd: this.qtd,
+                    precoUnit: precoFinal
+                });
+                this.modalAberto = null;
+            },
+            abrirResumo() {
+                if (this.carrinho.length === 0) return alert("Adicione produtos primeiro!");
+                this.modalAberto = 'resumo';
+            },
+            selecionarPagamento(tipo) {
+                this.pagamento = tipo;
+            },
+            finalizar(tipo) {
+                const msg = `Pedido: ${this.cliente}\nTotal: R$ ${this.totalFinal.toFixed(2)}`;
+                if (tipo === 'whats') {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+                } else {
+                    alert("Gerando PDF... (Função de integração)");
+                }
+            }
+        }
+    }).mount('#app')
 </script>
-
 </body>
 </html>
