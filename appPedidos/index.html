@@ -6,110 +6,110 @@
 <title>Tintas Qualy Quimy</title>
 
 <style>
-body {
-    font-family: Arial;
-    margin: 0;
-    background: #f3f4f6;
-}
+body { font-family: Arial; margin:0; background:#f3f4f6; }
 
 header {
-    background: #111827;
-    color: white;
-    padding: 15px;
-    text-align: center;
+    background:#111827;
+    color:white;
+    text-align:center;
+    padding:15px;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 10px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    padding:10px;
 }
 
 .categoria {
-    background: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .modal {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.5);
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.5);
     display:none;
 }
 
 .modal-content {
-    background: white;
-    margin: 50px auto;
-    padding: 20px;
-    width: 90%;
-    border-radius: 12px;
+    background:white;
+    margin:40px auto;
+    padding:20px;
+    width:90%;
+    border-radius:12px;
 }
 
 .produto {
-    padding:10px;
     border-bottom:1px solid #ddd;
+    padding:10px;
     cursor:pointer;
 }
 
 .qtd {
     display:flex;
     justify-content:center;
-    align-items:center;
     gap:10px;
-    margin-top:10px;
+    margin:10px;
 }
 
 button {
     background:#25D366;
+    color:white;
     border:none;
     padding:10px;
-    color:white;
     border-radius:8px;
-    cursor:pointer;
+    width:100%;
+    margin-top:10px;
 }
 
 .carrinho {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #111827;
-    color: white;
-    padding: 10px;
-    text-align: center;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#111827;
+    color:white;
+    padding:10px;
+    text-align:center;
+}
+
+.item {
+    font-size:14px;
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
 <h2>Tintas Qualy Quimy</h2>
-<p>Pedido rápido pelo WhatsApp 🚚</p>
+<p>Pedido rápido 🚚</p>
 </header>
 
 <div class="grid">
-<div class="categoria" onclick="abrirCategoria('tintas')">🎨 Tintas</div>
-<div class="categoria" onclick="abrirCategoria('massas')">🧱 Massas</div>
-<div class="categoria" onclick="abrirCategoria('texturas')">🪵 Texturas</div>
-<div class="categoria" onclick="abrirCategoria('prep')">🧴 Preparador</div>
+<div class="categoria" onclick="abrir('tintas')">🎨 Tintas</div>
+<div class="categoria" onclick="abrir('massas')">🧱 Massas</div>
+<div class="categoria" onclick="abrir('texturas')">🪵 Texturas</div>
+<div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
 </div>
 
 <!-- MODAL PRODUTOS -->
 <div class="modal" id="modalProdutos">
-<div class="modal-content" id="listaProdutos"></div>
+<div class="modal-content" id="lista"></div>
 </div>
 
-<!-- MODAL QUANTIDADE -->
+<!-- MODAL QTD -->
 <div class="modal" id="modalQtd">
 <div class="modal-content">
-<h3 id="nomeProduto"></h3>
-<p id="precoProduto"></p>
+<h3 id="nome"></h3>
+<p id="infoPreco"></p>
 
 <div class="qtd">
 <button onclick="menos()">-</button>
@@ -117,93 +117,140 @@ button {
 <button onclick="mais()">+</button>
 </div>
 
-<button onclick="confirmar()">Adicionar ao pedido</button>
+<button onclick="add()">Adicionar</button>
 </div>
 </div>
 
-<div class="carrinho" onclick="enviar()">
-🛒 Enviar Pedido
+<!-- MODAL FINAL -->
+<div class="modal" id="modalFinal">
+<div class="modal-content">
+<h3>Seu Pedido</h3>
+<div id="resumo"></div>
+
+<button onclick="enviar()">📲 WhatsApp</button>
+<button onclick="imprimir()">🧾 Imprimir / PDF</button>
+</div>
+</div>
+
+<div class="carrinho" onclick="finalizar()">
+🛒 Finalizar Pedido | Total: R$ <span id="total">0.00</span>
 </div>
 
 <script>
 let produtos = {
 tintas: [
-{nome:"Tinta Standard 18L", preco:124.90, atacado:116.90, min:10},
-{nome:"Tinta Premium 18L", preco:219.90}
+{nome:"Tinta Econômica 18L", regras:[
+{min:100, preco:65.99},
+{min:20, preco:71.90},
+{min:1, preco:76.90}
+]},
+{nome:"Tinta Standard 18L", regras:[
+{min:10, preco:116.90},
+{min:1, preco:124.90}
+]},
+{nome:"Tinta Premium 18L", regras:[
+{min:1, preco:219.90}
+]}
 ],
 massas: [
-{nome:"Massa Corrida 25kg", preco:33.90, atacado:31.90, min:20},
-{nome:"Massa Acrílica 25kg", preco:43.90}
+{nome:"Massa Corrida 25kg", regras:[
+{min:20, preco:31.90},
+{min:1, preco:33.90}
+]},
+{nome:"Massa Acrílica 25kg", regras:[
+{min:20, preco:41.99},
+{min:1, preco:43.90}
+]}
 ],
 texturas: [
-{nome:"Grafiato 25kg", preco:55.90}
+{nome:"Grafiato 25kg", regras:[
+{min:1, preco:55.90}
+]}
 ],
 prep: [
-{nome:"Selador Acrílico 18L", preco:69.90}
+{nome:"Selador Acrílico 18L", regras:[
+{min:1, preco:69.90}
+]}
 ]
 };
 
 let carrinho = [];
-let produtoAtual = null;
+let atual;
 
-function abrirCategoria(cat){
-let html = "<h3>Escolha o produto</h3>";
+function abrir(cat){
+let html = "<h3>Produtos</h3>";
 
 produtos[cat].forEach(p=>{
-html += `<div class="produto" onclick="selecionarProduto('${p.nome}', ${p.preco}, ${p.atacado || 0}, ${p.min || 0})">
-${p.nome}<br>R$ ${p.preco}
-</div>`;
+html += `<div class="produto" onclick="sel('${cat}', '${p.nome}')">${p.nome}</div>`;
 });
 
-document.getElementById("listaProdutos").innerHTML = html;
-document.getElementById("modalProdutos").style.display = "block";
+document.getElementById("lista").innerHTML = html;
+document.getElementById("modalProdutos").style.display="block";
 }
 
-function selecionarProduto(nome, preco, atacado, min){
-produtoAtual = {nome, preco, atacado, min};
-document.getElementById("modalProdutos").style.display = "none";
-document.getElementById("modalQtd").style.display = "block";
+function sel(cat, nome){
+atual = produtos[cat].find(p=>p.nome==nome);
+document.getElementById("modalProdutos").style.display="none";
+document.getElementById("modalQtd").style.display="block";
 
-document.getElementById("nomeProduto").innerText = nome;
-document.getElementById("precoProduto").innerText = "R$ " + preco;
+let regras = atual.regras.map(r=>`Acima de ${r.min} = R$ ${r.preco}`).join("<br>");
+document.getElementById("nome").innerText = nome;
+document.getElementById("infoPreco").innerHTML = regras;
 }
 
-function mais(){
-let q = document.getElementById("qtd");
-q.value = parseInt(q.value) + 1;
+function mais(){qtd.value++;}
+function menos(){if(qtd.value>1) qtd.value--;}
+
+function calcularPreco(q){
+for(let r of atual.regras){
+if(q>=r.min) return r.preco;
+}
 }
 
-function menos(){
-let q = document.getElementById("qtd");
-if(q.value > 1) q.value--;
+function add(){
+let q = parseInt(qtd.value);
+let preco = calcularPreco(q);
+
+carrinho.push({nome:atual.nome, qtd:q, preco:preco});
+modalQtd.style.display="none";
+qtd.value=1;
+
+atualizarTotal();
 }
 
-function confirmar(){
-let qtd = parseInt(document.getElementById("qtd").value);
-let precoFinal = produtoAtual.preco;
-
-if(produtoAtual.atacado && qtd >= produtoAtual.min){
-precoFinal = produtoAtual.atacado;
+function atualizarTotal(){
+let total = 0;
+carrinho.forEach(i=>{
+total += i.qtd * i.preco;
+});
+document.getElementById("total").innerText = total.toFixed(2);
 }
 
-carrinho.push({
-nome: produtoAtual.nome,
-qtd: qtd,
-preco: precoFinal
+function finalizar(){
+let html="";
+let total=0;
+
+carrinho.forEach(i=>{
+let sub = i.qtd*i.preco;
+total += sub;
+html += `<div class="item">${i.nome} x${i.qtd} = R$ ${sub.toFixed(2)}</div>`;
 });
 
-document.getElementById("modalQtd").style.display = "none";
-document.getElementById("qtd").value = 1;
+html += `<hr>Total: R$ ${total.toFixed(2)}`;
+document.getElementById("resumo").innerHTML = html;
+modalFinal.style.display="block";
 }
 
 function enviar(){
-let texto = "Olá! Quero fazer um pedido:%0A";
-
-carrinho.forEach(p=>{
-texto += `- ${p.nome} x${p.qtd} (R$ ${p.preco})%0A`;
+let texto="Pedido:%0A";
+carrinho.forEach(i=>{
+texto+=`${i.nome} x${i.qtd}%0A`;
 });
+window.open("https://wa.me/5511954950044?text="+texto);
+}
 
-window.open("https://wa.me/5511954950044?text=" + texto);
+function imprimir(){
+window.print();
 }
 </script>
 
