@@ -19,11 +19,7 @@ background:#111827;
 color:#fff;
 }
 
-header p {
-font-size:13px;
-margin:0;
-opacity:0.7;
-}
+header p {margin:0;font-size:13px;opacity:0.7;}
 
 input {
 width:90%;
@@ -50,7 +46,19 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.botao-total {
+/* TOTAL DISCRETO */
+.total-box {
+margin:10px;
+padding:10px;
+background:#fff;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+font-size:16px;
+}
+
+/* BOTÃO */
+.botao-final {
 margin:10px;
 background:#111827;
 color:#fff;
@@ -61,6 +69,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* MODAL */
 .modal {
 position:fixed;
 top:0;left:0;
@@ -78,21 +87,13 @@ width:90%;
 border-radius:12px;
 }
 
-.produto {
-padding:10px;
-border-bottom:1px solid #ddd;
-cursor:pointer;
-}
+.produto {padding:10px;border-bottom:1px solid #ddd;}
 
 .qtd-box {
 display:flex;
 justify-content:center;
 gap:10px;
 margin:10px 0;
-}
-
-.qtd-box button {
-width:40px;
 }
 
 button {
@@ -144,8 +145,12 @@ font-size:12px;
 <div class="categoria" onclick="abrir('prep')">🧴 Preparador</div>
 </div>
 
-<div class="botao-total" onclick="finalizar()">
-💰 Ver Total / Fechar Pedido
+<div class="total-box">
+💰 Total atual: R$ <span id="total">0.00</span>
+</div>
+
+<div class="botao-final" onclick="finalizar()">
+📦 Fechar Pedido
 </div>
 
 <!-- MODAIS -->
@@ -181,7 +186,13 @@ font-size:12px;
 
 <div id="tabela"></div>
 
-<h4 id="total"></h4>
+<h4 id="totalFinal"></h4>
+
+<h4>Pagamento</h4>
+<button onclick="pix()">Pix / Espécie (-3%)</button>
+<button onclick="cartao()">Cartão 3x</button>
+
+<div id="pagamento"></div>
 
 <button onclick="enviar()">📲 WhatsApp</button>
 <button onclick="imprimir()">🧾 PDF</button>
@@ -194,7 +205,6 @@ font-size:12px;
 <footer>
 <p>🔒 Site seguro</p>
 <p>Desenvolvido por <a href="https://wa.me/5511954950044">ImpulsoWeb10</a></p>
-<p>© 2026</p>
 </footer>
 
 <script>
@@ -205,7 +215,7 @@ texturas:[{nome:"Grafiato",regras:[{min:1,preco:55.9}]}],
 prep:[{nome:"Selador",regras:[{min:1,preco:69.9}]}]
 };
 
-let carrinho=[], atual;
+let carrinho=[], atual, total=0;
 
 function abrir(cat){
 let html="<h3>Produtos</h3>";
@@ -236,6 +246,14 @@ melhor.innerText = regra.min>1 ? "Melhor preço aplicado!" : "";
 
 carrinho.push({nome:atual.nome,qtd:q,preco:regra.preco});
 modalQtd.style.display="none";
+
+calcTotal();
+}
+
+function calcTotal(){
+total=0;
+carrinho.forEach(i=>total+=i.qtd*i.preco);
+document.getElementById("total").innerText=total.toFixed(2);
 }
 
 function finalizar(){
@@ -244,21 +262,31 @@ let cliente=cliente.value;
 
 info.innerHTML=`Vendedor: ${vendedor}<br>Cliente: ${cliente}`;
 
-let html="<table><tr><th>Produto</th><th>Qtd</th><th>Valor</th></tr>";
-let total=0;
+let html="<table><tr><th>Produto</th><th>Qtd</th><th>Total</th></tr>";
+let t=0;
 
 carrinho.forEach(i=>{
 let sub=i.qtd*i.preco;
-total+=sub;
+t+=sub;
 html+=`<tr><td>${i.nome}</td><td>${i.qtd}</td><td>${sub.toFixed(2)}</td></tr>`;
 });
 
 html+="</table>";
 tabela.innerHTML=html;
 
-document.getElementById("total").innerText="Total: R$ "+total.toFixed(2);
+totalFinal.innerText="Total: R$ "+t.toFixed(2);
 
 modalFinal.style.display="flex";
+}
+
+function pix(){
+let v=total*0.97;
+pagamento.innerHTML=`Total com desconto: R$ ${v.toFixed(2)}`;
+}
+
+function cartao(){
+let p=(total/3).toFixed(2);
+pagamento.innerHTML=`3x de R$ ${p}`;
 }
 
 function enviar(){
