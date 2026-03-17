@@ -6,84 +6,20 @@
 
 <title>Tintas Qualy Quimy</title>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf"></script>
-
 <style>
-body {font-family: Arial; margin:0; background:#f4f6f9;}
-
-.header {
-    background:#0d47a1;
-    color:#fff;
-    text-align:center;
-    padding:15px;
-}
-
-.container {padding:15px;}
-
-.grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.btn {
-    background:#fff;
-    padding:15px;
-    border-radius:10px;
-    text-align:center;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.total {
-    margin-top:10px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-.carrinho {
-    background:#fff;
-    padding:10px;
-    border-radius:10px;
-    margin-top:10px;
-    max-height:200px;
-    overflow:auto;
-}
-
-.fechar {
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:green;
-    color:#fff;
-    padding:15px;
-    border-radius:50px;
-    cursor:pointer;
-}
-
-.modal {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    display:none;
-    background:rgba(0,0,0,0.5);
-    justify-content:center;
-    align-items:center;
-}
-
-.modal-content {
-    background:#fff;
-    padding:20px;
-    width:90%;
-    max-width:400px;
-    border-radius:10px;
-}
-
-input {width:100%;padding:10px;margin-bottom:10px;}
+body{font-family:Arial;margin:0;background:#f4f6f9;}
+.header{background:#0d47a1;color:#fff;text-align:center;padding:15px;}
+.container{padding:15px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn{background:#fff;padding:15px;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer;}
+.total{margin-top:10px;font-size:18px;font-weight:bold;}
+.carrinho{background:#fff;padding:10px;border-radius:10px;margin-top:10px;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;}
+.modal-content{background:#fff;padding:20px;width:90%;max-width:400px;border-radius:10px;}
+.fechar{position:fixed;bottom:20px;right:20px;background:green;color:#fff;padding:15px;border-radius:50px;cursor:pointer;}
+input{width:100%;padding:10px;margin-bottom:10px;}
 </style>
+
 </head>
 
 <body>
@@ -94,11 +30,6 @@ input {width:100%;padding:10px;margin-bottom:10px;}
 </div>
 
 <div class="container">
-
-<input type="text" id="vendedor" placeholder="Nome do vendedor">
-<input type="text" id="cliente" placeholder="Nome do cliente">
-
-<input type="file" onchange="lerExcel(event)">
 
 <div id="categorias" class="grid"></div>
 
@@ -116,157 +47,152 @@ input {width:100%;padding:10px;margin-bottom:10px;}
 
 <script>
 
-let dados = [];
+// BASE DE DADOS
+const dados = [
+{cat:"Qualy Color Econômica", prod:"Pote 1lt Branca", preco:8.90, atacado:[]},
+{cat:"Qualy Color Econômica", prod:"Galão 3,6lts Branca", preco:26.90, atacado:[{q:20,v:23.90}]},
+{cat:"Qualy Color Econômica", prod:"Balde 18L Branca", preco:76.90, atacado:[{q:20,v:71.90},{q:100,v:65.99}]},
+{cat:"Latex Uso Interno", prod:"Lata 18L Branca", preco:64.90, atacado:[{q:20,v:62.90}]},
+{cat:"Standard", prod:"Lata 18L Branca", preco:124.90, atacado:[{q:10,v:116.90}]},
+{cat:"Premium", prod:"Balde 16L Branca", preco:190.00, atacado:[]},
+{cat:"Piso Premium", prod:"Lata 18L Branca", preco:219.90, atacado:[]},
+{cat:"Massa Corrida PVA", prod:"Lata 28kg", preco:55.90, atacado:[{q:30,v:55.90}]},
+{cat:"Grafiato", prod:"Barrica 25kg", preco:43.90, atacado:[]},
+{cat:"Selador Acrílico", prod:"Galão 3.6L", preco:19.90, atacado:[]},
+{cat:"Impermeabilizante", prod:"Balde 16L", preco:149.90, atacado:[]},
+{cat:"Esmalte Base Água", prod:"Lata 18L", preco:320.00, atacado:[]}
+];
+
 let carrinho = [];
 let total = 0;
 
-// LER EXCEL
-function lerExcel(e){
-    let reader = new FileReader();
-    reader.onload = (evt)=>{
-        let data = new Uint8Array(evt.target.result);
-        let wb = XLSX.read(data,{type:'array'});
-        let sheet = wb.Sheets[wb.SheetNames[0]];
-        dados = XLSX.utils.sheet_to_json(sheet);
-        carregarCategorias();
-    };
-    reader.readAsArrayBuffer(e.target.files[0]);
-}
-
 // CATEGORIAS
 function carregarCategorias(){
-    let cats = [...new Set(dados.map(d=>d.Categoria))];
+    let cats = [...new Set(dados.map(d=>d.cat))];
     let html="";
-    cats.forEach(cat=>{
-        html += `<div class="btn" onclick="abrirProdutos('${cat}')">${cat}</div>`;
+    cats.forEach(c=>{
+        html += `<div class="btn" onclick="abrirProdutos('${c}')">${c}</div>`;
     });
     document.getElementById("categorias").innerHTML = html;
 }
 
 // PRODUTOS
 function abrirProdutos(cat){
-    let lista = dados.filter(d=>d.Categoria===cat);
+    let lista = dados.filter(d=>d.cat===cat);
     let html = `<h3>${cat}</h3>`;
 
     lista.forEach((p,i)=>{
-        html += `<div class="btn" onclick="abrirProduto(${dados.indexOf(p)})">${p.Produto}</div>`;
+        html += `<div class="btn" onclick="abrirProduto('${cat}',${i})">${p.prod}</div>`;
     });
 
     html += `<button onclick="fecharModal()">Voltar</button>`;
     abrirModal(html);
 }
 
-// PRODUTO DETALHE
-function abrirProduto(i){
-    let p = dados[i];
+// PRODUTO
+function abrirProduto(cat,i){
+    let p = dados.filter(d=>d.cat===cat)[i];
+
+    let regras = "";
+    p.atacado.forEach(a=>{
+        regras += `<p>${a.q}+ = R$ ${a.v}</p>`;
+    });
 
     let html = `
-    <h3>${p.Produto}</h3>
-    <p>${p.Descrição || ''}</p>
-    <p>Normal: R$ ${p.Preço}</p>
-    <p>Atacado: R$ ${p.Atacado}</p>
-    <p>Mínimo: ${p.Minimo}</p>
+    <h3>${p.prod}</h3>
+    <p>Preço: R$ ${p.preco}</p>
+    ${regras}
 
-    <input type="number" id="qtd" value="${p.Minimo}" min="${p.Minimo}">
+    <input type="number" id="qtd" value="1" min="1">
 
-    <button onclick="addProduto(${i})">Adicionar</button>
+    <button onclick="addProduto('${cat}',${i})">Adicionar</button>
     <button onclick="fecharModal()">Voltar</button>
     `;
 
     abrirModal(html);
 }
 
-// ADD PRODUTO
-function addProduto(i){
-    let p = dados[i];
+// CALCULO INTELIGENTE
+function calcularPreco(p, qtd){
+    let valor = p.preco;
+
+    p.atacado.forEach(a=>{
+        if(qtd >= a.q){
+            valor = a.v;
+        }
+    });
+
+    return valor;
+}
+
+// ADD
+function addProduto(cat,i){
+    let p = dados.filter(d=>d.cat===cat)[i];
     let qtd = parseInt(document.getElementById("qtd").value);
 
-    if(qtd < p.Minimo){
-        alert("Mínimo não atingido!");
-        return;
-    }
+    let precoFinal = calcularPreco(p,qtd);
 
-    let preco = qtd >= p.Minimo ? p.Atacado : p.Preço;
-
-    carrinho.push({nome:p.Produto, qtd, preco});
+    carrinho.push({nome:p.prod,qtd,preco:precoFinal});
 
     atualizarCarrinho();
     fecharModal();
 }
 
-// ATUALIZAR CARRINHO
+// CARRINHO
 function atualizarCarrinho(){
     let html="";
-    total = 0;
+    total=0;
 
-    carrinho.forEach(item=>{
-        let sub = item.qtd * item.preco;
-        total += sub;
-        html += `<div>${item.nome} - ${item.qtd} = R$ ${sub.toFixed(2)}</div>`;
+    carrinho.forEach(i=>{
+        let sub = i.qtd*i.preco;
+        total+=sub;
+        html += `<div>${i.nome} x${i.qtd} = R$ ${sub.toFixed(2)}</div>`;
     });
 
     document.getElementById("carrinho").innerHTML = html;
     document.getElementById("total").innerText = total.toFixed(2);
 }
 
-// RESUMO + PAGAMENTO
+// PAGAMENTO
 function abrirResumo(){
-    let html = `<h3>Pagamento</h3>
-
-    <button onclick="pix()">PIX / Dinheiro (-3%)</button>
-    <button onclick="cartao()">Cartão</button>
+    let html = `
+    <h3>Pagamento</h3>
+    <button onclick="pix()">PIX (-3%)</button>
+    <button onclick="cartao()">Cartão 3x</button>
     <button onclick="cheque()">Cheque</button>
-
-    <button onclick="fecharModal()">Voltar</button>
     `;
 
     abrirModal(html);
 }
 
 function pix(){
-    let totalPix = total * 0.97;
-    finalizar(totalPix, "PIX");
+    finalizar(total*0.97,"PIX");
 }
 
 function cartao(){
-    let parcela = (total/3).toFixed(2);
-    finalizar(total, "Cartão 3x de "+parcela);
+    finalizar(total,"Cartão");
 }
 
 function cheque(){
-    finalizar(total, "Cheque");
+    finalizar(total,"Cheque");
 }
 
-// FINALIZAR
-function finalizar(valor, tipo){
-    let msg = `Pedido:\n`;
+// FINAL
+function finalizar(valor,tipo){
+    let msg="Pedido:\n";
 
     carrinho.forEach(i=>{
-        msg += `${i.nome} x${i.qtd}\n`;
+        msg+=`${i.nome} x${i.qtd}\n`;
     });
 
-    msg += `Total: R$ ${valor.toFixed(2)}\nPagamento: ${tipo}`;
+    msg+=`Total: R$ ${valor.toFixed(2)}\n${tipo}`;
 
-    let html = `
+    let html=`
     <h3>Finalizado</h3>
-    <button onclick="gerarPDF('${msg}')">Gerar PDF</button>
-    <button onclick="enviarWhats('${msg}')">WhatsApp</button>
+    <button onclick="window.open('https://wa.me/?text='+encodeURIComponent('${msg}'))">WhatsApp</button>
     `;
 
     abrirModal(html);
-}
-
-// PDF
-function gerarPDF(msg){
-    let doc = new jspdf.jsPDF();
-    doc.text(msg,10,10);
-    doc.save("pedido.pdf");
-}
-
-// WHATS
-function enviarWhats(msg){
-    let url = "https://wa.me/?text=" + encodeURIComponent(msg);
-    window.open(url);
 }
 
 // MODAL
@@ -278,6 +204,8 @@ function abrirModal(html){
 function fecharModal(){
     document.getElementById("modal").style.display="none";
 }
+
+carregarCategorias();
 
 </script>
 
