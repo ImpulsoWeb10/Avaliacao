@@ -9,53 +9,78 @@
 body {
     font-family: Arial;
     margin: 0;
-    background: #f5f5f5;
+    background: #f3f4f6;
 }
 
 header {
-    background: #0f172a;
+    background: #111827;
     color: white;
     padding: 15px;
     text-align: center;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+}
+
 .categoria {
-    margin: 15px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.card {
     background: white;
-    margin: 10px;
-    padding: 15px;
+    padding: 20px;
+    text-align: center;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.preco {
-    color: green;
-    font-weight: bold;
+.modal {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    display:none;
+}
+
+.modal-content {
+    background: white;
+    margin: 50px auto;
+    padding: 20px;
+    width: 90%;
+    border-radius: 12px;
+}
+
+.produto {
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    cursor:pointer;
+}
+
+.qtd {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
 }
 
 button {
-    background: #25D366;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    margin-top: 10px;
+    background:#25D366;
+    border:none;
+    padding:10px;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
 }
 
 .carrinho {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: #0f172a;
+    background: #111827;
     color: white;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
 }
 </style>
@@ -65,74 +90,120 @@ button {
 
 <header>
 <h2>Tintas Qualy Quimy</h2>
-<p>Peça pelo WhatsApp e receba em casa 🚚</p>
+<p>Pedido rápido pelo WhatsApp 🚚</p>
 </header>
 
-<div class="categoria">🎨 Tintas</div>
-
-<div class="card">
-Tinta Standard 18L<br>
-<span class="preco">R$ 124,90</span><br>
-Atacado: R$ 116,90 (10+)
-<button onclick="add('Tinta Standard 18L')">Adicionar</button>
+<div class="grid">
+<div class="categoria" onclick="abrirCategoria('tintas')">🎨 Tintas</div>
+<div class="categoria" onclick="abrirCategoria('massas')">🧱 Massas</div>
+<div class="categoria" onclick="abrirCategoria('texturas')">🪵 Texturas</div>
+<div class="categoria" onclick="abrirCategoria('prep')">🧴 Preparador</div>
 </div>
 
-<div class="card">
-Tinta Premium 18L<br>
-<span class="preco">R$ 219,90</span>
-<button onclick="add('Tinta Premium 18L')">Adicionar</button>
+<!-- MODAL PRODUTOS -->
+<div class="modal" id="modalProdutos">
+<div class="modal-content" id="listaProdutos"></div>
 </div>
 
-<div class="categoria">🧱 Massas</div>
+<!-- MODAL QUANTIDADE -->
+<div class="modal" id="modalQtd">
+<div class="modal-content">
+<h3 id="nomeProduto"></h3>
+<p id="precoProduto"></p>
 
-<div class="card">
-Massa Corrida 25kg<br>
-<span class="preco">R$ 33,90</span>
-<button onclick="add('Massa Corrida 25kg')">Adicionar</button>
+<div class="qtd">
+<button onclick="menos()">-</button>
+<input type="number" id="qtd" value="1" style="width:60px;text-align:center;">
+<button onclick="mais()">+</button>
 </div>
 
-<div class="card">
-Massa Acrílica 25kg<br>
-<span class="preco">R$ 43,90</span>
-<button onclick="add('Massa Acrílica 25kg')">Adicionar</button>
+<button onclick="confirmar()">Adicionar ao pedido</button>
 </div>
-
-<div class="categoria">🪵 Texturas</div>
-
-<div class="card">
-Grafiato 25kg<br>
-<span class="preco">R$ 55,90</span>
-<button onclick="add('Grafiato 25kg')">Adicionar</button>
-</div>
-
-<div class="categoria">🧴 Preparador</div>
-
-<div class="card">
-Selador Acrílico 18L<br>
-<span class="preco">R$ 69,90</span>
-<button onclick="add('Selador Acrílico 18L')">Adicionar</button>
 </div>
 
 <div class="carrinho" onclick="enviar()">
-🛒 Enviar pedido no WhatsApp
+🛒 Enviar Pedido
 </div>
 
 <script>
-let carrinho = [];
+let produtos = {
+tintas: [
+{nome:"Tinta Standard 18L", preco:124.90, atacado:116.90, min:10},
+{nome:"Tinta Premium 18L", preco:219.90}
+],
+massas: [
+{nome:"Massa Corrida 25kg", preco:33.90, atacado:31.90, min:20},
+{nome:"Massa Acrílica 25kg", preco:43.90}
+],
+texturas: [
+{nome:"Grafiato 25kg", preco:55.90}
+],
+prep: [
+{nome:"Selador Acrílico 18L", preco:69.90}
+]
+};
 
-function add(produto){
-    carrinho.push(produto);
-    alert(produto + " adicionado!");
+let carrinho = [];
+let produtoAtual = null;
+
+function abrirCategoria(cat){
+let html = "<h3>Escolha o produto</h3>";
+
+produtos[cat].forEach(p=>{
+html += `<div class="produto" onclick="selecionarProduto('${p.nome}', ${p.preco}, ${p.atacado || 0}, ${p.min || 0})">
+${p.nome}<br>R$ ${p.preco}
+</div>`;
+});
+
+document.getElementById("listaProdutos").innerHTML = html;
+document.getElementById("modalProdutos").style.display = "block";
+}
+
+function selecionarProduto(nome, preco, atacado, min){
+produtoAtual = {nome, preco, atacado, min};
+document.getElementById("modalProdutos").style.display = "none";
+document.getElementById("modalQtd").style.display = "block";
+
+document.getElementById("nomeProduto").innerText = nome;
+document.getElementById("precoProduto").innerText = "R$ " + preco;
+}
+
+function mais(){
+let q = document.getElementById("qtd");
+q.value = parseInt(q.value) + 1;
+}
+
+function menos(){
+let q = document.getElementById("qtd");
+if(q.value > 1) q.value--;
+}
+
+function confirmar(){
+let qtd = parseInt(document.getElementById("qtd").value);
+let precoFinal = produtoAtual.preco;
+
+if(produtoAtual.atacado && qtd >= produtoAtual.min){
+precoFinal = produtoAtual.atacado;
+}
+
+carrinho.push({
+nome: produtoAtual.nome,
+qtd: qtd,
+preco: precoFinal
+});
+
+document.getElementById("modalQtd").style.display = "none";
+document.getElementById("qtd").value = 1;
 }
 
 function enviar(){
-    let texto = "Olá! Quero fazer um pedido:%0A";
-    
-    carrinho.forEach(p => {
-        texto += "- " + p + "%0A";
-    });
+let texto = "Olá! Quero fazer um pedido:%0A";
 
-    window.open("https://wa.me/5511954950044?text=" + texto);
+carrinho.forEach(p=>{
+texto += `- ${p.nome} x${p.qtd} (R$ ${p.preco})%0A`;
+});
+
+window.open("https://wa.me/5511954950044?text=" + texto);
 }
 </script>
 
