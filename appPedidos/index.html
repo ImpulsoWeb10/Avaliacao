@@ -3,242 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tintas Qualy Quimy - Pedidos</title>
+    <title>Tintas Qualy Quimy - Sistema de Pedidos</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .modal-enter-active, .modal-leave-active { transition: opacity 0.3s ease; }
-        .modal-enter-from, .modal-leave-to { opacity: 0; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-    </style>
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-100">
 
-<div id="app" class="max-w-md mx-auto min-h-screen pb-24 shadow-2xl bg-white relative">
+<div id="app" class="max-w-md mx-auto min-h-screen pb-24 bg-white shadow-xl relative">
     
-    <header class="bg-blue-800 text-white p-6 rounded-b-3xl shadow-lg">
-        <h1 class="text-2xl font-bold">Tintas Qualy Quimy</h1>
-        <p class="text-blue-200 text-sm">Qualidade em Tintas e Complementos</p>
+    <div v-if="loading" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-800"></div>
+        <p class="mt-4 font-bold text-blue-800">Sincronizando com o Excel...</p>
+    </div>
+
+    <header class="bg-blue-900 text-white p-6 rounded-b-3xl">
+        <h1 class="text-2xl font-bold italic">QUALY QUIMY</h1>
+        <p class="text-xs opacity-80">Qualidade em Tintas e Complementos</p>
         
-        <div class="mt-4 space-y-2 text-black">
-            <input v-model="vendedor" type="text" placeholder="Nome do Vendedor" class="w-full p-2 rounded-lg border-none focus:ring-2 focus:ring-yellow-400 text-sm">
-            <input v-model="cliente" type="text" placeholder="Nome do Cliente" class="w-full p-2 rounded-lg border-none focus:ring-2 focus:ring-yellow-400 text-sm">
-            <div class="flex gap-2">
-                <input v-model="dataPedido" type="date" class="flex-1 p-2 rounded-lg border-none text-sm">
-                <button @click="showCalc = !showCalc" class="bg-yellow-500 p-2 rounded-lg text-white w-12"><i class="fas fa-calculator"></i></button>
-            </div>
+        <div class="mt-4 space-y-2">
+            <input v-model="vendedor" placeholder="Vendedor" class="w-full p-3 rounded-xl text-black text-sm outline-none">
+            <input v-model="cliente" placeholder="Nome do Cliente/Loja" class="w-full p-3 rounded-xl text-black text-sm outline-none">
         </div>
     </header>
 
-    <main class="p-4">
-        <h3 class="font-bold text-gray-700 mb-4 px-2">Categorias</h3>
-        <div class="grid grid-cols-2 gap-4">
-            <button v-for="cat in categorias" :key="cat.nome" 
-                    @click="abrirCategoria(cat)"
-                    class="bg-white border-2 border-gray-100 p-6 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-blue-500 transition-all active:scale-95 shadow-sm">
-                <i :class="cat.icon" class="text-3xl text-blue-700"></i>
-                <span class="font-bold text-gray-600 text-sm">{{ cat.nome }}</span>
+    <div class="p-4 grid grid-cols-2 gap-3">
+        <button v-for="cat in categoriasUnicas" @click="abrirCategoria(cat)" 
+                class="bg-blue-50 border border-blue-100 p-5 rounded-2xl flex flex-col items-center hover:bg-blue-100 transition shadow-sm">
+            <i class="fas fa-layer-group text-blue-700 mb-2"></i>
+            <span class="font-bold text-gray-700 text-xs uppercase">{{ cat }}</span>
+        </button>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t p-4 flex items-center justify-between shadow-2xl">
+        <div>
+            <p class="text-xs text-gray-400">Total Atual</p>
+            <p class="text-xl font-black text-blue-900">R$ {{ totalPedido.toFixed(2) }}</p>
+        </div>
+        <button @click="abrirResumo" class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2">
+            FECHAR <i class="fas fa-check-circle"></i>
+        </button>
+    </div>
+
+    <div v-if="modal == 'produtos'" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-end">
+        <div class="bg-white w-full rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="font-bold text-blue-800 uppercase">{{ categoriaAtiva }}</h3>
+                <button @click="modal = null" class="text-2xl">&times;</button>
+            </div>
+            <div v-for="p in produtosFiltrados" @click="selecionarProduto(p)" class="p-4 border-b hover:bg-gray-50 flex justify-between items-center">
+                <div>
+                    <p class="font-bold text-sm">{{ p.Produto }}</p>
+                    <p class="text-xs text-gray-400">{{ p.Subcategoria }}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm font-bold text-blue-700">R$ {{ parseFloat(p.Preco_Unit).toFixed(2) }}</p>
+                    <p class="text-[10px] text-orange-600">Atacado: R$ {{ parseFloat(p.Preco_Atacado).toFixed(2) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="modal == 'detalhe'" class="fixed inset-0 z-[60] bg-black bg-opacity-70 flex items-center justify-center p-6">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-xs text-center">
+            <h4 class="font-bold text-lg mb-2">{{ prodSel.Produto }}</h4>
+            <p class="text-xs text-gray-500 mb-6">{{ prodSel.Descricao }}</p>
+
+            <div class="flex items-center justify-center gap-6 mb-6">
+                <button @click="qtd > 1 ? qtd-- : null" class="w-10 h-10 rounded-full bg-gray-200 font-bold">-</button>
+                <span class="text-3xl font-bold">{{ qtd }}</span>
+                <button @click="qtd++" class="w-10 h-10 rounded-full bg-blue-800 text-white font-bold">+</button>
+            </div>
+
+            <button @click="confirmarItem" class="w-full bg-blue-800 text-white py-4 rounded-xl font-bold">
+                ADICIONAR R$ {{ (qtd >= prodSel.Qtd_Min_Atacado ? prodSel.Preco_Atacado * qtd : prodSel.Preco_Unit * qtd).toFixed(2) }}
             </button>
+            <button @click="modal = 'produtos'" class="mt-2 text-gray-400 text-sm">Cancelar</button>
+        </div>
+    </div>
+
+    <div v-if="modal == 'resumo'" class="fixed inset-0 z-[70] bg-white p-6 overflow-y-auto">
+        <div class="flex items-center gap-4 mb-6">
+            <button @click="modal = null" class="text-blue-800"><i class="fas fa-arrow-left text-xl"></i></button>
+            <h2 class="text-xl font-bold">Finalizar Pedido</h2>
         </div>
 
-        <div class="mt-8 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-800">
-            <p class="text-xs text-blue-600 uppercase font-bold tracking-wider">Subtotal do Pedido</p>
-            <p class="text-3xl font-black text-blue-900">R$ {{ totalPedido.toFixed(2) }}</p>
-        </div>
-    </main>
-
-    <button @click="abrirResumo" class="fixed bottom-6 right-6 left-6 md:max-w-xs md:mx-auto bg-green-600 text-white p-4 rounded-full shadow-2xl font-bold flex justify-between items-center px-8 active:scale-95 transition-transform">
-        <span>🛒 {{ carrinho.length }} Itens</span>
-        <span>FECHAR PEDIDO <i class="fas fa-chevron-right ml-2"></i></span>
-    </button>
-
-    <transition name="modal">
-        <div v-if="modalAberto == 'produtos'" class="fixed inset-0 z-50 glass flex items-end sm:items-center justify-center">
-            <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl shadow-2xl p-6 max-h-[85vh] overflow-y-auto">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-bold text-blue-800">{{ categoriaSelecionada.nome }}</h2>
-                    <button @click="modalAberto = null" class="text-gray-400 text-2xl">&times;</button>
-                </div>
-                <div class="space-y-3">
-                    <div v-for="prod in produtosFiltrados" @click="selecionarProduto(prod)" 
-                         class="p-4 border rounded-xl hover:bg-blue-50 cursor-pointer flex justify-between items-center">
-                        <div>
-                            <p class="font-bold text-gray-800">{{ prod.nome }}</p>
-                            <p class="text-xs text-gray-500">{{ prod.sub }}</p>
-                        </div>
-                        <i class="fas fa-plus text-blue-500"></i>
-                    </div>
-                </div>
+        <div class="space-y-3 mb-6">
+            <div v-for="(item, i) in carrinho" class="flex justify-between text-sm border-b pb-2">
+                <span>{{item.qtd}}x {{item.nome}}</span>
+                <span class="font-bold text-blue-900">R$ {{item.subtotal.toFixed(2)}}</span>
             </div>
         </div>
-    </transition>
 
-    <transition name="modal">
-        <div v-if="modalAberto == 'detalhe'" class="fixed inset-0 z-[60] glass flex items-center justify-center p-4">
-            <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6">
-                <h2 class="text-lg font-bold">{{ produtoSelecionado.nome }}</h2>
-                <p class="text-sm text-gray-500 mb-4">{{ produtoSelecionado.desc }}</p>
-                
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="p-3 bg-gray-50 rounded-lg text-center">
-                        <p class="text-xs text-gray-400">Normal</p>
-                        <p class="font-bold">R$ {{ produtoSelecionado.preco.toFixed(2) }}</p>
-                    </div>
-                    <div class="p-3 bg-yellow-50 rounded-lg text-center border border-yellow-200">
-                        <p class="text-xs text-yellow-600 font-bold">Atacado (+{{produtoSelecionado.minAtacado}} un)</p>
-                        <p class="font-bold text-yellow-700">R$ {{ produtoSelecionado.precoAtacado.toFixed(2) }}</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-center gap-6 mb-6">
-                    <button @click="qtd > 1 ? qtd-- : null" class="w-12 h-12 rounded-full bg-gray-100 text-xl font-bold">-</button>
-                    <span class="text-3xl font-bold">{{ qtd }}</span>
-                    <button @click="qtd++" class="w-12 h-12 rounded-full bg-blue-800 text-white text-xl font-bold">+</button>
-                </div>
-
-                <div v-if="qtd < produtoSelecionado.minAtacado && produtoSelecionado.minAtacado > 0" class="text-center mb-4">
-                    <p class="text-xs text-orange-500 italic">Adicione mais {{produtoSelecionado.minAtacado - qtd}} para preço de atacado</p>
-                </div>
-
-                <div class="flex gap-2">
-                    <button @click="modalAberto = 'produtos'" class="flex-1 py-3 font-bold text-gray-500">Voltar</button>
-                    <button @click="adicionarAoCarrinho" class="flex-[2] py-3 bg-blue-800 text-white rounded-xl font-bold shadow-lg">ADICIONAR R$ {{ subtotalItem.toFixed(2) }}</button>
-                </div>
+        <div class="bg-gray-100 p-4 rounded-2xl mb-6">
+            <p class="text-xs font-bold text-gray-500 uppercase">Selecione o Pagamento</p>
+            <div class="grid grid-cols-2 gap-2 mt-2">
+                <button @click="pagamento = 'pix'" :class="pagamento == 'pix' ? 'bg-blue-800 text-white' : 'bg-white text-gray-700'" class="p-3 rounded-lg border font-bold text-xs uppercase">PIX (-3%)</button>
+                <button @click="pagamento = 'cartao'" :class="pagamento == 'cartao' ? 'bg-blue-800 text-white' : 'bg-white text-gray-700'" class="p-3 rounded-lg border font-bold text-xs uppercase">Cartão</button>
             </div>
         </div>
-    </transition>
 
-    <transition name="modal">
-        <div v-if="modalAberto == 'resumo'" class="fixed inset-0 z-50 bg-white overflow-y-auto">
-            <div class="p-6">
-                <button @click="modalAberto = null" class="mb-4 text-blue-800 font-bold"><i class="fas fa-arrow-left"></i> Voltar</button>
-                <h2 class="text-2xl font-bold mb-6">Resumo do Pedido</h2>
-                
-                <div class="space-y-4 mb-8">
-                    <div v-for="(item, idx) in carrinho" :key="idx" class="flex justify-between border-b pb-2">
-                        <div>
-                            <p class="font-bold text-sm">{{ item.qtd }}x {{ item.nome }}</p>
-                            <p class="text-xs text-gray-400">R$ {{ item.precoUnit.toFixed(2) }} un.</p>
-                        </div>
-                        <p class="font-bold">R$ {{ (item.qtd * item.precoUnit).toFixed(2) }}</p>
-                    </div>
-                </div>
-
-                <h3 class="font-bold mb-4">Forma de Pagamento</h3>
-                <div class="space-y-3 mb-8" v-if="!pagamento">
-                    <button @click="selecionarPagamento('pix')" class="w-full p-4 border-2 rounded-xl text-left flex justify-between">
-                        <span><i class="fas fa-qrcode mr-2 text-green-500"></i> PIX / Dinheiro</span>
-                        <b class="text-green-600">-3% OFF</b>
-                    </button>
-                    <button @click="selecionarPagamento('cartao')" class="w-full p-4 border-2 rounded-xl text-left flex justify-between">
-                        <span><i class="fas fa-credit-card mr-2 text-blue-500"></i> Cartão de Crédito</span>
-                        <span class="text-gray-400 text-sm">Até 3x</span>
-                    </button>
-                </div>
-
-                <div v-else class="p-4 bg-blue-50 rounded-xl relative">
-                    <button @click="pagamento = null" class="absolute top-2 right-2 text-xs text-blue-800 underline">Mudar</button>
-                    <p class="font-bold text-blue-900 uppercase">Selecionado: {{ pagamento.toUpperCase() }}</p>
-                    <p class="text-2xl font-black mt-2">Total: R$ {{ totalFinal.toFixed(2) }}</p>
-                    <p v-if="pagamento == 'cartao'" class="text-sm">3 parcelas de R$ {{ (totalFinal/3).toFixed(2) }}</p>
-                </div>
-
-                <div class="mt-8 space-y-3" v-if="pagamento">
-                    <button @click="finalizar('pdf')" class="w-full py-4 bg-gray-800 text-white rounded-xl font-bold"><i class="fas fa-file-pdf mr-2"></i> Gerar PDF</button>
-                    <button @click="finalizar('whats')" class="w-full py-4 bg-green-600 text-white rounded-xl font-bold"><i class="fab fa-whatsapp mr-2"></i> Enviar via WhatsApp</button>
-                </div>
-            </div>
-        </div>
-    </transition>
+        <button @click="enviarWhatsApp" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg flex items-center justify-center gap-3">
+            <i class="fab fa-whatsapp text-2xl"></i> ENVIAR PEDIDO AGORA
+        </button>
+    </div>
 
 </div>
 
 <script>
-    const { createApp } = Vue
-
-    createApp({
-        data() {
-            return {
-                vendedor: '',
-                cliente: '',
-                dataPedido: new Date().toISOString().substr(0, 10),
-                modalAberto: null,
-                categoriaSelecionada: {},
-                produtoSelecionado: {},
-                qtd: 1,
-                carrinho: [],
-                pagamento: null,
-                categorias: [
-                    { nome: 'Tintas', icon: 'fas fa-paint-roller' },
-                    { nome: 'Textura', icon: 'fas fa-brush' },
-                    { nome: 'Massas', icon: 'fas fa-fill-drip' },
-                    { nome: 'Acabamento', icon: 'fas fa-sparkles' },
-                    { nome: 'Complementos', icon: 'fas fa-tools' }
-                ],
-                // Simulando dados que viriam do Excel
-                bancoProdutos: [
-                    { cat: 'Tintas', sub: 'Acrílica', nome: 'Látex Premium 18L', desc: 'Interior e Exterior', preco: 280.00, precoAtacado: 250.00, minAtacado: 5 },
-                    { cat: 'Tintas', sub: 'Esmalte', nome: 'Esmalte Sintético 3.6L', desc: 'Para Madeiras e Metais', preco: 85.00, precoAtacado: 75.00, minAtacado: 10 },
-                    { cat: 'Massas', sub: 'Corrida', nome: 'Massa Corrida 20kg', desc: 'Fácil Lixamento', preco: 65.00, precoAtacado: 55.00, minAtacado: 10 },
-                    { cat: 'Textura', sub: 'Rústica', nome: 'Grafiato 25kg', desc: 'Efeito Riscado', preco: 120.00, precoAtacado: 105.00, minAtacado: 20 }
-                ]
-            }
-        },
-        computed: {
-            produtosFiltrados() {
-                return this.bancoProdutos.filter(p => p.cat === this.categoriaSelecionada.nome);
-            },
-            subtotalItem() {
-                if (!this.produtoSelecionado.preco) return 0;
-                let p = (this.qtd >= this.produtoSelecionado.minAtacado) ? this.produtoSelecionado.precoAtacado : this.produtoSelecionado.preco;
-                return p * this.qtd;
-            },
-            totalPedido() {
-                return this.carrinho.reduce((acc, item) => acc + (item.qtd * item.precoUnit), 0);
-            },
-            totalFinal() {
-                let t = this.totalPedido;
-                if (this.pagamento === 'pix') t *= 0.97;
-                return t;
-            }
-        },
-        methods: {
-            abrirCategoria(cat) {
-                this.categoriaSelecionada = cat;
-                this.modalAberto = 'produtos';
-            },
-            selecionarProduto(prod) {
-                this.produtoSelecionado = prod;
-                this.qtd = 1;
-                this.modalAberto = 'detalhe';
-            },
-            adicionarAoCarrinho() {
-                let precoFinal = (this.qtd >= this.produtoSelecionado.minAtacado) ? this.produtoSelecionado.precoAtacado : this.produtoSelecionado.preco;
-                this.carrinho.push({
-                    nome: this.produtoSelecionado.nome,
-                    qtd: this.qtd,
-                    precoUnit: precoFinal
-                });
-                this.modalAberto = null;
-            },
-            abrirResumo() {
-                if (this.carrinho.length === 0) return alert("Adicione produtos primeiro!");
-                this.modalAberto = 'resumo';
-            },
-            selecionarPagamento(tipo) {
-                this.pagamento = tipo;
-            },
-            finalizar(tipo) {
-                const msg = `Pedido: ${this.cliente}\nTotal: R$ ${this.totalFinal.toFixed(2)}`;
-                if (tipo === 'whats') {
-                    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
-                } else {
-                    alert("Gerando PDF... (Função de integração)");
-                }
-            }
+const { createApp } = Vue;
+createApp({
+    data() {
+        return {
+            loading: true,
+            modal: null,
+            vendedor: '',
+            cliente: '',
+            categoriaAtiva: '',
+            prodSel: {},
+            qtd: 1,
+            carrinho: [],
+            pagamento: 'cartao',
+            produtos: [], // VAI VIR DO EXCEL
+            // ⚠️ LINK DO GOOGLE SHEETS VIA API (USE SHEETDB.IO OU GOOGLE APPS SCRIPT)
+            api_url: 'https://sheetdb.io/api/v1/SUA_CHAVE_AQUI' 
         }
-    }).mount('#app')
+    },
+    computed: {
+        categoriasUnicas() {
+            return [...new Set(this.produtos.map(p => p.Categoria))];
+        },
+        produtosFiltrados() {
+            return this.produtos.filter(p => p.Categoria === this.categoriaAtiva);
+        },
+        totalPedido() {
+            let total = this.carrinho.reduce((acc, item) => acc + item.subtotal, 0);
+            return this.pagamento === 'pix' ? total * 0.97 : total;
+        }
+    },
+    methods: {
+        async fetchProdutos() {
+            try {
+                // Se você não tiver API ainda, o código usa dados locais para você testar agora
+                const response = await fetch(this.api_url);
+                const data = await response.json();
+                this.produtos = data;
+                this.loading = false;
+            } catch (e) {
+                console.error("Erro ao carregar Excel, usando modo offline.");
+                this.produtos = [
+                    { Categoria: 'TINTAS', Subcategoria: 'Acrílica', Produto: 'Látex Premium 18L', Descricao: 'Fosco', Preco_Unit: 350, Preco_Atacado: 310, Qtd_Min_Atacado: 5 },
+                    { Categoria: 'TINTAS', Subcategoria: 'Esmalte', Produto: 'Esmalte Brilhante 3.6L', Descricao: 'Metais', Preco_Unit: 95, Preco_Atacado: 80, Qtd_Min_Atacado: 10 },
+                    { Categoria: 'MASSAS', Subcategoria: 'PVA', Produto: 'Massa Corrida 20kg', Descricao: 'Liso', Preco_Unit: 80, Preco_Atacado: 65, Qtd_Min_Atacado: 5 }
+                ];
+                this.loading = false;
+            }
+        },
+        abrirCategoria(cat) { this.categoriaAtiva = cat; this.modal = 'produtos'; },
+        selecionarProduto(p) { this.prodSel = p; this.qtd = 1; this.modal = 'detalhe'; },
+        confirmarItem() {
+            const preco = (this.qtd >= this.prodSel.Qtd_Min_Atacado) ? this.prodSel.Preco_Atacado : this.prodSel.Preco_Unit;
+            this.carrinho.push({ nome: this.prodSel.Produto, qtd: this.qtd, subtotal: preco * this.qtd });
+            this.modal = null;
+        },
+        abrirResumo() { this.modal = 'resumo'; },
+        enviarWhatsApp() {
+            let texto = `*PEDIDO: TINTAS QUALY QUIMY*\n\n`;
+            texto += `*Vendedor:* ${this.vendedor}\n*Cliente:* ${this.cliente}\n`;
+            texto += `--------------------------\n`;
+            this.carrinho.forEach(i => { texto += `• ${i.qtd}x ${i.nome} = R$ ${i.subtotal.toFixed(2)}\n`; });
+            texto += `--------------------------\n`;
+            texto += `*PAGAMENTO:* ${this.pagamento.toUpperCase()}\n`;
+            texto += `*TOTAL FINAL: R$ ${this.totalPedido.toFixed(2)}*`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`);
+        }
+    },
+    mounted() { this.fetchProdutos(); }
+}).mount('#app')
 </script>
 </body>
 </html>
