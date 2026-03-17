@@ -1,213 +1,199 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Tintas Qualy Quimy</title>
-
-<style>
-body{font-family:Arial;margin:0;background:#f4f6f9;}
-.header{background:#0d47a1;color:#fff;text-align:center;padding:15px;}
-.container{padding:15px;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.btn{background:#fff;padding:15px;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer;}
-.total{margin-top:10px;font-size:18px;font-weight:bold;}
-.carrinho{background:#fff;padding:10px;border-radius:10px;margin-top:10px;}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;display:none;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;}
-.modal-content{background:#fff;padding:20px;width:90%;max-width:400px;border-radius:10px;}
-.fechar{position:fixed;bottom:20px;right:20px;background:green;color:#fff;padding:15px;border-radius:50px;cursor:pointer;}
-input{width:100%;padding:10px;margin-bottom:10px;}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qualy Quimy - App Oficial</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        .sidebar-blue { background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%); }
+        .card-menu { transition: all 0.2s ease; border: 1px solid #f1f5f9; cursor: pointer; }
+        .card-menu:active { transform: scale(0.96); background-color: #f8fafc; }
+        .bottom-sheet { animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    </style>
 </head>
-
 <body>
 
-<div class="header">
-<h2>Tintas Qualy Quimy</h2>
-<p>Qualidade em Tintas e Complementos</p>
-</div>
+<div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col bg-white shadow-2xl">
+    
+    <div v-if="tela === 'home'" class="flex flex-col flex-1">
+        <header class="sidebar-blue text-white p-8 rounded-b-[3rem] shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-extrabold italic uppercase">Qualy Quimy</h1>
+                    <p class="text-blue-200 text-xs font-bold">Painel de Vendas</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-2xl border border-white/20"><i class="fas fa-paint-roller text-xl"></i></div>
+            </div>
+            <div class="space-y-3">
+                <input v-model="vendedor" placeholder="Nome do Vendedor" class="w-full bg-white/10 border border-white/20 p-3.5 rounded-2xl text-sm placeholder:text-blue-100 text-white outline-none focus:bg-white focus:text-gray-900 transition-all">
+                <input v-model="cliente" placeholder="Nome do Cliente" class="w-full bg-white/10 border border-white/20 p-3.5 rounded-2xl text-sm placeholder:text-blue-100 text-white outline-none focus:bg-white focus:text-gray-900 transition-all">
+            </div>
+        </header>
 
-<div class="container">
+        <main class="p-6 flex-1">
+            <h2 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-th-large text-blue-600"></i> Selecione a Categoria
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div v-for="cat in categoriasSetup" :key="cat.nome" @click="abrirCategoria(cat.nome)"
+                     class="card-menu bg-white p-6 rounded-[2.5rem] shadow-sm flex flex-col items-center justify-center text-center">
+                    <div :class="cat.bg" class="w-14 h-14 rounded-2xl flex items-center justify-center mb-3">
+                        <i :class="[cat.icon, cat.color]" class="text-2xl"></i>
+                    </div>
+                    <span class="font-bold text-gray-700 text-[10px] uppercase tracking-widest">{{ cat.nome }}</span>
+                </div>
+            </div>
 
-<div id="categorias" class="grid"></div>
+            <div v-if="carrinho.length > 0" class="mt-8 bg-slate-900 p-6 rounded-[2.5rem] text-white flex justify-between items-center shadow-lg">
+                <div>
+                    <p class="text-slate-400 text-[10px] uppercase font-bold">Subtotal</p>
+                    <p class="text-2xl font-black italic">R$ {{ totalPedido.toFixed(2) }}</p>
+                </div>
+                <button @click="tela = 'resumo'" class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
 
-<div class="carrinho" id="carrinho"></div>
+    <div v-if="tela === 'resumo'" class="flex flex-col flex-1 p-6 bottom-sheet">
+        <div class="flex items-center gap-4 mb-8">
+            <button @click="tela = 'home'" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center"><i class="fas fa-arrow-left"></i></button>
+            <h2 class="text-xl font-black text-slate-800 uppercase italic">Finalizar Pedido</h2>
+        </div>
 
-<div class="total">Total: R$ <span id="total">0.00</span></div>
+        <div class="flex-1 overflow-y-auto space-y-4 mb-6">
+            <div v-for="(item, idx) in carrinho" :key="idx" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex justify-between items-center">
+                <div class="flex-1">
+                    <p class="font-bold text-slate-800 text-sm leading-tight">{{ item.qtd }}x {{ item.nome }}</p>
+                    <p class="text-[10px] text-blue-600 font-bold uppercase mt-1">Un: R$ {{ (item.total/item.qtd).toFixed(2) }}</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <p class="font-black text-slate-900 text-sm">R$ {{ item.total.toFixed(2) }}</p>
+                    <button @click="removerItem(idx)" class="text-red-400"><i class="fas fa-times-circle"></i></button>
+                </div>
+            </div>
+        </div>
 
-</div>
+        <div class="bg-white border p-6 rounded-[2.5rem] mb-6 shadow-sm">
+            <h3 class="font-bold text-slate-400 text-[10px] uppercase mb-4 text-center tracking-widest">Meio de Pagamento</h3>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button @click="pagamento = 'pix'" :class="pagamento == 'pix' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-50 text-slate-400'" class="p-4 rounded-2xl font-bold text-xs uppercase transition-all">PIX (-3%)</button>
+                <button @click="pagamento = 'cartao'" :class="pagamento == 'cartao' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-50 text-slate-400'" class="p-4 rounded-2xl font-bold text-xs uppercase transition-all">Cartão</button>
+            </div>
+            <div class="p-5 bg-slate-900 rounded-[1.5rem] text-center">
+                <p class="text-slate-500 text-[10px] font-bold uppercase">Total Líquido</p>
+                <p class="text-3xl font-black text-white italic">R$ {{ totalFinal.toFixed(2) }}</p>
+            </div>
+        </div>
 
-<div class="fechar" onclick="abrirResumo()">Fechar Pedido</div>
+        <button @click="enviarWhats" class="w-full bg-green-600 text-white py-5 rounded-[2rem] font-black shadow-xl flex items-center justify-center gap-3">
+            <i class="fab fa-whatsapp text-2xl"></i> ENVIAR PELO WHATSAPP
+        </button>
+    </div>
 
-<div class="modal" id="modal">
-<div class="modal-content" id="modalContent"></div>
+    <div v-if="modal == 'produtos'" class="fixed inset-0 bg-black/60 z-50 flex items-end">
+        <div class="bg-white w-full rounded-t-[3rem] p-8 bottom-sheet max-h-[85vh] flex flex-col">
+            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-black text-slate-800 uppercase italic">{{ categoriaAtiva }}</h3>
+                <button @click="modal = null" class="w-10 h-10 bg-slate-50 rounded-full text-slate-400">&times;</button>
+            </div>
+            <div class="overflow-y-auto space-y-3 pb-8">
+                <div v-for="p in produtosFiltrados" @click="selecionarProduto(p)" class="p-4 border border-slate-100 rounded-2xl hover:bg-blue-50 transition-all cursor-pointer flex justify-between items-center">
+                    <p class="font-bold text-slate-800 text-sm flex-1 pr-4 leading-tight">{{ p.produto }}</p>
+                    <div class="text-right">
+                        <p class="text-blue-700 font-black text-sm">R$ {{ p.un.toFixed(2) }}</p>
+                        <p v-if="p.atacado" class="text-[9px] text-orange-600 font-bold">Ver Atacado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="modal == 'detalhe'" class="fixed inset-0 z-[60] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-6">
+        <div class="bg-white rounded-[3rem] p-8 w-full max-w-sm shadow-2xl text-center">
+            <h4 class="font-black text-slate-800 mb-6 px-4">{{ prodSel.produto }}</h4>
+            <div class="flex items-center justify-center gap-8 mb-8">
+                <button @click="qtd > 1 ? qtd-- : null" class="w-14 h-14 rounded-2xl bg-slate-100 font-bold text-xl">-</button>
+                <span class="text-4xl font-black text-slate-800 w-12">{{ qtd }}</span>
+                <button @click="qtd++" class="w-14 h-14 rounded-2xl bg-blue-600 text-white font-bold text-xl shadow-lg">+</button>
+            </div>
+            <button @click="confirmarItem" class="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-bold shadow-xl active:scale-95 transition-all">
+                ADICIONAR R$ {{ subtotalItem.toFixed(2) }}
+            </button>
+            <button @click="modal = 'produtos'" class="mt-4 text-slate-400 text-xs font-bold uppercase">Voltar</button>
+        </div>
+    </div>
+
 </div>
 
 <script>
-
-// BASE DE DADOS
-const dados = [
-{cat:"Qualy Color Econômica", prod:"Pote 1lt Branca", preco:8.90, atacado:[]},
-{cat:"Qualy Color Econômica", prod:"Galão 3,6lts Branca", preco:26.90, atacado:[{q:20,v:23.90}]},
-{cat:"Qualy Color Econômica", prod:"Balde 18L Branca", preco:76.90, atacado:[{q:20,v:71.90},{q:100,v:65.99}]},
-{cat:"Latex Uso Interno", prod:"Lata 18L Branca", preco:64.90, atacado:[{q:20,v:62.90}]},
-{cat:"Standard", prod:"Lata 18L Branca", preco:124.90, atacado:[{q:10,v:116.90}]},
-{cat:"Premium", prod:"Balde 16L Branca", preco:190.00, atacado:[]},
-{cat:"Piso Premium", prod:"Lata 18L Branca", preco:219.90, atacado:[]},
-{cat:"Massa Corrida PVA", prod:"Lata 28kg", preco:55.90, atacado:[{q:30,v:55.90}]},
-{cat:"Grafiato", prod:"Barrica 25kg", preco:43.90, atacado:[]},
-{cat:"Selador Acrílico", prod:"Galão 3.6L", preco:19.90, atacado:[]},
-{cat:"Impermeabilizante", prod:"Balde 16L", preco:149.90, atacado:[]},
-{cat:"Esmalte Base Água", prod:"Lata 18L", preco:320.00, atacado:[]}
-];
-
-let carrinho = [];
-let total = 0;
-
-// CATEGORIAS
-function carregarCategorias(){
-    let cats = [...new Set(dados.map(d=>d.cat))];
-    let html="";
-    cats.forEach(c=>{
-        html += `<div class="btn" onclick="abrirProdutos('${c}')">${c}</div>`;
-    });
-    document.getElementById("categorias").innerHTML = html;
-}
-
-// PRODUTOS
-function abrirProdutos(cat){
-    let lista = dados.filter(d=>d.cat===cat);
-    let html = `<h3>${cat}</h3>`;
-
-    lista.forEach((p,i)=>{
-        html += `<div class="btn" onclick="abrirProduto('${cat}',${i})">${p.prod}</div>`;
-    });
-
-    html += `<button onclick="fecharModal()">Voltar</button>`;
-    abrirModal(html);
-}
-
-// PRODUTO
-function abrirProduto(cat,i){
-    let p = dados.filter(d=>d.cat===cat)[i];
-
-    let regras = "";
-    p.atacado.forEach(a=>{
-        regras += `<p>${a.q}+ = R$ ${a.v}</p>`;
-    });
-
-    let html = `
-    <h3>${p.prod}</h3>
-    <p>Preço: R$ ${p.preco}</p>
-    ${regras}
-
-    <input type="number" id="qtd" value="1" min="1">
-
-    <button onclick="addProduto('${cat}',${i})">Adicionar</button>
-    <button onclick="fecharModal()">Voltar</button>
-    `;
-
-    abrirModal(html);
-}
-
-// CALCULO INTELIGENTE
-function calcularPreco(p, qtd){
-    let valor = p.preco;
-
-    p.atacado.forEach(a=>{
-        if(qtd >= a.q){
-            valor = a.v;
+const { createApp } = Vue;
+createApp({
+    data() {
+        return {
+            tela: 'home', modal: null, vendedor: '', cliente: '', pagamento: 'cartao',
+            categoriaAtiva: '', prodSel: {}, qtd: 1, carrinho: [],
+            categoriasSetup: [
+                { nome: 'Qualy Color Econômica', icon: 'fas fa-fill', color: 'text-blue-600', bg: 'bg-blue-50' },
+                { nome: 'Latex Uso Interno', icon: 'fas fa-home', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                { nome: 'Standard', icon: 'fas fa-star', color: 'text-orange-600', bg: 'bg-orange-50' },
+                { nome: 'Premium', icon: 'fas fa-crown', color: 'text-purple-600', bg: 'bg-purple-50' },
+                { nome: 'Pisos', icon: 'fas fa-road', color: 'text-slate-600', bg: 'bg-slate-50' },
+                { nome: 'Outros', icon: 'fas fa-plus', color: 'text-red-600', bg: 'bg-red-50' }
+            ],
+            produtos: [
+                // EXTRAÇÃO REAL DA SUA TABELA
+                { cat: 'Qualy Color Econômica', produto: 'Pote 1lt Branca', un: 8.90 },
+                { cat: 'Qualy Color Econômica', produto: 'Galão 3,6lts Branca', un: 26.90, atacado: 23.90, min: 20 },
+                { cat: 'Qualy Color Econômica', produto: 'Galão 3,6lts Na Cor', un: 30.00 },
+                { cat: 'Qualy Color Econômica', produto: 'Balde 18L Branca', un: 76.90, atacado: 71.90, min: 20 },
+                { cat: 'Qualy Color Econômica', produto: 'Balde 18L Na Cor', un: 76.90 },
+                { cat: 'Qualy Color Econômica', produto: 'Lata 18L Branca', un: 79.90, atacado: 77.90, min: 20 },
+                { cat: 'Latex Uso Interno', produto: 'Lata 18L Branca', un: 64.90, atacado: 62.90, min: 20 },
+                { cat: 'Latex Uso Interno', produto: 'Balde 16L Branca', un: 51.90, atacado: 49.90, min: 50 },
+                { cat: 'Standard', produto: 'Pote 1lt Branca', un: 15.90 },
+                { cat: 'Standard', produto: 'Galão 3,6lts', un: 34.90 },
+                { cat: 'Standard', produto: 'Lata 18L Branca', un: 124.90, atacado: 116.90, min: 10 },
+                { cat: 'Premium', produto: 'Balde 18L Branca', un: 155.00, atacado: 145.00, min: 10 },
+                { cat: 'Premium', produto: 'Galão 3,6lts Branca', un: 45.00, atacado: 40.00, min: 10 },
+                { cat: 'Pisos', produto: 'Balde 18L (Cores)', un: 135.00, atacado: 125.00, min: 5 },
+                { cat: 'Pisos', produto: 'Galão 3,6L (Cores)', un: 45.00, atacado: 38.00, min: 10 }
+            ]
         }
-    });
-
-    return valor;
-}
-
-// ADD
-function addProduto(cat,i){
-    let p = dados.filter(d=>d.cat===cat)[i];
-    let qtd = parseInt(document.getElementById("qtd").value);
-
-    let precoFinal = calcularPreco(p,qtd);
-
-    carrinho.push({nome:p.prod,qtd,preco:precoFinal});
-
-    atualizarCarrinho();
-    fecharModal();
-}
-
-// CARRINHO
-function atualizarCarrinho(){
-    let html="";
-    total=0;
-
-    carrinho.forEach(i=>{
-        let sub = i.qtd*i.preco;
-        total+=sub;
-        html += `<div>${i.nome} x${i.qtd} = R$ ${sub.toFixed(2)}</div>`;
-    });
-
-    document.getElementById("carrinho").innerHTML = html;
-    document.getElementById("total").innerText = total.toFixed(2);
-}
-
-// PAGAMENTO
-function abrirResumo(){
-    let html = `
-    <h3>Pagamento</h3>
-    <button onclick="pix()">PIX (-3%)</button>
-    <button onclick="cartao()">Cartão 3x</button>
-    <button onclick="cheque()">Cheque</button>
-    `;
-
-    abrirModal(html);
-}
-
-function pix(){
-    finalizar(total*0.97,"PIX");
-}
-
-function cartao(){
-    finalizar(total,"Cartão");
-}
-
-function cheque(){
-    finalizar(total,"Cheque");
-}
-
-// FINAL
-function finalizar(valor,tipo){
-    let msg="Pedido:\n";
-
-    carrinho.forEach(i=>{
-        msg+=`${i.nome} x${i.qtd}\n`;
-    });
-
-    msg+=`Total: R$ ${valor.toFixed(2)}\n${tipo}`;
-
-    let html=`
-    <h3>Finalizado</h3>
-    <button onclick="window.open('https://wa.me/?text='+encodeURIComponent('${msg}'))">WhatsApp</button>
-    `;
-
-    abrirModal(html);
-}
-
-// MODAL
-function abrirModal(html){
-    document.getElementById("modal").style.display="flex";
-    document.getElementById("modalContent").innerHTML=html;
-}
-
-function fecharModal(){
-    document.getElementById("modal").style.display="none";
-}
-
-carregarCategorias();
-
+    },
+    computed: {
+        produtosFiltrados() { return this.produtos.filter(p => p.cat === this.categoriaAtiva); },
+        subtotalItem() {
+            const p = (this.prodSel.atacado && this.qtd >= this.prodSel.min) ? this.prodSel.atacado : this.prodSel.un;
+            return p * this.qtd;
+        },
+        totalPedido() { return this.carrinho.reduce((acc, i) => acc + i.total, 0); },
+        totalFinal() { return this.pagamento === 'pix' ? this.totalPedido * 0.97 : this.totalPedido; }
+    },
+    methods: {
+        abrirCategoria(c) { this.categoriaAtiva = c; this.modal = 'produtos'; },
+        selecionarProduto(p) { this.prodSel = p; this.qtd = 1; this.modal = 'detalhe'; },
+        confirmarItem() {
+            this.carrinho.push({ nome: this.prodSel.produto, qtd: this.qtd, total: this.subtotalItem });
+            this.modal = null;
+        },
+        removerItem(idx) { this.carrinho.splice(idx, 1); if(!this.carrinho.length) this.tela = 'home'; },
+        enviarWhats() {
+            let m = `*PEDIDO QUALY QUIMY*\n\n*Vendedor:* ${this.vendedor}\n*Cliente:* ${this.cliente}\n\n`;
+            this.carrinho.forEach(i => m += `• ${i.qtd}x ${i.nome} = R$ ${i.total.toFixed(2)}\n`);
+            m += `\n*TOTAL: R$ ${this.totalFinal.toFixed(2)}*\n*PAGAMENTO:* ${this.pagamento.toUpperCase()}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(m)}`);
+        }
+    }
+}).mount('#app')
 </script>
-
 </body>
 </html>
