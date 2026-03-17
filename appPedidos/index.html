@@ -1,220 +1,107 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qualy Quimy - Oficial</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
-        .sidebar-blue { background: linear-gradient(180deg, #0F172A 0%, #1E3A8A 100%); }
-        .card-menu { transition: all 0.2s ease; cursor: pointer; border-radius: 2rem; overflow: hidden; }
-        .card-menu:active { transform: scale(0.95); opacity: 0.9; }
-        .bottom-sheet { animation: slideUp 0.3s ease-out; border-radius: 3rem 3rem 0 0; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .price-tag { background: rgba(0,0,0,0.05); border-radius: 0.75rem; padding: 2px 8px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tintas Qualy Quimy - Pedidos</title>
+<style>
+body{font-family:Arial;background:#f2f4f7;margin:0}
+header{background:#0d6efd;color:#fff;padding:15px;text-align:center}
+.container{padding:15px}
+input,button{width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+button{background:#0d6efd;color:#fff;border:none;font-weight:bold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.card{background:#fff;padding:20px;border-radius:12px;text-align:center;font-weight:bold;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.total{margin-top:15px;font-size:18px;font-weight:bold}
+.fixo{position:fixed;bottom:10px;right:10px;background:#28a745;padding:15px;border-radius:50px}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;justify-content:center;align-items:center}
+.modal-content{background:#fff;padding:20px;border-radius:10px;width:90%;max-height:80%;overflow:auto}
+.prod{padding:10px;border-bottom:1px solid #eee;cursor:pointer}
+</style>
 </head>
 <body>
 
-<div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col bg-white shadow-2xl">
-    
-    <div v-if="tela === 'home'" class="flex flex-col flex-1">
-        <header class="sidebar-blue text-white p-8 pb-12 rounded-b-[3.5rem] shadow-xl">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">Qualy Quimy</h1>
-                <i class="fas fa-paint-roller text-2xl opacity-50"></i>
-            </div>
-            <div class="space-y-3">
-                <input v-model="vendedor" placeholder="Vendedor" class="w-full bg-white/10 border border-white/20 p-4 rounded-2xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all">
-                <input v-model="cliente" placeholder="Cliente" class="w-full bg-white/10 border border-white/20 p-4 rounded-2xl text-sm placeholder:text-blue-200 outline-none focus:bg-white focus:text-gray-900 transition-all">
-            </div>
-        </header>
+<header>
+<h1>Tintas Qualy Quimy</h1>
+<h2>Qualidade em Tintas e Complementos</h2>
+</header>
 
-        <main class="p-6 -mt-6 flex-1 bg-white rounded-t-[3rem]">
-            <div class="grid grid-cols-2 gap-4">
-                <div v-for="cat in categoriasSetup" :key="cat.nome" @click="abrirCategoria(cat.nome)"
-                     :class="cat.bg" class="card-menu p-6 flex flex-col items-center justify-center text-center shadow-md">
-                    <i :class="[cat.icon, 'text-white text-3xl mb-3']"></i>
-                    <span class="font-extrabold text-white text-[11px] uppercase leading-tight">{{ cat.nome }}</span>
-                </div>
-            </div>
+<div class="container">
+<input id="vendedor" placeholder="Nome do vendedor">
+<input id="cliente" placeholder="Nome do cliente">
+<input type="date" id="data">
 
-            <div v-if="carrinho.length > 0" class="mt-8 bg-slate-900 p-6 rounded-[2.5rem] text-white flex justify-between items-center shadow-2xl">
-                <div>
-                    <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Subtotal</p>
-                    <p class="text-2xl font-black italic">R$ {{ totalPedido.toFixed(2) }}</p>
-                </div>
-                <button @click="tela = 'resumo'" class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
-                    <i class="fas fa-shopping-cart"></i>
-                </button>
-            </div>
-        </main>
-    </div>
+<div class="grid">
+<div class="card" onclick="abrir('Tintas')">Tintas</div>
+<div class="card" onclick="abrir('Textura')">Textura</div>
+<div class="card" onclick="abrir('Massas')">Massas</div>
+<div class="card" onclick="abrir('Acabamento')">Acabamento</div>
+<div class="card" onclick="abrir('Complementos')">Complementos</div>
+</div>
 
-    <div v-if="tela === 'resumo'" class="flex flex-col flex-1 p-6 bottom-sheet bg-white">
-        <div class="flex items-center gap-4 mb-6">
-            <button @click="tela = 'home'" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center"><i class="fas fa-chevron-left"></i></button>
-            <h2 class="text-xl font-black text-slate-800 italic uppercase">Fechar Pedido</h2>
-        </div>
+<div class="total">Total: R$ <span id="total">0.00</span></div>
+</div>
 
-        <div class="flex-1 overflow-y-auto space-y-3 mb-6">
-            <div v-for="(item, idx) in carrinho" :key="idx" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex justify-between items-center">
-                <div class="flex-1">
-                    <p class="font-bold text-slate-800 text-sm">{{ item.qtd }}x {{ item.nome }}</p>
-                    <p class="text-[10px] text-blue-600 font-bold uppercase">Preço Unit: R$ {{ (item.total/item.qtd).toFixed(2) }}</p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <p class="font-black text-slate-900 text-sm">R$ {{ item.total.toFixed(2) }}</p>
-                    <button @click="removerItem(idx)" class="text-red-400"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-        </div>
+<div class="fixo" onclick="resumo()">Fechar Pedido</div>
 
-        <div class="bg-slate-900 p-6 rounded-[2.5rem] text-white shadow-xl mb-4">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-slate-400 text-xs font-bold">FORMA DE PAGAMENTO</span>
-                <select v-model="pagamento" class="bg-white/10 border-none rounded-lg text-xs font-bold p-1">
-                    <option value="cartao">CARTÃO</option>
-                    <option value="pix">PIX (-3%)</option>
-                </select>
-            </div>
-            <div class="text-center border-t border-white/10 pt-4">
-                <p class="text-3xl font-black italic">R$ {{ totalFinal.toFixed(2) }}</p>
-            </div>
-        </div>
-
-        <button @click="enviarWhats" class="w-full bg-green-600 text-white py-5 rounded-[2rem] font-black shadow-lg flex items-center justify-center gap-3">
-            <i class="fab fa-whatsapp text-2xl"></i> ENVIAR PELO WHATSAPP
-        </button>
-    </div>
-
-    <div v-if="modal == 'produtos'" class="fixed inset-0 bg-black/60 z-50 flex items-end backdrop-blur-sm">
-        <div class="bg-white w-full p-8 bottom-sheet max-h-[85vh] flex flex-col">
-            <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-6"></div>
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-black text-slate-800 uppercase italic">{{ categoriaAtiva }}</h3>
-                <button @click="modal = null" class="w-10 h-10 bg-slate-50 rounded-full text-slate-400">&times;</button>
-            </div>
-            <div class="overflow-y-auto space-y-2 pb-10">
-                <div v-for="p in produtosFiltrados" @click="selecionarProduto(p)" class="p-4 border border-slate-100 rounded-2xl hover:bg-slate-50 transition-all flex justify-between items-center cursor-pointer">
-                    <p class="font-bold text-slate-800 text-sm flex-1 pr-4">{{ p.produto }}</p>
-                    <div class="text-right">
-                        <p class="text-blue-700 font-black text-sm">R$ {{ p.un.toFixed(2) }}</p>
-                        <p v-if="p.atacado" class="text-[9px] text-orange-600 font-bold uppercase">Atacado p/ {{ p.min }}+</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div v-if="modal == 'detalhe'" class="fixed inset-0 z-[60] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-6">
-        <div class="bg-white rounded-[3rem] p-8 w-full max-w-sm shadow-2xl text-center">
-            <span class="text-[10px] font-black bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase mb-4 inline-block">{{ categoriaAtiva }}</span>
-            <h4 class="font-black text-slate-800 mb-6 leading-tight">{{ prodSel.produto }}</h4>
-            
-            <div class="flex items-center justify-center gap-8 mb-8">
-                <button @click="qtd > 1 ? qtd-- : null" class="w-14 h-14 rounded-2xl bg-slate-100 font-bold text-xl">-</button>
-                <span class="text-4xl font-black text-slate-800 w-12">{{ qtd }}</span>
-                <button @click="qtd++" class="w-14 h-14 rounded-2xl bg-blue-600 text-white font-bold text-xl shadow-lg">+</button>
-            </div>
-
-            <div v-if="prodSel.atacado" class="bg-slate-50 p-5 rounded-[2rem] mb-8 border-2 border-dashed border-slate-200">
-                <div class="flex justify-between text-xs mb-2">
-                    <span class="text-slate-400 font-bold">NORMAL</span>
-                    <span class="text-slate-500 line-through">R$ {{ (prodSel.un * qtd).toFixed(2) }}</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-slate-800 font-black text-xs">PREÇO ATUAL</span>
-                    <span :class="qtd >= prodSel.min ? 'text-green-600' : 'text-blue-600'" class="text-2xl font-black">R$ {{ subtotalItem.toFixed(2) }}</span>
-                </div>
-                <p v-if="qtd < prodSel.min" class="text-[9px] text-orange-500 font-bold mt-2 uppercase">
-                    Faltam {{ prodSel.min - qtd }} unidades para o preço de atacado!
-                </p>
-                <p v-else class="text-[9px] text-green-500 font-bold mt-2 uppercase tracking-widest animate-pulse">
-                    ✅ PREÇO DE ATACADO APLICADO!
-                </p>
-            </div>
-
-            <button @click="confirmarItem" class="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-black shadow-xl active:scale-95 transition-all">
-                ADICIONAR AO PEDIDO
-            </button>
-            <button @click="modal = 'produtos'" class="mt-4 text-slate-400 text-[10px] font-bold uppercase">Voltar</button>
-        </div>
-    </div>
-
+<div class="modal" id="modal">
+<div class="modal-content" id="conteudo"></div>
 </div>
 
 <script>
-const { createApp } = Vue;
-createApp({
-    data() {
-        return {
-            tela: 'home', modal: null, vendedor: '', cliente: '', pagamento: 'cartao',
-            categoriaAtiva: '', prodSel: {}, qtd: 1, carrinho: [],
-            categoriasSetup: [
-                { nome: 'Tintas', icon: 'fas fa-tint', bg: 'bg-gray-500' }, // Cinza Médio
-                { nome: 'Massas', icon: 'fas fa-fill-drip', bg: 'bg-blue-600' }, // Azul
-                { nome: 'Selantes / Complementos', icon: 'fas fa-tools', bg: 'bg-gray-300' }, // Cinza Claro
-                { nome: 'Acabamentos Decorativos', icon: 'fas fa-magic', bg: 'bg-red-600' } // Vermelho
-            ],
-            produtos: [
-                // TINTAS
-                { cat: 'Tintas', produto: 'Econômica Balde 18L Branca', un: 76.90, atacado: 71.90, min: 20 },
-                { cat: 'Tintas', produto: 'Econômica Balde 18L Branca (100+)', un: 76.90, atacado: 65.99, min: 100 },
-                { cat: 'Tintas', produto: 'Standard Lata 18L Branca', un: 124.90, atacado: 116.90, min: 10 },
-                { cat: 'Tintas', produto: 'Premium Balde 18L Branca', un: 155.00, atacado: 145.00, min: 10 },
-                { cat: 'Tintas', produto: 'Piso Balde 18L (Cores)', un: 135.00, atacado: 125.00, min: 5 },
-                
-                // MASSAS
-                { cat: 'Massas', produto: 'Massa PVA Lata 28kg', un: 58.90, atacado: 55.90, min: 30 },
-                { cat: 'Massas', produto: 'Massa PVA Barrica 25kg', un: 33.90, atacado: 31.90, min: 20 },
-                { cat: 'Massas', produto: 'Massa Acrílica Lata 28kg', un: 72.90, atacado: 69.90, min: 30 },
-                { cat: 'Massas', produto: 'Massa Acrílica Barrica 25kg', un: 43.90, atacado: 41.99, min: 20 },
+const produtos = [
+{cat:'Tintas',nome:'Balde 18L Econômica',preco:76.90,atacado:71.90,min:20},
+{cat:'Massas',nome:'Massa PVA 25kg',preco:38.90,atacado:35.90,min:20},
+{cat:'Textura',nome:'Grafiato 25kg',preco:48.90,atacado:45.90,min:20},
+{cat:'Acabamento',nome:'Selador 16L',preco:52.90},
+{cat:'Complementos',nome:'Impermeabilizante 16L',preco:149.90}
+];
 
-                // SELANTES / COMPLEMENTOS
-                { cat: 'Selantes / Complementos', produto: 'Selador Acrílico 18L', un: 85.00, atacado: 78.00, min: 10 },
-                { cat: 'Selantes / Complementos', produto: 'Selador Gesso 18L', un: 110.00 },
-                { cat: 'Selantes / Complementos', produto: 'Primer Fundo 18L', un: 158.00, atacado: 145.00, min: 5 },
-                { cat: 'Selantes / Complementos', produto: 'Vedalaje 16L', un: 138.90, atacado: 129.00, min: 5 },
+let carrinho=[];
 
-                // ACABAMENTOS
-                { cat: 'Acabamentos Decorativos', produto: 'Grafiato Barrica 25kg', un: 55.90, atacado: 52.00, min: 20 },
-                { cat: 'Acabamentos Decorativos', produto: 'Textura Barrica 25kg', un: 79.90, atacado: 75.00, min: 20 },
-                { cat: 'Acabamentos Decorativos', produto: 'Cimento Queimado 25kg', un: 188.00, atacado: 175.00, min: 5 },
-                { cat: 'Acabamentos Decorativos', produto: 'Tinta Emborrachada 18L', un: 272.90, atacado: 260.00, min: 5 }
-            ]
-        }
-    },
-    computed: {
-        produtosFiltrados() { return this.produtos.filter(p => p.cat === this.categoriaAtiva); },
-        subtotalItem() {
-            if(!this.prodSel.un) return 0;
-            const p = (this.prodSel.atacado && this.qtd >= this.prodSel.min) ? this.prodSel.atacado : this.prodSel.un;
-            return p * this.qtd;
-        },
-        totalPedido() { return this.carrinho.reduce((acc, i) => acc + i.total, 0); },
-        totalFinal() { return this.pagamento === 'pix' ? this.totalPedido * 0.97 : this.totalPedido; }
-    },
-    methods: {
-        abrirCategoria(c) { this.categoriaAtiva = c; this.modal = 'produtos'; },
-        selecionarProduto(p) { this.prodSel = p; this.qtd = 1; this.modal = 'detalhe'; },
-        confirmarItem() {
-            this.carrinho.push({ nome: this.prodSel.produto, qtd: this.qtd, total: this.subtotalItem });
-            this.modal = null;
-        },
-        removerItem(idx) { this.carrinho.splice(idx, 1); if(!this.carrinho.length) this.tela = 'home'; },
-        enviarWhats() {
-            let m = `*PEDIDO QUALY QUIMY*\n\n*Vendedor:* ${this.vendedor}\n*Cliente:* ${this.cliente}\n\n`;
-            this.carrinho.forEach(i => m += `• ${i.qtd}x ${i.nome} = R$ ${i.total.toFixed(2)}\n`);
-            m += `\n*PAGAMENTO:* ${this.pagamento.toUpperCase()}\n*TOTAL: R$ ${this.totalFinal.toFixed(2)}*`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(m)}`);
-        }
-    }
-}).mount('#app')
+function abrir(cat){
+let html='<h3>'+cat+'</h3>';
+produtos.filter(p=>p.cat==cat).forEach(p=>{
+html+=`<div class='prod' onclick="add('${p.nome}',${p.preco},${p.atacado||0},${p.min||0})">${p.nome}<br>R$ ${p.preco}</div>`;
+});
+html+="<button onclick='fechar()'>Fechar</button>";
+document.getElementById('conteudo').innerHTML=html;
+document.getElementById('modal').style.display='flex';
+}
+
+function fechar(){document.getElementById('modal').style.display='none'}
+
+function add(nome,preco,atacado,min){
+let qtd=parseInt(prompt('Quantidade:'));
+if(!qtd) return;
+let valor=preco;
+if(min && qtd<min){alert('Mínimo '+min);return}
+if(min && qtd>=min) valor=atacado;
+carrinho.push({nome,qtd,valor});
+calc();
+fechar();
+}
+
+function calc(){
+let t=0;
+carrinho.forEach(i=>t+=i.qtd*i.valor);
+document.getElementById('total').innerText=t.toFixed(2);
+}
+
+function resumo(){
+let html='<h3>Resumo</h3>';
+carrinho.forEach(i=>{
+html+=`<div>${i.nome} - ${i.qtd} = R$ ${(i.qtd*i.valor).toFixed(2)}</div>`;
+});
+html+='<hr><button onclick="finalizar()">Finalizar</button>';
+document.getElementById('conteudo').innerHTML=html;
+document.getElementById('modal').style.display='flex';
+}
+
+function finalizar(){
+alert('Pedido pronto para WhatsApp ou PDF');
+}
 </script>
+
 </body>
 </html>
