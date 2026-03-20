@@ -72,10 +72,9 @@
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 18px; font-size: 16px; font-weight: 800;
             border-radius: 20px; transition: 0.3s; border: none; cursor: pointer; text-decoration: none;
-            position: relative; overflow: hidden;
+            position: relative; overflow: hidden; margin-bottom: 15px;
         }
 
-        /* IMAGEM FIXA DE FEEDBACK POSITIVO */
         .img-feedback {
             width: 100%;
             border-radius: 15px;
@@ -107,6 +106,8 @@
         .ssl-msg { font-weight: bold; color: #059669; margin-bottom: 8px; display: block; }
         .hero-msg { font-weight: bold; color: #ff69b4; margin-bottom: 15px; font-size: 18px; min-height: 24px; }
         .footer .dev-link { color: #f59e0b; text-decoration: none; font-weight: 800; }
+        
+        #timer-msg { font-size: 12px; color: #64748b; margin-top: 5px; font-style: italic; }
     </style>
 </head>
 
@@ -129,18 +130,20 @@
         <i class="fas fa-star star-btn" onclick="avaliar(5)"></i>
     </div>
 
-    <div id="feedback-bom" class="hidden">
+    <div id="feedback-area" class="hidden">
         <img src="amor-por-patas.png" class="img-feedback" alt="Amor por Patas">
-        <a href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
+        
+        <a id="link-google" href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
-    </div>
+        <p id="timer-msg">Redirecionando para o Google em <span id="segundos">5</span>s...</p>
 
-    <div id="feedback-ruim" class="hidden">
-        <p style="font-size: 18px; margin-bottom: 15px;">Sentimos muito... 😔</p>
-        <textarea id="texto-melhoria" placeholder="Por gentileza, o que ocorreu para melhorarmos?"></textarea>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+        
+        <p style="font-size: 16px; margin-bottom: 10px; font-weight: bold;">Deseja deixar um comentário?</p>
+        <textarea id="texto-melhoria" placeholder="Conte-nos mais sobre sua experiência..."></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
-            <i class="fab fa-whatsapp"></i> ENVIAR PARA O GERENTE
+            <i class="fab fa-whatsapp"></i> ENVIAR PELO WHATSAPP
         </button>
     </div>
 
@@ -157,11 +160,12 @@
 
 <script>
     let notaSelecionada = 0;
+    let redirecionando = false;
+
     function avaliar(n) {
         notaSelecionada = n;
         const stars = document.querySelectorAll('.star-btn');
-        const bom = document.getElementById('feedback-bom');
-        const ruim = document.getElementById('feedback-ruim');
+        const feedbackArea = document.getElementById('feedback-area');
         const titulo = document.getElementById('titulo-dinamico');
         const msgEspecial = document.getElementById('msg-especial');
 
@@ -170,18 +174,38 @@
             else s.classList.remove('active');
         });
 
+        // Mostra a área de feedback para qualquer nota
+        feedbackArea.classList.remove('hidden');
+        
         if (n >= 4) {
             titulo.innerText = "Nos ajude com sua avaliação";
             msgEspecial.innerText = "Você é um herói dos animais! 🐾";
-            bom.classList.remove('hidden');
-            ruim.classList.add('hidden');
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff69b4', '#facc15', '#ffffff'] });
         } else {
             titulo.innerText = "Sua opinião é vital! 💬";
             msgEspecial.innerText = "";
-            ruim.classList.remove('hidden');
-            bom.classList.add('hidden');
         }
+
+        // Iniciar redirecionamento automático apenas uma vez
+        if (!redirecionando) {
+            iniciarTimerRedirecionamento();
+        }
+    }
+
+    function iniciarTimerRedirecionamento() {
+        redirecionando = true;
+        let tempo = 5;
+        const display = document.getElementById('segundos');
+        const linkGoogle = document.getElementById('link-google').href;
+
+        const intervalo = setInterval(() => {
+            tempo--;
+            display.innerText = tempo;
+            if (tempo <= 0) {
+                clearInterval(intervalo);
+                window.open(linkGoogle, '_blank');
+            }
+        }, 1000);
     }
 
     function enviarWhatsApp() {
