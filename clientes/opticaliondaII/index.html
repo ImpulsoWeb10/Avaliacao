@@ -33,6 +33,7 @@
             width: 160px; height: auto; padding: 5px;
             border-radius: 22px; border: 3px solid #facc15; 
             background: white; margin: 0 auto 15px; display: block;
+            transition: 0.4s;
         }
 
         .logo-compacta { transform: scale(0.7); margin-bottom: -10px; }
@@ -46,6 +47,7 @@
             font-size: 14px; font-weight: 600; color: #facc15; 
             min-height: 20px; margin-bottom: 15px; opacity: 0; 
             background: rgba(250, 204, 21, 0.1); padding: 8px; border-radius: 10px;
+            transition: 0.5s;
         }
         #frase-seo.show { opacity: 1; }
 
@@ -69,6 +71,7 @@
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; border-radius: 50px; font-weight: 800; 
             text-decoration: none; border: none; cursor: pointer;
+            transition: 0.3s;
         }
 
         .google { background: #facc15; color: #000; padding: 16px; font-size: 15px; margin-bottom: 10px; animation: pulsarBtn 2s infinite; }
@@ -92,7 +95,7 @@
 <body>
 
 <div class="container">
-    <img src="logo.png" class="logo" id="main-logo">
+    <img src="logo-optica-lionda.png" class="logo" id="main-logo">
 
     <h1>Óptica Lionda</h1>
     <h2>Excelência em Saúde Visual</h2>
@@ -182,6 +185,8 @@
         redirecionamentoAtivo = false;
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
+        // Se você quiser que o Google abra em segundo plano ao clicar em críticas:
+        // window.open(linkGoogleURL, '_blank');
     }
 
     function enviarGerente() {
