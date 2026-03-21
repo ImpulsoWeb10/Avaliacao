@@ -73,7 +73,6 @@
 
         .google { background: #facc15; color: #000; padding: 16px; font-size: 15px; margin-bottom: 10px; animation: pulsarBtn 2s infinite; }
         
-        /* BOTÃO MENOR DE CRÍTICAS */
         .btn-abrir-msg { background: rgba(255,255,255,0.1); color: #fff; padding: 10px; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); margin-top: 5px; }
 
         .whatsapp { background: #22c55e; color: white; padding: 12px; font-size: 14px; margin-top: 10px; }
@@ -109,16 +108,16 @@
     <div id="feedback-final" class="hidden">
         <img src="casal-oculos.png" class="img-comemorativa">
         
-        <a href="https://www.google.com/maps/place/%C3%93tica+Lionda/@-23.4210109,-46.3495786,17z/data=!4m8!3m7!1s0x94ce7d399227cfdd:0xd2612d44d239ba82!8m2!3d-23.4210109!4d-46.3495786!9m1!1b1!16s%2Fg%2F11k6sxfh2t?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="botao google">
+        <a id="link-google-auto" href="https://search.google.com/local/writereview?placeid=SEU_ID_AQUI" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
         <button id="btn-critica" class="botao btn-abrir-msg" onclick="abrirCaixaMsg()">
-            Criticas ou elogios
+            Críticas ou elogios
         </button>
 
         <div id="caixa-gerente" class="hidden">
-            <textarea id="texto-cliente" rows="2" placeholder="Escreva aqui..."></textarea>
+            <textarea id="texto-cliente" rows="2" placeholder="Sua mensagem para o gerente..."></textarea>
             <button onclick="enviarGerente()" class="botao whatsapp">
                 <i class="fab fa-whatsapp"></i> ENVIAR PARA GERENTE
             </button>
@@ -127,11 +126,15 @@
 
     <div class="footer">
         <b>📍 R. Joaquim Caetano - Parque Piratininga</b><br>
-        📞 (11) 97131-9233
+        Itaquaquecetuba - SP, 08583-670<br>
+        📞 Telefone: (11) 97131-9233
+        <div style="margin-top: 10px; opacity: 0.6; font-size: 9px;">© 2026 ImpulsoWeb10</div>
     </div>
 </div>
 
 <script>
+    const linkGoogle = "https://search.google.com/local/writereview?placeid=SEU_ID_AQUI";
+
     function avaliar(n) {
         const stars = document.querySelectorAll('.star-btn');
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
@@ -141,9 +144,18 @@
         document.getElementById('feedback-final').classList.remove('hidden');
 
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
+
+        // TIMER DE 4 SEGUNDOS PARA ABRIR O GOOGLE AUTOMATICAMENTE
+        setTimeout(() => {
+            if (!document.getElementById('caixa-gerente').offsetParent) { // Só abre se não estiver escrevendo
+                window.open(linkGoogle, '_blank');
+            }
+        }, 4000);
     }
 
     function abrirCaixaMsg() {
+        // Abre o Google em outra aba (segundo plano) e mostra a caixa de texto
+        window.open(linkGoogle, '_blank');
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
     }
@@ -151,7 +163,7 @@
     function enviarGerente() {
         const texto = document.getElementById('texto-cliente').value;
         if (!texto) return alert("Por favor, escreva sua mensagem.");
-        window.open(`https://wa.me/5511971319233?text=Feedback Cliente: ${texto}`, '_blank');
+        window.open(`https://wa.me/5511971319233?text=Feedback Cliente Óptica Lionda: ${texto}`, '_blank');
     }
 </script>
 
