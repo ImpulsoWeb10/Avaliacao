@@ -136,12 +136,12 @@
         <a id="link-google" href="https://g.page/r/CS5Xk3_P3_i7EAE/review" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
-        <p id="timer-msg">Redirecionando para o Google em <span id="segundos">5</span>s...</p>
+        <p id="timer-msg">Redirecionando para o Google em <span id="segundos">4</span>s...</p>
 
         <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
         
         <p style="font-size: 16px; margin-bottom: 10px; font-weight: bold;">Deseja deixar um comentário?</p>
-        <textarea id="texto-melhoria" placeholder="Conte-nos mais sobre sua experiência..."></textarea>
+        <textarea id="texto-melhoria" placeholder="Conte-nos mais sobre sua experiência..." oninput="cancelarTimer()"></textarea>
         <button onclick="enviarWhatsApp()" class="botao whatsapp">
             <i class="fab fa-whatsapp"></i> ENVIAR PELO WHATSAPP
         </button>
@@ -160,7 +160,9 @@
 
 <script>
     let notaSelecionada = 0;
-    let redirecionando = false;
+    let timerAtivo = null;
+    let tempoRestante = 4;
+    const linkGoogleURL = "https://g.page/r/CS5Xk3_P3_i7EAE/review";
 
     function avaliar(n) {
         notaSelecionada = n;
@@ -174,7 +176,6 @@
             else s.classList.remove('active');
         });
 
-        // Mostra a área de feedback para qualquer nota
         feedbackArea.classList.remove('hidden');
         
         if (n >= 4) {
@@ -186,33 +187,46 @@
             msgEspecial.innerText = "";
         }
 
-        // Iniciar redirecionamento automático apenas uma vez
-        if (!redirecionando) {
-            iniciarTimerRedirecionamento();
-        }
+        // Reseta e inicia o timer de 4 segundos
+        iniciarTimer();
     }
 
-    function iniciarTimerRedirecionamento() {
-        redirecionando = true;
-        let tempo = 5;
-        const display = document.getElementById('segundos');
-        const linkGoogle = document.getElementById('link-google').href;
+    function iniciarTimer() {
+        cancelarTimer(); // Garante que não existam dois timers rodando
+        tempoRestante = 4;
+        document.getElementById('segundos').innerText = tempoRestante;
+        document.getElementById('timer-msg').classList.remove('hidden');
 
-        const intervalo = setInterval(() => {
-            tempo--;
-            display.innerText = tempo;
-            if (tempo <= 0) {
-                clearInterval(intervalo);
-                window.open(linkGoogle, '_blank');
+        timerAtivo = setInterval(() => {
+            tempoRestante--;
+            document.getElementById('segundos').innerText = tempoRestante;
+            if (tempoRestante <= 0) {
+                clearInterval(timerAtivo);
+                window.open(linkGoogleURL, '_blank');
             }
         }, 1000);
+    }
+
+    function cancelarTimer() {
+        if (timerAtivo) {
+            clearInterval(timerAtivo);
+            timerAtivo = null;
+            document.getElementById('timer-msg').classList.add('hidden');
+        }
     }
 
     function enviarWhatsApp() {
         const texto = document.getElementById('texto-melhoria').value;
         const telefone = "5511955883909"; 
         const mensagem = encodeURIComponent(`Feedback Amor por Patinhas (${notaSelecionada} estrelas): ${texto}`);
+        
+        // Abre o WhatsApp
         window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+        
+        // Abre o Google em segundo plano (delay de 1s para garantir o disparo)
+        setTimeout(() => {
+            window.open(linkGoogleURL, '_blank');
+        }, 1000);
     }
 </script>
 </body>
