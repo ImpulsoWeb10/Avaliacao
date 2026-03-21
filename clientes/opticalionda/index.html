@@ -115,7 +115,7 @@
     <div id="feedback-final" class="hidden">
         <img src="casal-oculos.png" class="img-comemorativa">
         
-        <a id="link-google" href="https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM" target="_blank" class="botao google">
+        <a id="btn-google-direct" href="https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
@@ -148,6 +148,7 @@
 
 <script>
     const linkGoogleURL = "https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM";
+    let redirecionamentoAtivo = true;
     
     const frasesSEO = [
         "Referência em exames de vista e armações modernas em Itaquaquecetuba.",
@@ -171,15 +172,22 @@
 
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
 
+        // TIMER DE 4 SEGUNDOS
         setTimeout(() => {
-            if (document.getElementById('caixa-gerente').classList.contains('hidden')) {
+            if (redirecionamentoAtivo) {
                 window.open(linkGoogleURL, '_blank');
             }
         }, 4000);
     }
 
     function abrirCaixaMsg() {
+        // Cancela o redirecionamento automático de 4s para não interromper a escrita
+        redirecionamentoAtivo = false;
+        
+        // Abre o Google em segundo plano imediatamente
         window.open(linkGoogleURL, '_blank');
+        
+        // Mostra a caixa do gerente
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
     }
