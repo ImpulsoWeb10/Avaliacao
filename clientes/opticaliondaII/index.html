@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Óptica Lionda | Avalie nossa Qualidade</title>
+    <title>Óptica Lionda Unidade II | Avalie nossa Qualidade</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@
 <div class="container">
     <img src="logo-optica-lionda.png" class="logo" id="main-logo">
 
-    <h1>Óptica Lionda</h1>
+    <h1>Óptica Lionda Unidade II</h1>
     <h2>Excelência em Saúde Visual</h2>
     
     <p id="instrucao">Como foi sua experiência hoje?</p>
@@ -132,11 +132,11 @@
     </div>
 
     <div class="footer">
-        <b>📍 R. Joaquim Caetano - Parque Piratininga</b><br>
-        Itaquaquecetuba - SP, 08583-670<br>
-        📞 Telefone: (11) 97131-9233<br>
+        <b>📍 Estr. Pedro da Cunha Albuquerque Lopes, 2235</b><br>
+        Perobal - Itaquaquecetuba - SP, 08584-584<br>
+        📞 Telefone: (11) 99982-2103<br>
         
-        <a href="https://wa.me/5511954950044?text=Olá, vim pela Óptica Lionda e quero um link personalizado!" target="_blank" class="venda-link">
+        <a href="https://wa.me/5511954950044?text=Olá, vim pela Óptica Lionda II e quero um link personalizado!" target="_blank" class="venda-link">
             Deseja um link "assim" personalizado para sua empresa? Saiba mais
         </a><br>
         
@@ -147,6 +147,7 @@
 </div>
 
 <script>
+    // Se a Unidade II tiver um link de avaliação diferente, substitua o PlaceID abaixo
     const linkGoogleURL = "https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM";
     let redirecionamentoAtivo = true;
     let timerGoogle;
@@ -155,8 +156,8 @@
         1: "Obrigado! Buscamos sempre evoluir nossa qualidade.",
         2: "Sua opinião nos ajuda a ser a melhor óptica da região.",
         3: "Atendimento e precisão são prioridades na Óptica Lionda.",
-        4: "Ficamos felizes! Referência em lentes e armações em Itaquá.",
-        5: "Incrível! Você acaba de avaliar a melhor Óptica de Itaquaquecetuba!"
+        4: "Ficamos felizes! Referência em lentes e armações na Unidade II.",
+        5: "Incrível! Você acaba de avaliar a melhor Óptica do Perobal!"
     };
 
     function avaliar(n) {
@@ -185,16 +186,14 @@
         redirecionamentoAtivo = false;
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
-        // Se você quiser que o Google abra em segundo plano ao clicar em críticas:
-        // window.open(linkGoogleURL, '_blank');
     }
 
     function enviarGerente() {
         const texto = document.getElementById('texto-cliente').value;
         if (!texto) return alert("Por favor, escreva sua mensagem.");
         
-        // NÚMERO DA GERENTE (11 97131-9233)
-        window.open(`https://wa.me/5511971319233?text=Feedback Cliente Lionda: ${texto}`, '_blank');
+        // NÚMERO DA GERENTE UNIDADE II (11 99982-2103)
+        window.open(`https://wa.me/5511999822103?text=Feedback Cliente Lionda Unidade II: ${texto}`, '_blank');
         
         setTimeout(() => { window.open(linkGoogleURL, '_blank'); }, 1000);
     }
