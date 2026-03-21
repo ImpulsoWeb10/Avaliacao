@@ -18,55 +18,58 @@
         .container {
             max-width: 420px; width: 100%; background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(12px); padding: 30px 20px; border-radius: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15); text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15); text-align: center; position: relative;
         }
         .logo { width: 150px; background: white; padding: 5px; border-radius: 15px; border: 2px solid #facc15; margin-bottom: 15px; }
-        
-        /* ESTRELAS */
         .rating-box { margin: 20px 0; display: flex; justify-content: center; gap: 10px; }
         .star-btn { font-size: 45px; color: #475569; cursor: pointer; transition: 0.3s; }
-        .star-btn.active { color: #facc15; transform: scale(1.1); }
+        .star-btn:hover { color: #facc15; }
 
-        /* EFEITO PURPURINA NA FRASE */
+        /* MODAL ESTILOSO */
+        #modal-gratidao {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95); border-radius: 35px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; padding: 20px; text-align: center;
+        }
         .purpurina {
-            font-size: 28px; font-weight: 800; margin: 20px 0;
-            background: linear-gradient(90deg, #facc15, #fff, #facc15, #ffd700);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: brilhoPurpurina 2s linear infinite;
+            font-size: 32px; font-weight: 800;
+            background: linear-gradient(90deg, #facc15, #fff, #ffd700, #fff);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: brilho 2s linear infinite; margin-bottom: 15px;
         }
-        @keyframes brilhoPurpurina { to { background-position: 200% center; } }
+        @keyframes brilho { to { background-position: 200% center; } }
 
-        /* ELEMENTOS COM ANIMAÇÃO DE SURGIMENTO */
-        .fade-in { animation: fadeIn 0.8s forwards; opacity: 0; }
-        .scale-up { animation: scaleUp 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0); }
-
-        /* BOTÃO GOOGLE PULSANTE */
+        /* SEGUNDA FASE - ELEMENTOS */
         .google-btn {
-            background: #facc15; color: #000; padding: 18px; border-radius: 50px;
+            background: #facc15; color: #000; padding: 15px; border-radius: 50px;
             font-weight: 800; text-decoration: none; display: flex; align-items: center;
-            justify-content: center; gap: 10px; margin: 20px 0;
-            animation: pulsar 1.5s infinite; box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+            justify-content: center; gap: 10px; margin: 15px 0;
+            animation: pulsar 1.5s infinite; box-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
         }
 
-        /* FOTO DO ÓCULOS */
-        .img-oculos { width: 130px; border-radius: 20px; border: 2px solid #facc15; margin: 15px auto; display: block; }
+        .img-oculos-anim {
+            width: 50px; border-radius: 15px; border: 2px solid #facc15; margin: 10px auto;
+            display: block; opacity: 0; transform: scale(0.1);
+            animation: crescerFoto 1.5s forwards ease-in-out;
+        }
 
+        @keyframes crescerFoto { to { opacity: 1; transform: scale(2.8); margin: 50px auto; } } /* Cresce bastante como no original */
+        @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* CAMPO DE MSG E BOTAO MENORES */
+        .area-feedback { width: 85%; margin: 0 auto; opacity: 0; animation: fadeIn 1s forwards 1s; }
         textarea {
-            width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 15px; color: white; padding: 12px; margin-top: 15px; outline: none;
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px; color: white; padding: 8px; font-size: 13px; outline: none; margin-top: 10px;
         }
-        .btn-envia {
-            width: 100%; padding: 15px; border-radius: 50px; background: #22c55e;
-            color: white; font-weight: 700; border: none; margin-top: 10px; cursor: pointer;
+        .btn-gerente {
+            width: 100%; padding: 10px; border-radius: 50px; background: #22c55e;
+            color: white; font-weight: 700; border: none; margin-top: 8px; cursor: pointer; font-size: 13px;
         }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes scaleUp { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
-        @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-        .hidden { display: none; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -74,73 +77,55 @@
 <div class="container">
     <img src="logo-optica-lionda.png" class="logo">
     
-    <div id="etapa-1">
+    <div id="tela-estrelas">
         <h1>Óptica Lionda</h1>
         <p style="color: #facc15; margin-top: 5px;">Como foi sua experiência hoje?</p>
         <div class="rating-box">
-            <i class="fas fa-star star-btn" onclick="proximaFase(1)"></i>
-            <i class="fas fa-star star-btn" onclick="proximaFase(2)"></i>
-            <i class="fas fa-star star-btn" onclick="proximaFase(3)"></i>
-            <i class="fas fa-star star-btn" onclick="proximaFase(4)"></i>
-            <i class="fas fa-star star-btn" onclick="proximaFase(5)"></i>
+            <i class="fas fa-star star-btn" onclick="iniciarProcesso(1)"></i>
+            <i class="fas fa-star star-btn" onclick="iniciarProcesso(2)"></i>
+            <i class="fas fa-star star-btn" onclick="iniciarProcesso(3)"></i>
+            <i class="fas fa-star star-btn" onclick="iniciarProcesso(4)"></i>
+            <i class="fas fa-star star-btn" onclick="iniciarProcesso(5)"></i>
         </div>
     </div>
 
-    <div id="etapa-gratidao" class="hidden">
+    <div id="modal-gratidao" class="hidden">
         <h2 class="purpurina">"Gratidão!"</h2>
-        <p style="font-size: 14px; padding: 0 10px;">Por favor, para nos avaliar clique no Botão do Google, ou se preferir deixe uma msg de elogio ou critica no campo abaixo.</p>
+        <p style="font-size: 15px;">Aguarde um instante...</p>
     </div>
 
-    <div id="etapa-google" class="hidden">
-        <a href="https://search.google.com/local/writereview?placeid=SEU_ID_AQUI" target="_blank" class="google-btn">
+    <div id="segunda-fase" class="hidden">
+        <a href="https://search.google.com/local/writereview?placeid=SEU_ID" target="_blank" class="google-btn">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
-    </div>
 
-    <div id="etapa-foto" class="hidden">
-        <img src="casal-oculos.png" class="img-oculos scale-up">
-    </div>
+        <img src="casal-oculos.png" class="img-oculos-anim" id="foto-oculos">
 
-    <div id="etapa-final" class="hidden">
-        <textarea id="msg-cliente" rows="3" placeholder="Escreva aqui seu elogio ou crítica..."></textarea>
-        <button onclick="enviar()" class="btn-envia">ENVIAR PARA GERENTE</button>
+        <div class="area-feedback">
+            <textarea id="msg" rows="2" placeholder="Deixe um elogio ou crítica..."></textarea>
+            <button onclick="enviarGerente()" class="btn-gerente">ENVIAR PARA GERENTE</button>
+        </div>
     </div>
 </div>
 
 <script>
-    let nota = 0;
+    function iniciarProcesso(n) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
-    function proximaFase(n) {
-        nota = n;
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 } });
+        // Abre o Modal com a frase
+        document.getElementById('modal-gratidao').classList.remove('hidden');
 
-        // Esconde primeira tela
-        document.getElementById('etapa-1').classList.add('hidden');
-        
-        // 1. Mostra Gratidão (Imediato)
-        document.getElementById('etapa-gratidao').classList.remove('hidden');
-
-        // 2. Após 4 segundos, mostra o Botão Google
+        // Temporizador de 4 segundos para o Modal sumir e liberar a 2ª fase
         setTimeout(() => {
-            document.getElementById('etapa-google').classList.remove('hidden');
-            document.getElementById('etapa-google').classList.add('fade-in');
+            document.getElementById('modal-gratidao').classList.add('hidden');
+            document.getElementById('tela-estrelas').classList.add('hidden'); // Esconde estrelas de vez
+            document.getElementById('segunda-fase').classList.remove('hidden');
         }, 4000);
-
-        // 3. Após 5 segundos, mostra a Foto crescendo
-        setTimeout(() => {
-            document.getElementById('etapa-foto').classList.remove('hidden');
-        }, 5000);
-
-        // 4. Após 6 segundos, mostra o Campo de Mensagem
-        setTimeout(() => {
-            document.getElementById('etapa-final').classList.remove('hidden');
-            document.getElementById('etapa-final').classList.add('fade-in');
-        }, 6000);
     }
 
-    function enviar() {
-        const texto = document.getElementById('msg-cliente').value;
-        window.open(`https://wa.me/5511971319233?text=Avaliação: ${nota} estrelas. Mensagem: ${texto}`, '_blank');
+    function enviarGerente() {
+        const texto = document.getElementById('msg').value;
+        window.open(`https://wa.me/5511971319233?text=Feedback: ${texto}`, '_blank');
     }
 </script>
 
