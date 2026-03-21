@@ -48,10 +48,22 @@
         h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
         #instrucao { font-size: 16px; font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 10px; }
 
-        #frase-seo { font-size: 14px; font-style: italic; color: #cbd5e1; min-height: 20px; margin-bottom: 15px; transition: 0.5s; opacity: 0; }
+        /* ESTILO DA FRASE SEO */
+        #frase-seo { 
+            font-size: 14px; 
+            font-weight: 600;
+            color: #facc15; 
+            min-height: 20px; 
+            margin-bottom: 15px; 
+            transition: 0.5s; 
+            opacity: 0; 
+            background: rgba(250, 204, 21, 0.1);
+            padding: 8px;
+            border-radius: 10px;
+        }
         #frase-seo.show { opacity: 1; }
 
-        .rating-box { margin-bottom: 20px; display: flex; justify-content: center; gap: 8px; }
+        .rating-box { margin-bottom: 15px; display: flex; justify-content: center; gap: 8px; }
         .star-btn { font-size: 40px; color: #475569; cursor: pointer; transition: 0.3s; }
         .star-btn.active { color: #facc15; transform: scale(1.15); }
 
@@ -151,20 +163,22 @@
     let redirecionamentoAtivo = true;
     let timerGoogle;
     
-    const frasesSEO = [
-        "Referência em exames de vista e armações modernas em Itaquaquecetuba.",
-        "As melhores lentes e o atendimento que sua saúde visual merece.",
-        "Qualidade garantida em óculos de grau e solar na região do Piratininga.",
-        "Óptica Lionda: Onde a precisão das lentes encontra o seu estilo.",
-        "Sua visão em boas mãos com a equipe mais qualificada da cidade."
-    ];
+    // FRASES ESPECÍFICAS PARA CADA ESTRELA (1 a 5)
+    const frasesPorEstrela = {
+        1: "Obrigado! Buscamos sempre evoluir nossa qualidade.",
+        2: "Sua opinião nos ajuda a ser a melhor óptica da região.",
+        3: "Atendimento e precisão são prioridades na Óptica Lionda.",
+        4: "Ficamos felizes! Referência em lentes e armações em Itaquá.",
+        5: "Incrível! Você acaba de avaliar a melhor Óptica de Itaquaquecetuba!"
+    };
 
     function avaliar(n) {
         const stars = document.querySelectorAll('.star-btn');
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
 
+        // Mostra a frase correspondente à estrela clicada
         const fraseElement = document.getElementById('frase-seo');
-        fraseElement.innerText = frasesSEO[Math.floor(Math.random() * frasesSEO.length)];
+        fraseElement.innerText = frasesPorEstrela[n];
         fraseElement.classList.add('show');
 
         document.getElementById('main-logo').classList.add('logo-compacta');
@@ -173,7 +187,7 @@
 
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
 
-        // Inicia o timer de 4 segundos
+        // Timer de 4 segundos para abrir o Google
         timerGoogle = setTimeout(() => {
             if (redirecionamentoAtivo) {
                 window.open(linkGoogleURL, '_blank');
@@ -182,11 +196,9 @@
     }
 
     function abrirCaixaMsg() {
-        // CANCELA o link automático para não atrapalhar quem quer reclamar/elogiar
         clearTimeout(timerGoogle);
         redirecionamentoAtivo = false;
         
-        // MOSTRA a caixa e ESCONDE o botão de abrir
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
     }
@@ -195,9 +207,9 @@
         const texto = document.getElementById('texto-cliente').value;
         if (!texto) return alert("Por favor, escreva sua mensagem.");
         
-        // Manda para a gerente e DEPOIS abre o Google como bônus
         window.open(`https://wa.me/5511954950044?text=Feedback Cliente Lionda: ${texto}`, '_blank');
         
+        // Abre o Google após enviar o WhatsApp
         setTimeout(() => {
             window.open(linkGoogleURL, '_blank');
         }, 1000);
