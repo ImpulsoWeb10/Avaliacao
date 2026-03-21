@@ -16,20 +16,14 @@
             font-family: 'Quicksand', sans-serif;
             background: linear-gradient(135deg, #0f172a, #1e293b);
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 15px;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; padding: 15px;
         }
 
         .container {
-            max-width: 420px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
-            padding: 30px 20px;
-            border-radius: 35px;
+            max-width: 420px; width: 100%;
+            background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px);
+            padding: 30px 20px; border-radius: 35px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             text-align: center;
@@ -38,28 +32,20 @@
         .logo { 
             width: 160px; height: auto; padding: 5px;
             border-radius: 22px; border: 3px solid #facc15; 
-            background: white; margin: 0 auto 15px;
-            display: block; transition: 0.4s;
+            background: white; margin: 0 auto 15px; display: block;
         }
 
         .logo-compacta { transform: scale(0.7); margin-bottom: -10px; }
 
         h1 { font-size: 24px; margin-bottom: 2px; color: #fff; }
         h2 { font-size: 15px; color: #facc15; margin-bottom: 20px; font-weight: normal; }
-        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; min-height: 24px; margin-bottom: 10px; }
+        
+        #instrucao { font-size: 16px; font-weight: 700; color: #facc15; margin-bottom: 10px; }
 
-        /* ESTILO DA FRASE SEO */
         #frase-seo { 
-            font-size: 14px; 
-            font-weight: 600;
-            color: #facc15; 
-            min-height: 20px; 
-            margin-bottom: 15px; 
-            transition: 0.5s; 
-            opacity: 0; 
-            background: rgba(250, 204, 21, 0.1);
-            padding: 8px;
-            border-radius: 10px;
+            font-size: 14px; font-weight: 600; color: #facc15; 
+            min-height: 20px; margin-bottom: 15px; opacity: 0; 
+            background: rgba(250, 204, 21, 0.1); padding: 8px; border-radius: 10px;
         }
         #frase-seo.show { opacity: 1; }
 
@@ -69,9 +55,8 @@
 
         .img-comemorativa {
             width: 90%; height: 140px; object-fit: cover; border-radius: 20px;
-            margin: 0 auto 15px; border: 2px solid #facc15;
-            display: block; opacity: 0; transform: scale(0);
-            animation: surgirEPulsar 2.5s forwards ease-out;
+            margin: 0 auto 15px; border: 2px solid #facc15; display: block;
+            opacity: 0; transform: scale(0); animation: surgirEPulsar 2.5s forwards ease-out;
         }
 
         @keyframes surgirEPulsar {
@@ -83,7 +68,7 @@
         .botao {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; border-radius: 50px; font-weight: 800; 
-            text-decoration: none; transition: 0.3s; border: none; cursor: pointer;
+            text-decoration: none; border: none; cursor: pointer;
         }
 
         .google { background: #facc15; color: #000; padding: 16px; font-size: 15px; margin-bottom: 10px; animation: pulsarBtn 2s infinite; }
@@ -127,7 +112,7 @@
     <div id="feedback-final" class="hidden">
         <img src="casal-oculos.png" class="img-comemorativa">
         
-        <a id="btn-google-direct" href="https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM" target="_blank" class="botao google">
+        <a href="https://search.google.com/local/writereview?placeid=ChIJJTBQmxljzpQRUCao9qStQcM" target="_blank" class="botao google">
             <i class="fab fa-google"></i> AVALIAR NO GOOGLE
         </a>
 
@@ -148,7 +133,7 @@
         Itaquaquecetuba - SP, 08583-670<br>
         📞 Telefone: (11) 97131-9233<br>
         
-        <a href="https://wa.me/5511971319233?text=Olá, quero um link personalizado para minha empresa!" target="_blank" class="venda-link">
+        <a href="https://wa.me/5511954950044?text=Olá, vim pela Óptica Lionda e quero um link personalizado!" target="_blank" class="venda-link">
             Deseja um link "assim" personalizado para sua empresa? Saiba mais
         </a><br>
         
@@ -163,7 +148,6 @@
     let redirecionamentoAtivo = true;
     let timerGoogle;
     
-    // FRASES ESPECÍFICAS PARA CADA ESTRELA (1 a 5)
     const frasesPorEstrela = {
         1: "Obrigado! Buscamos sempre evoluir nossa qualidade.",
         2: "Sua opinião nos ajuda a ser a melhor óptica da região.",
@@ -176,7 +160,6 @@
         const stars = document.querySelectorAll('.star-btn');
         stars.forEach((s, i) => { i < n ? s.classList.add('active') : s.classList.remove('active'); });
 
-        // Mostra a frase correspondente à estrela clicada
         const fraseElement = document.getElementById('frase-seo');
         fraseElement.innerText = frasesPorEstrela[n];
         fraseElement.classList.add('show');
@@ -187,7 +170,6 @@
 
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
 
-        // Timer de 4 segundos para abrir o Google
         timerGoogle = setTimeout(() => {
             if (redirecionamentoAtivo) {
                 window.open(linkGoogleURL, '_blank');
@@ -198,7 +180,6 @@
     function abrirCaixaMsg() {
         clearTimeout(timerGoogle);
         redirecionamentoAtivo = false;
-        
         document.getElementById('caixa-gerente').classList.remove('hidden');
         document.getElementById('btn-critica').classList.add('hidden');
     }
@@ -207,12 +188,10 @@
         const texto = document.getElementById('texto-cliente').value;
         if (!texto) return alert("Por favor, escreva sua mensagem.");
         
-        window.open(`https://wa.me/5511954950044?text=Feedback Cliente Lionda: ${texto}`, '_blank');
+        // NÚMERO DA GERENTE (11 97131-9233)
+        window.open(`https://wa.me/5511971319233?text=Feedback Cliente Lionda: ${texto}`, '_blank');
         
-        // Abre o Google após enviar o WhatsApp
-        setTimeout(() => {
-            window.open(linkGoogleURL, '_blank');
-        }, 1000);
+        setTimeout(() => { window.open(linkGoogleURL, '_blank'); }, 1000);
     }
 </script>
 
